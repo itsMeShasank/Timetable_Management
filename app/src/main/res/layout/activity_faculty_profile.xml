@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cse.timetableapp.FacultyProfile"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+
+
+    >
+
+
+
+    <ImageView
+        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="40dp"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:src="@drawable/vignanlogohighres"
+        android:layout_marginBottom="20dp"
+        />
+    <LinearLayout
+        android:background="@drawable/layout_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="206dp"
+        android:src="@drawable/profpic"
+       />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_height="206dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:text="ID"
+                    />
+
+            <TextView
+                    android:id="@+id/faculty_profile_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="16dp"
+                    android:layout_weight="1"
+                    android:text="TextView"
+         />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:text="Name"
+                    />
+
+                <TextView
+                    android:id="@+id/faculty_profile_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="16dp"
+                    android:layout_weight="1"
+                    android:text="TextView"/></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7"
+                    android:text="Workload"
+                    />
+                <TextView
+                    android:id="@+id/faculty_profile_workload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="16dp"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Lab Hours"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="308dp" />
+
+    <TextView
+        android:id="@+id/faculty_profile_labs"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:text="TextView"
+        android:paddingLeft="10dp"
+        tools:layout_editor_absoluteX="256dp"
+        tools:layout_editor_absoluteY="308dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Competetive Coding"
+        tools:layout_editor_absoluteX="76dp"
+        tools:layout_editor_absoluteY="376dp" />
+
+    <TextView
+        android:id="@+id/faculty_profile_coding"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:text="TextView"
+        android:paddingLeft="10dp"
+        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteY="383dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="IDP"
+        tools:layout_editor_absoluteX="76dp"
+        tools:layout_editor_absoluteY="457dp" />
+
+    <TextView
+        android:id="@+id/faculty_profile_idp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:text="TextView"
+        android:paddingLeft="10dp"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="475dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:text="Theory"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="503dp" />
+
+    <TextView
+        android:id="@+id/faculty_profile_theory"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:text="TextView"
+        android:paddingLeft="10dp"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="540dp" /></LinearLayout>
+    </LinearLayout>
+</LinearLayout>

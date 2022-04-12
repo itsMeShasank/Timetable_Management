@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="15dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
+    android:backgroundTint="@color/baby_pink"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                android:text="Period"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                android:text="1"
+
+                android:id="@+id/period_id"
+                android:textSize="50sp"
+                android:textAlignment="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
+                android:text="Subject:"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
+                android:text="Room:"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
+                android:text="Faculty :"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
+                android:text="III-F"
+                android:id="@+id/subject_id"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
+                android:text="CNS"
+                android:id="@+id/room_id"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0sp"
+                android:layout_weight="1"
+                android:text="1034"
+                android:id="@+id/faculty_id"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>
+    <!--
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+
+                <LinearLayout
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Class Name      : "
+                            android:textSize="15dp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/class_name"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Faculty Name  : "
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/faculty_name"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Short Name : "
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/short_name"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Faculty Id Number  : "
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/faculty_id"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+        </LinearLayout>
+    -->

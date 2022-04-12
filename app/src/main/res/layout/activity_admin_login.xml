@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cse.timetableapp.AdminLogin"
+    android:orientation="vertical">
+
+    <ImageView
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:src="@drawable/vignanlogohighres"
+        android:layout_marginTop="50sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:layout_marginLeft="18sp"
+        android:layout_marginRight="18sp"
+        android:layout_marginTop="50sp"
+        android:paddingRight="40sp"
+        android:paddingLeft="40sp"
+        android:orientation="vertical"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/admin_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter user id"
+            android:textStyle="bold"
+            android:layout_marginTop="60dp"
+            android:singleLine="true"
+            android:nextFocusForward="@+id/admin_password"
+            />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/admin_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter password"
+            android:textStyle="bold"
+            android:inputType="textPassword"
+            android:layout_marginTop="70sp"
+            android:singleLine="true"
+            android:nextFocusForward="@+id/admin_submit_button"
+            />
+        <Button
+            android:id="@+id/admin_submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="submit"
+            android:layout_marginTop="80sp"/>
+
+    </LinearLayout>
+    <TextView android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:fontFamily="casual"
+        android:textColor="@color/black"
+        android:layout_marginBottom="30dp"
+        android:text="\u00A9 2022 Dept. of CSE     |     All Rights Reserved"/>
+
+</LinearLayout>

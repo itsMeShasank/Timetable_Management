@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cse.timetableapp.SubjectFacultyDealing"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_subject_faculty_dealing"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="80sp"
+            android:padding="30sp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="FACULTY DEALING"
+            android:textSize="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="9sp"
+            android:textColor="@color/black"
+            />
+
+    </LinearLayout>
+    <Spinner
+        android:id="@+id/spinner_year"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:gravity="right"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5sp"
+        android:entries="@array/years"
+        android:background="@drawable/change_textbox_color"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_subject_delaing"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:gravity="right"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5sp"
+        android:background="@drawable/change_textbox_color"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/customborder">
+
+        <TextView
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Faculty ID"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            />
+
+        <TextView
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Section"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subject_faculty_dealing"
+        android:divider="@null"
+        android:dividerHeight="0sp"/>
+
+</LinearLayout>

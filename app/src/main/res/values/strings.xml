@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">TabTesting</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="days">
+        <item>Day</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+
+    <string-array name="Periods">
+        <item>Period</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="Sections">
+        <item>Section</item>
+        <item>III-A</item>
+        <item>III-B</item>
+        <item>III-C</item>
+        <item>III-D</item>
+        <item>III-E</item>
+        <item>III-F</item>
+        <item>III-G</item>
+        <item>DSUP-1</item>
+        <item>DSUP-2</item>
+        <item>IOT-1</item>
+        <item>IOT-2</item>
+        <item>MCES</item>
+        <item>MCES-2</item>
+        <item>PGI</item>
+        <item>ME</item>
+        <item>BIR</item>
+
+    </string-array>
+    <string-array name="secondyears">
+        <item>Section</item>
+        <item>II-A</item>
+        <item>II-B</item>
+        <item>II-C</item>
+        <item>II-D</item>
+        <item>II-E</item>
+        <item>II-AI-ML</item>
+        <item>II-CS</item>
+        <item>II-CSBS</item>
+    </string-array>
+    <string-array name="years">
+        <item>Select a Section</item>
+        <item>II</item>
+        <item>III</item>
+    </string-array>
+    <string-array name="secondYearsSubject">
+        <item>"Select a Subject</item>
+        <item>OR</item>
+        <item>OR LAB</item>
+        <item>DAA</item>
+        <item>DAA LAB</item>
+        <item>DAA</item>
+        <item>DAA LAB</item>
+        <item>FLAT</item>
+        <item>PP</item>
+        <item>PP LAB</item>
+        <item>PMOB</item>
+        <item>COA</item>
+        <item>Tech Seminar</item>
+        <item>IDP-2</item>
+        <item>WT</item>
+        <item>WT LAB</item>
+        <item>DBS</item>
+        <item>DBS LAB</item>
+        <item>ES</item>
+        <item>IML</item>
+        <item>IML LAB</item>
+        <item>OS</item>
+        <item>OS LAB</item>
+        <item>CV</item>
+        <item>CV LAB</item>
+        <item>FM</item>
+        <item>HRM</item>
+        <item>IDP</item>
+        <item>CN</item>
+        <item>CN LAB</item>
+    </string-array>
+    <string-array name="Subjects">
+        <item>Subject</item>
+        <item>IDP-2</item>
+        <item>CNS</item>
+        <item>MC</item>
+        <item>MC LAB</item>
+        <item>AI</item>
+        <item>AI LAB</item>
+        <item>Competitive Coding</item>
+        <item>PE</item>
+        <item>PC</item>
+        <item>IOT</item>
+        <item>DSUP</item>
+        <item>BIR</item>
+        <item>MCES</item>
+        <item>ME</item>
+        <item>PGI</item>
+    </string-array>
+
+
+</resources>

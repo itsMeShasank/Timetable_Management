@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputEditText
+
+        android:id="@+id/FacultyInputText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Enter ID"
+        android:paddingLeft="20sp"
+        tools:layout_editor_absoluteX="44sp"
+        tools:layout_editor_absoluteY="168sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="100sp"
+        android:background="@drawable/change_textbox_color"
+        android:singleLine="true"
+        android:nextFocusForward="@+id/FacultySubmitButton"
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remember"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
+        android:id="@+id/faculty_login_checkbox"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/FacultySubmitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Faculty"
+        tools:layout_editor_absoluteX="123sp"
+        tools:layout_editor_absoluteY="315sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginTop="30sp"
+        android:background="@drawable/buttondesign"
+        android:layout_marginLeft="40sp"
+        android:layout_marginBottom="20sp"/>
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin Login"
+        android:layout_gravity="right"
+        android:layout_marginRight="45sp"
+        android:textSize="16sp"
+        android:id="@+id/adminLogin"
+        android:background="@drawable/change_textbox_color"
+        android:textColor="@color/purple_700"
+        android:padding="10dp"
+        />
+
+
+    <TextView android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:fontFamily="casual"
+        android:textColor="@color/black"
+        android:layout_marginBottom="30dp"
+        android:text="\u00A9 2022 Dept. of CSE     |     All Rights Reserved"/>
+
+
+
+</LinearLayout>
+
+<!--android:background="#FEEAE2"-->
