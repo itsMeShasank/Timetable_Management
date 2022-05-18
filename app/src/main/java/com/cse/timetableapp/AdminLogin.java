@@ -1,8 +1,12 @@
 package com.cse.timetableapp;
 
+import static com.cse.timetableapp.MainActivity.filename;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,8 +48,11 @@ public class AdminLogin extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(getApplicationContext(),StartUpActivity.class);
-        startActivity(intent);
+        SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("remember","false");
+        editor.apply();
+        startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
         finish();
     }
 }

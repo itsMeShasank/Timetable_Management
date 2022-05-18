@@ -1,13 +1,16 @@
 package com.cse.timetableapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     private MyViewPager adapter;
     LinearLayout linearLayout;
+    String val,flag;
     DatabaseReference databaseReference;
     ArrayList<FacultyData> mondayList,tuesdayList,wednesdayList,thursdayList,fridayList,saturdayList;
     ArrayList<StudentData> smondayList,stuesdayList,swednesdayList,sthursdayList,sfridayList,ssaturdayList;
@@ -55,15 +59,13 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("");
         //Receive Arguments
         Intent intent = getIntent();
-        String val = intent.getStringExtra("text");
-        String flag = intent.getStringExtra("type");
+        val = intent.getStringExtra("text");
+        flag = intent.getStringExtra("type");
         if(flag.equalsIgnoreCase("student"))
             toolbar.setTitle("Section : "+val+" TimeTable");
         else{
             toolbar.setTitle("Faculty ID : "+val);
         }
-
-
 
         //arrayLists
         assignValues();
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.care:
                 Intent intent = new Intent(getApplicationContext(),Contact.class);
+                intent.putExtra("text",val);
+                intent.putExtra("type",flag);
                 startActivity(intent);
                 finish();
                 break;
@@ -215,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot snap:snapshot.getChildren()){
                     //Log.e("Hello","hello");
                     if(!snap.getKey().equals("Details")) {
-                    for(DataSnapshot snapper:snap.getChildren()){
+                        for(DataSnapshot snapper:snap.getChildren()){
 
                             FacultyData data = snapper.getValue(FacultyData.class);
                             workload++;
@@ -310,6 +314,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     //StudentDatabase
     public void GetStudentDatabaseValues(String val){
         databaseReference = FirebaseDatabase.getInstance().getReference("ClassDetails").child(val);
@@ -317,38 +323,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap:snapshot.getChildren()){
-                    Log.e("Ide Key",snap.getKey());
+                    //Log.e("Ide Key",snap.getKey());
                     if(!snap.getKey().equals("Details")){
                         for(DataSnapshot snapper:snap.getChildren()){
-                        StudentData studentData = snapper.getValue(StudentData.class);
-                        if(snap.getKey().equals("Monday")){
-                            smondayList.add(studentData);
-                            Log.e("Data Added",mondayList.toString());
-                        }
-                        else if(snap.getKey().equals("Tuesday")){
-                            stuesdayList.add(studentData);
-                            Log.e("Data Added",tuesdayList.toString());
-                        }
-                        else if(snap.getKey().equals("Wednesday")){
-                            swednesdayList.add(studentData);
-                            Log.e("Data Added",wednesdayList.toString());
-                        }
-                        else if(snap.getKey().equals("Thursday")){
-                            sthursdayList.add(studentData);
-                            Log.e("Data Added",thursdayList.toString());
-                        }
-                        else if(snap.getKey().equals("Friday")){
-                            sfridayList.add(studentData);
-                            Log.e("Data Added",fridayList.toString());
-                        }
-                        else if(snap.getKey().equals("Saturday")){
-                            ssaturdayList.add(studentData);
-                            Log.e("Data Added",saturdayList.toString());
-                        }
+                            StudentData studentData = snapper.getValue(StudentData.class);
+                            if(snap.getKey().equals("Monday")){
+                                smondayList.add(studentData);
+                                Log.e("Data Added",mondayList.toString());
+                            }
+                            else if(snap.getKey().equals("Tuesday")){
+                                stuesdayList.add(studentData);
+                                Log.e("Data Added",tuesdayList.toString());
+                            }
+                            else if(snap.getKey().equals("Wednesday")){
+                                swednesdayList.add(studentData);
+                                Log.e("Data Added",wednesdayList.toString());
+                            }
+                            else if(snap.getKey().equals("Thursday")){
+                                sthursdayList.add(studentData);
+                                Log.e("Data Added",thursdayList.toString());
+                            }
+                            else if(snap.getKey().equals("Friday")){
+                                sfridayList.add(studentData);
+                                Log.e("Data Added",fridayList.toString());
+                            }
+                            else if(snap.getKey().equals("Saturday")){
+                                ssaturdayList.add(studentData);
+                                Log.e("Data Added",saturdayList.toString());
+                            }
 
 
 
-                    }}
+                        }}
                 }
                 printStudentReceivedData();
             }
@@ -417,6 +423,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("remember","false");
+        editor.apply();
+        Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
+        finish();
 
     }
 }

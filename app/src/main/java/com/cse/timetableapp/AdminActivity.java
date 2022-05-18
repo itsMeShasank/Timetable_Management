@@ -1,8 +1,12 @@
 package com.cse.timetableapp;
 
+import static com.cse.timetableapp.MainActivity.filename;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -113,8 +117,15 @@ public class AdminActivity extends AppCompatActivity {
         adminlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+                Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
                 finish();
+
             }
         });
 
@@ -122,8 +133,13 @@ public class AdminActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(getApplicationContext(),AdminLogin.class);
-        startActivity(i);
+
+        SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("remember","false");
+        editor.apply();
+        Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
         finish();
     }
 }
