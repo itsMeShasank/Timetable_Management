@@ -44,9 +44,6 @@ public class StartUpActivity extends AppCompatActivity {
 
 
     }
-    public void yearchecking(String year) {
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -54,7 +51,7 @@ public class StartUpActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(StartUpActivity.this);
 
         builder.setMessage("Do you want to exit ?");
-        builder.setTitle("Alert !");
+        builder.setTitle("Alert!!");
         builder.setCancelable(true);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

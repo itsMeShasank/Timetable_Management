@@ -123,7 +123,7 @@ public class AdminActivity extends AppCompatActivity {
                 editor.putString("remember","false");
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
+                //startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
                 finish();
 
             }
@@ -139,7 +139,8 @@ public class AdminActivity extends AppCompatActivity {
         editor.putString("remember","false");
         editor.apply();
         Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
+        //startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
+
         finish();
     }
 }

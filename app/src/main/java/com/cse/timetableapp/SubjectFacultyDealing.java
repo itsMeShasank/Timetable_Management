@@ -52,7 +52,6 @@ public class SubjectFacultyDealing extends AppCompatActivity {
             year_spinnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(SubjectFacultyDealing.this, year_spinnner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                     if(year_spinnner.getSelectedItem().toString().equals("III")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.Subjects, android.R.layout.simple_spinner_item);
@@ -81,7 +80,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                         subjectFaculties.clear();
                         getDataFromFirebase(str);
                     } else {
-                        Toast.makeText(SubjectFacultyDealing.this, "Please Select a Subject", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SubjectFacultyDealing.this, "Please Select a Subject", Toast.LENGTH_SHORT).show();
                     }
                 }
 
