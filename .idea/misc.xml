@@ -14,7 +14,11 @@
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_opening2.xml" value="0.264" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_splashscreen.xml" value="0.1" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_start_up.xml" value="0.1" />
+        <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_timetable_update.xml" value="0.2296875" />
+        <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_update_timetable.xml" value="0.2296875" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/faculty_tab_fragment.xml" value="0.24615384615384617" />
+        <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/fragment_for_forth_year.xml" value="0.1585144927536232" />
+        <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/fragment_fourth_year.xml" value="0.2296875" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/fragment_secondyear_student.xml" value="0.1" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/friday_layout.xml" value="0.1" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/monday_layout.xml" value="0.1" />
@@ -22,7 +26,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

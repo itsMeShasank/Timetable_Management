@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <Spinner
+        android:id="@+id/spinner_fourth_year"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:gravity="center"
+        android:layout_marginLeft="40sp"
+        android:layout_marginTop="100sp"
+        android:layout_marginRight="40sp"
+        android:background="@drawable/change_textbox_color"
+        android:textColor="@color/black"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remember"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
+        android:id="@+id/login_checkbox"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        app:strokeColor="#F65A91"
+        android:id="@+id/studentSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/openingbuttondesign"
+        android:text="Submit"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="315dp"
+        android:layout_margin="40dp"/>
+
+
+    <TextView android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:fontFamily="casual"
+        android:textColor="@color/black"
+        android:layout_marginBottom="30dp"
+        android:text="\u00A9 2022 Dept. of CSE     |     All Rights Reserved"/>
+</LinearLayout>
+

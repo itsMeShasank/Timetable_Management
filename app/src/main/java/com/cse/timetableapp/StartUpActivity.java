@@ -32,11 +32,11 @@ public class StartUpActivity extends AppCompatActivity {
         StudentFragment studentFragment = new StudentFragment();
         myViewPager.AddFragment(studentFragment,"III YEAR");
 
+        FragmentForForthYear fragmentForForthYear = new FragmentForForthYear();
+        myViewPager.AddFragment(fragmentForForthYear,"IV YEAR");
 
         FacultyFragment facultyFragment = new FacultyFragment();
         myViewPager.AddFragment(facultyFragment,"Faculty");
-
-
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         viewPager.setAdapter(myViewPager);

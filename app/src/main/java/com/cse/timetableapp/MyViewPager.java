@@ -40,3 +40,4 @@ public class MyViewPager extends FragmentPagerAdapter {
         fragmentTitles.add(title);
     }
 }
+

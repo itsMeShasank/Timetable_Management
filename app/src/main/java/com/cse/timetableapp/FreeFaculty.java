@@ -41,7 +41,7 @@ public class FreeFaculty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),AdminActivity.class));
-                //finish();
+                finish();
 
             }
         });
