@@ -322,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("json : ",snapshot.toString());
                 for(DataSnapshot snap:snapshot.getChildren()){
                     //Log.e("Ide Key",snap.getKey());
                     if(!snap.getKey().equals("Details")){

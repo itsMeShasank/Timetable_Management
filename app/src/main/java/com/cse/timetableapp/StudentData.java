@@ -4,15 +4,24 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class StudentData implements Parcelable {
-    String day,faculty,per,room,sec,sub;
+    String day,faculty,per,room,sec,sub;//time;
 
-    public StudentData(String day, String faculty, String per, String room, String sec, String sub) {
+    /*public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }*/
+
+    public StudentData(String day, String faculty, String per, String room, String sec, String sub, String time) {
         this.day = day;
         this.faculty = faculty;
         this.per = per;
         this.room = room;
         this.sec = sec;
         this.sub = sub;
+        //this.time = time;
     }
 
     public StudentData() {
@@ -25,6 +34,7 @@ public class StudentData implements Parcelable {
         room = in.readString();
         sec = in.readString();
         sub = in.readString();
+        //time = in.readString();
     }
 
     public static final Creator<StudentData> CREATOR = new Creator<StudentData>() {
@@ -100,5 +110,6 @@ public class StudentData implements Parcelable {
         parcel.writeString(room);
         parcel.writeString(sec);
         parcel.writeString(sub);
+        //parcel.writeString(time);
     }
 }
