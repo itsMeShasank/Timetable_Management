@@ -4,37 +4,30 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class StudentData implements Parcelable {
-    String day,faculty,per,room,sec,sub;//time;
+    String day,faculty,room,sec,sub,time;
+    long per;
 
-    /*public String getTime() {
-        return time;
+    public StudentData() {
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }*/
-
-    public StudentData(String day, String faculty, String per, String room, String sec, String sub, String time) {
+    public StudentData(String day, String faculty, long per, String room, String sec, String sub, String time) {
         this.day = day;
         this.faculty = faculty;
         this.per = per;
         this.room = room;
         this.sec = sec;
         this.sub = sub;
-        //this.time = time;
-    }
-
-    public StudentData() {
+        this.time = time;
     }
 
     protected StudentData(Parcel in) {
         day = in.readString();
         faculty = in.readString();
-        per = in.readString();
+        per = in.readLong();
         room = in.readString();
         sec = in.readString();
         sub = in.readString();
-        //time = in.readString();
+        time = in.readString();
     }
 
     public static final Creator<StudentData> CREATOR = new Creator<StudentData>() {
@@ -65,11 +58,11 @@ public class StudentData implements Parcelable {
         this.faculty = faculty;
     }
 
-    public String getPer() {
+    public long getPer() {
         return per;
     }
 
-    public void setPer(String per) {
+    public void setPer(long per) {
         this.per = per;
     }
 
@@ -97,6 +90,14 @@ public class StudentData implements Parcelable {
         this.sub = sub;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,10 +107,10 @@ public class StudentData implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(day);
         parcel.writeString(faculty);
-        parcel.writeString(per);
+        parcel.writeLong(per);
         parcel.writeString(room);
         parcel.writeString(sec);
         parcel.writeString(sub);
-        //parcel.writeString(time);
+        parcel.writeString(time);
     }
 }

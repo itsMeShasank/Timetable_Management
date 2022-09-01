@@ -36,14 +36,15 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
     @Override
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         StudentData studentData = studentDataList.get(position);
-        String str = studentData.getPer();
+        String str = ""+studentData.getPer();
         if(str.contains("LAB"))
             holder.period.setTypeface(holder.period.getTypeface(), Typeface.BOLD);
 
-        holder.period.setText(studentData.getPer());
+        holder.period.setText(""+studentData.getPer());
         holder.faculty.setText(studentData.getFaculty());
         holder.room.setText(studentData.getRoom());
         holder.sub.setText(studentData.getSub());
+        holder.periodtime.setText(studentData.getTime());
     }
 
     @Override
@@ -53,13 +54,14 @@ public class StudentRecyclerAdapter extends RecyclerView.Adapter<StudentRecycler
 
     public static class StudentViewHolder extends RecyclerView.ViewHolder{
 
-        TextView period,faculty,room,sub;
+        TextView period,faculty,room,sub,periodtime;
         public StudentViewHolder(@NonNull View view) {
             super(view);
             period = view.findViewById(R.id.period_id);
             faculty = view.findViewById(R.id.faculty_id);
             room = view.findViewById(R.id.room_id);
             sub = view.findViewById(R.id.subject_id);
+            periodtime = view.findViewById(R.id.period_time_student);
         }
     }
 }

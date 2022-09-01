@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FacultyResults">
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Matched Faculty Names"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:background="@drawable/change_textbox_color"
+        android:textColor="@color/purple_700"
+        android:padding="10dp"
+        />
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:id="@+id/listViewForSearchResults"
+
+        />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remember"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginLeft="40sp"
+        android:id="@+id/faculty_search_checkbox"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/FacultySearchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Faculty"
+        tools:layout_editor_absoluteX="123sp"
+        tools:layout_editor_absoluteY="315sp"
+        android:layout_marginRight="40sp"
+        android:layout_marginTop="30sp"
+        android:background="@drawable/buttondesign"
+        android:layout_marginLeft="40sp"
+        android:layout_marginBottom="20sp"/>
+
+
+</LinearLayout>

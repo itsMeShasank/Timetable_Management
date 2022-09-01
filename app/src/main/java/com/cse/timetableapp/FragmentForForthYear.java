@@ -86,7 +86,7 @@ public class FragmentForForthYear extends Fragment {
         spinner = root.findViewById(R.id.spinner_student);
         selected_class = "";
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(root.getContext(),
-                R.array.secondyears, android.R.layout.simple_spinner_item);
+                R.array.FourthYears, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

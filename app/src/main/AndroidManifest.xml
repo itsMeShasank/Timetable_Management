@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION" />
 
     <application
         android:allowBackup="true"
@@ -7,7 +12,13 @@
         android:label="Timetable"
         android:roundIcon="@mipmap/new_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TabTesting" >
+        android:theme="@style/Theme.TabTesting">
+        <activity
+            android:name=".FacultyResults"
+            android:exported="false" />
+        <activity
+            android:name=".ModidyCurrentTimetable"
+            android:exported="false" />
         <activity
             android:name=".TimetableUpdate"
             android:exported="false" />
@@ -28,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".splashscreen"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

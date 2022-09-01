@@ -35,21 +35,33 @@
         <item>8</item>
     </string-array>
 
+    <string-array name="FourthYears">
+        <item>Period</item>
+        <item>IV - A</item>
+        <item>IV - B</item>
+        <item>IV - C</item>
+        <item>IV - D</item>
+        <item>IV - E</item>
+        <item>IV - F</item>
+
+
+    </string-array>
+
     <string-array name="Sections">
         <item>Section</item>
-        <item>III-A</item>
-        <item>III-B</item>
-        <item>III-C</item>
-        <item>III-D</item>
-        <item>III-E</item>
-        <item>III-F</item>
-        <item>III-G</item>
-        <item>DSUP-1</item>
-        <item>DSUP-2</item>
-        <item>IOT-1</item>
-        <item>IOT-2</item>
+        <item>III - A</item>
+        <item>III - B</item>
+        <item>III - C</item>
+        <item>III - D</item>
+        <item>III - E</item>
+        <item>III - F</item>
+        <item>III - G</item>
+        <item>DSUP - 1</item>
+        <item>DSUP - 2</item>
+        <item>IOT - 1</item>
+        <item>IOT - 2</item>
         <item>MCES</item>
-        <item>MCES-2</item>
+        <item>MCES - 2</item>
         <item>PGI</item>
         <item>ME</item>
         <item>BIR</item>
@@ -57,11 +69,11 @@
     </string-array>
     <string-array name="secondyears">
         <item>Section</item>
-        <item>II-A</item>
-        <item>II-B</item>
-        <item>II-C</item>
-        <item>II-D</item>
-        <item>II-E</item>
+        <item>II - A</item>
+        <item>II - B</item>
+        <item>II - C</item>
+        <item>II - D</item>
+        <item>II - E</item>
         <item>II-AI-ML</item>
         <item>II-CS</item>
         <item>II-CSBS</item>

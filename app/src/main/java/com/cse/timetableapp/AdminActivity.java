@@ -22,7 +22,7 @@ public class AdminActivity extends AppCompatActivity {
 
     Spinner periods,days;
     String selected_period,selected_day;
-    Button free_periods,free_faculty,faculty_workload,subject_faculty,adminlogout;
+    Button free_periods,free_faculty,faculty_workload,subject_faculty,changetimetable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,8 +113,8 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),FacultyWorkload.class));
             }
         });
-        adminlogout = findViewById(R.id.logout);
-        adminlogout.setOnClickListener(new View.OnClickListener() {
+        changetimetable = findViewById(R.id.change_timetable);
+        changetimetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

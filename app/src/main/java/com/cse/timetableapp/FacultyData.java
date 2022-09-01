@@ -6,25 +6,31 @@ import android.os.Parcelable;
 
 public class FacultyData implements Parcelable {
 
-    String facultyId,period,sectionId,shortVal,room;
-
-    public FacultyData(String facultyId, String period, String sectionId, String shortVal, String room) {
-        this.facultyId = facultyId;
-        this.period = period;
-        this.sectionId = sectionId;
-        this.shortVal = shortVal;
-        this.room = room;
-    }
+    private String day,name,sectionId,shortVal,room,time;
+    private long period;
 
     public FacultyData() {
     }
 
+    public FacultyData(String day, String name, String sectionId, String shortVal, String room, String time, long period) {
+        this.day = day;
+        this.name = name;
+        this.sectionId = sectionId;
+        this.shortVal = shortVal;
+        this.room = room;
+        this.time = time;
+        this.period = period;
+    }
+
+
     protected FacultyData(Parcel in) {
-        facultyId = in.readString();
-        period = in.readString();
+        day = in.readString();
+        name = in.readString();
         sectionId = in.readString();
         shortVal = in.readString();
         room = in.readString();
+        time = in.readString();
+        period = in.readLong();
     }
 
     public static final Creator<FacultyData> CREATOR = new Creator<FacultyData>() {
@@ -39,20 +45,20 @@ public class FacultyData implements Parcelable {
         }
     };
 
-    public String getFacultyId() {
-        return facultyId;
+    public String getDay() {
+        return day;
     }
 
-    public void setFacultyId(String facultyId) {
-        this.facultyId = facultyId;
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public String getPeriod() {
-        return period;
+    public String getName() {
+        return name;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSectionId() {
@@ -79,17 +85,35 @@ public class FacultyData implements Parcelable {
         this.room = room;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public long getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(long period) {
+        this.period = period;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(facultyId);
-        dest.writeString(period);
-        dest.writeString(sectionId);
-        dest.writeString(shortVal);
-        dest.writeString(room);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(day);
+        parcel.writeString(name);
+        parcel.writeString(sectionId);
+        parcel.writeString(shortVal);
+        parcel.writeString(room);
+        parcel.writeString(time);
+        parcel.writeLong(period);
     }
 }

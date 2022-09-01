@@ -26,9 +26,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -223,22 +226,22 @@ public class MainActivity extends AppCompatActivity {
 
                             FacultyData data = snapper.getValue(FacultyData.class);
                             workload++;
-                            if (snap.getKey().equals("Monday")) {
+                            if (snap.getKey().equals("Mon")) {
                                 mondayList.add(data);
                                 //Log.e("Data Added", mondayList.toString());
-                            } else if (snap.getKey().equals("Tuesday")) {
+                            } else if (snap.getKey().equals("Tue")) {
                                 tuesdayList.add(data);
                                 //Log.e("Data Added", tuesdayList.toString());
-                            } else if (snap.getKey().equals("Wednesday")) {
+                            } else if (snap.getKey().equals("Wed")) {
                                 wednesdayList.add(data);
                                 //Log.e("Data Added", wednesdayList.toString());
-                            } else if (snap.getKey().equals("Thursday")) {
+                            } else if (snap.getKey().equals("Thu")) {
                                 thursdayList.add(data);
                                 //Log.e("Data Added", thursdayList.toString());
-                            } else if (snap.getKey().equals("Friday")) {
+                            } else if (snap.getKey().equals("Fri")) {
                                 fridayList.add(data);
                                 //Log.e("Data Added", fridayList.toString());
-                            } else if (snap.getKey().equals("Saturday")) {
+                            } else if (snap.getKey().equals("Sat")) {
                                 saturdayList.add(data);
                                 //Log.e("Data Added", saturdayList.toString());
                             }
@@ -257,6 +260,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void printReceivedData(){
+
+
+        //Sorting Lists based on period
+
+
+        Comparator<FacultyData> comparator = new Comparator<FacultyData>() {
+            @Override
+            public int compare(FacultyData studentData, FacultyData t1) {
+                if(studentData.getPeriod() > t1.getPeriod())
+                    return 1;
+                else
+                    return -1;
+            }
+        };
+
+        Collections.sort(mondayList, comparator);
+        Collections.sort(tuesdayList,comparator);
+        Collections.sort(wednesdayList, comparator);
+        Collections.sort(thursdayList,comparator);
+        Collections.sort(fridayList, comparator);
+        Collections.sort(saturdayList,comparator);
+
+
+
+        //
+
+
+
         Monday monday = new Monday();
         Bundle mondaybundle = new Bundle();
         mondaybundle.putParcelableArrayList("faculty",mondayList);
@@ -318,7 +349,9 @@ public class MainActivity extends AppCompatActivity {
 
     //StudentDatabase
     public void GetStudentDatabaseValues(String val){
-        databaseReference = FirebaseDatabase.getInstance().getReference("ClassDetails").child(val);
+        databaseReference = FirebaseDatabase.getInstance().getReference("StudentDetails").child(val);
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -328,29 +361,32 @@ public class MainActivity extends AppCompatActivity {
                     if(!snap.getKey().equals("Details")){
                         for(DataSnapshot snapper:snap.getChildren()){
                             StudentData studentData = snapper.getValue(StudentData.class);
-                            if(snap.getKey().equals("Monday")){
+                            if(studentData.faculty.equals("not mentioned"))
+                                studentData.faculty = "-";
+                            Log.e("Data read",studentData.getSub());
+                            if(snap.getKey().equals("Mon")){
                                 smondayList.add(studentData);
-                                Log.e("Data Added",mondayList.toString());
+                                Log.e("Data Added",smondayList.toString());
                             }
-                            else if(snap.getKey().equals("Tuesday")){
+                            else if(snap.getKey().equals("Tue")){
                                 stuesdayList.add(studentData);
-                                Log.e("Data Added",tuesdayList.toString());
+                                Log.e("Data Added",stuesdayList.toString());
                             }
-                            else if(snap.getKey().equals("Wednesday")){
+                            else if(snap.getKey().equals("Wed")){
                                 swednesdayList.add(studentData);
-                                Log.e("Data Added",wednesdayList.toString());
+                                Log.e("Data Added",swednesdayList.toString());
                             }
-                            else if(snap.getKey().equals("Thursday")){
+                            else if(snap.getKey().equals("Thu")){
                                 sthursdayList.add(studentData);
-                                Log.e("Data Added",thursdayList.toString());
+                                Log.e("Data Added",sthursdayList.toString());
                             }
-                            else if(snap.getKey().equals("Friday")){
+                            else if(snap.getKey().equals("Fri")){
                                 sfridayList.add(studentData);
-                                Log.e("Data Added",fridayList.toString());
+                                Log.e("Data Added",sfridayList.toString());
                             }
-                            else if(snap.getKey().equals("Saturday")){
+                            else if(snap.getKey().equals("Sat")){
                                 ssaturdayList.add(studentData);
-                                Log.e("Data Added",saturdayList.toString());
+                                Log.e("Data Added",ssaturdayList.toString());
                             }
 
 
@@ -369,8 +405,36 @@ public class MainActivity extends AppCompatActivity {
     public void printStudentReceivedData(){
 
 
+        //Sorting  all the lists based on period
+
+
+        Comparator<StudentData> comparator = new Comparator<StudentData>() {
+            @Override
+            public int compare(StudentData studentData, StudentData t1) {
+                if(studentData.getPer() > t1.getPer())
+                    return 1;
+                else
+                    return -1;
+            }
+        };
+
+        Collections.sort(smondayList, comparator);
+        Collections.sort(stuesdayList,comparator);
+        Collections.sort(swednesdayList, comparator);
+        Collections.sort(sthursdayList,comparator);
+        Collections.sort(sfridayList, comparator);
+        Collections.sort(ssaturdayList,comparator);
+        // SOrting over
+
+        for(StudentData i:smondayList){
+            Log.e("Monday List",i.getSub());
+        }
+
+
+
         StudentMonday monday = new StudentMonday();
         Bundle mondaybundle = new Bundle();
+
         mondaybundle.putParcelableArrayList("student",smondayList);
         monday.setArguments(mondaybundle);
 

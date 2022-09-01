@@ -37,12 +37,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             FacultyData faculty = facultyData.get(position);
-            holder.faculty_id.setText(faculty.getPeriod());
+            holder.faculty_id.setText(""+faculty.getPeriod());
 
             holder.short_val.setText(faculty.getShortVal());
-            holder.faculty_name.setText(faculty.getFacultyId());
+            holder.faculty_name.setText(faculty.getName());
             holder.class_id.setText(faculty.getSectionId());
             holder.room.setText(faculty.getRoom());
+            holder.period_time.setText(faculty.getTime());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     }
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder{
-        TextView faculty_name,faculty_id,class_id,short_val,room;
+        TextView faculty_name,faculty_id,class_id,short_val,room,period_time;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,7 +62,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             short_val = itemView.findViewById(R.id.short_name);
             room = itemView.findViewById(R.id.room_id);
             short_val.setTypeface(null, Typeface.BOLD_ITALIC);
-
+            period_time = itemView.findViewById(R.id.period_time);
             /*
             *
             * String shortValue = faculty.getShortVal();
