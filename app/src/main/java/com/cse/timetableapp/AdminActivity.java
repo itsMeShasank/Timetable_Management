@@ -13,10 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cse.timetableapp.R;
+import com.cse.timetableapp.Workloads.FacultyWorkload;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -110,7 +109,7 @@ public class AdminActivity extends AppCompatActivity {
         faculty_workload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),FacultyWorkload.class));
+                startActivity(new Intent(getApplicationContext(), FacultyWorkload.class));
             }
         });
         changetimetable = findViewById(R.id.change_timetable);

@@ -1,4 +1,4 @@
-package com.cse.timetableapp;
+package com.cse.timetableapp.Workloads;
 
 import android.content.Context;
 import android.graphics.Color;

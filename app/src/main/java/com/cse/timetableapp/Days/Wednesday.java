@@ -1,4 +1,4 @@
-package com.cse.timetableapp;
+package com.cse.timetableapp.Days;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,34 +12,45 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cse.timetableapp.FacultyData;
+import com.cse.timetableapp.MyRecyclerAdapter;
 import com.cse.timetableapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class StudentTuesday extends Fragment {
+public class Wednesday extends Fragment {
     LinearLayout linearLayout;
     View root;
     RecyclerView recyclerView;
-    ArrayList<StudentData> studentData;
+    List<FacultyData> facultyData;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root =  inflater.inflate(R.layout.tuesday_layout,container,false);
-        studentData = new ArrayList<>();
+        root =  inflater.inflate(R.layout.wednesday_layout,container,false);
 
+
+        facultyData = new ArrayList<>();
         if(getArguments()!=null){
-            studentData = getArguments().getParcelableArrayList("student");
+            facultyData = getArguments().getParcelableArrayList("faculty");
             //Log.e("data","vachindi");
         }
 
+        linearLayout = root.findViewById(R.id.wednesday_layout);
 
-
-        linearLayout = root.findViewById(R.id.tuesday_layout);
-        recyclerView = root.findViewById(R.id.tuesday_recycler_view);
-        StudentRecyclerAdapter studentRecyclerAdapter = new StudentRecyclerAdapter(getContext(),studentData);
+        recyclerView = root.findViewById(R.id.wednesday_recycler_view);
+        MyRecyclerAdapter myRecyclerAdapter = new MyRecyclerAdapter(getContext(),facultyData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(studentRecyclerAdapter);
+        recyclerView.setAdapter(myRecyclerAdapter);
 
         return root;
     }

@@ -1,4 +1,4 @@
-package com.cse.timetableapp;
+package com.cse.timetableapp.Workloads;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cse.timetableapp.FacultyDetails;
+import com.cse.timetableapp.FacultyProfile;
 import com.cse.timetableapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,7 +78,7 @@ public class FacultyWorkload extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 WorkLoads work = workLoads.get(i);
-                Intent intent = new Intent(getApplicationContext(),FacultyProfile.class);
+                Intent intent = new Intent(getApplicationContext(), FacultyProfile.class);
                 intent.putExtra("faculty",work);
                 startActivity(intent);
             }

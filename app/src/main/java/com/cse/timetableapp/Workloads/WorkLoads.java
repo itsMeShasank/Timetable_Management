@@ -1,4 +1,4 @@
-package com.cse.timetableapp;
+package com.cse.timetableapp.Workloads;
 
 import android.os.Parcel;
 import android.os.Parcelable;
