@@ -80,17 +80,36 @@
         android:text="Subject - Faculty"
         android:textAllCaps="false"
          />
-    <Button
-        android:id="@+id/change_timetable"
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="left"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/buttondesign"
-        android:text="change timetable"
-        android:textAllCaps="false"
-        />
+
+    <LinearLayout
+
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/change_timetable"
+            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttondesign"
+            android:text="change timetable"
+            android:textAllCaps="false" />
+        <Button
+            android:id="@+id/change_faculty_details"
+            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttondesign"
+            android:text="change faculty details"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
 
 
 

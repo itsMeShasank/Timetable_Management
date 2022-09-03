@@ -7,13 +7,16 @@
     <uses-permission android:name="android.permission.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION" />
 
     <application
-
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/new_icon"
         android:label="Timetable"
         android:roundIcon="@mipmap/new_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TabTesting">
+        <activity
+            android:name=".ChangeFacultyDetails"
+            android:exported="false" />
         <activity
             android:name=".FacultyResults"
             android:exported="false" />

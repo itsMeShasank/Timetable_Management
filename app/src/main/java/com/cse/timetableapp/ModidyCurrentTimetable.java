@@ -232,7 +232,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         List<String>roomsList = new ArrayList<>();
         List<String>entireList = new ArrayList<>();
         HashMap<String,ArrayList> subjects = new HashMap<>();
-        HashMap<String,ArrayList> namesmap = new HashMap<>();
+        HashMap<String,ArrayList<String>> namesmap = new HashMap<>();
         List<List>entireroomsList = new ArrayList<>();
         for(Integer x :sheet.keySet())
         {
@@ -320,7 +320,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                             ArrayList<String> list = new ArrayList<>();
                             while(st1.hasMoreTokens()) {
                                 String facultyName = st1.nextToken().trim();
-                                facultyName = facultyName.replaceAll("[-+.^:,]","");
+                                facultyName = facultyName.replaceAll("[-+.^:, ]","");
                                 list.add(facultyName);
                             }
                             map.put(key,list);
@@ -390,6 +390,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             Log.e(name,namesmap.get(name)+" ");
         }
 
+
+        MyApplication.namesmap = namesmap;
         //faculty(entireList, entireroomsList.get(0), subjects);
         //student(entireList,entireroomsList.get(0),subjects);
 

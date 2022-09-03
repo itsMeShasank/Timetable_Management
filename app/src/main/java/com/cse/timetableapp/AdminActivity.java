@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,16 +18,28 @@ import android.widget.Toast;
 
 import com.cse.timetableapp.Workloads.FacultyWorkload;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class AdminActivity extends AppCompatActivity {
 
     Spinner periods,days;
     String selected_period,selected_day;
-    Button free_periods,free_faculty,faculty_workload,subject_faculty,changetimetable;
+    Button free_periods,free_faculty,faculty_workload,subject_faculty,changetimetable,change_faculty_details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+
+
+        change_faculty_details = findViewById(R.id.change_faculty_details);
+        change_faculty_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(),ChangeFacultyDetails.class));
+            }
+        });
 
         subject_faculty = findViewById(R.id.subject_faculty);
         subject_faculty.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +105,19 @@ public class AdminActivity extends AppCompatActivity {
         free_faculty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selected_period.equals("")||selected_period.equals("Period")||selected_day.equals("")||selected_day.equals("Day"))
+                if(selected_period.equals("")||selected_period.equals("Period")||selected_day.equals("")||selected_day.equals("Day")) {
                     Toast.makeText(getApplicationContext(), "Select a Valid Option", Toast.LENGTH_SHORT).show();
+
+
+                    HashMap<String, ArrayList<String>> namesmap = MyApplication.namesmap;
+
+                    for (String name : namesmap.keySet()) {
+                        Log.e(name, namesmap.get(name) + " ");
+                    }
+
+
+                }
+
                 else{
                     Toast.makeText(getApplicationContext(), selected_period+" "+selected_day, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),FreeFaculty.class);
@@ -124,8 +148,12 @@ public class AdminActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
                 finish();*/
+
+
+
                 startActivity(new Intent(getApplicationContext(),ModidyCurrentTimetable.class));
                 finish();
+
 
             }
         });
