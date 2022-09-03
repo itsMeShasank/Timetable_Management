@@ -117,14 +117,14 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               /* SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
+                SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("remember","false");
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
-                finish();*/
-                startActivity(new Intent(getApplicationContext(),ModidyCurrentTimetable.class));
+                finish();
+
             }
         });
 

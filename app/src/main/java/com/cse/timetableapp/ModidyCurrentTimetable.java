@@ -66,7 +66,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         };
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
+                intent.setType("/");
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                 startActivityForResult(intent, 100);
 
@@ -76,8 +76,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    year = spinner.getSelectedItem().toString();
-                    siddhu = spinner.getSelectedItem().toString();
+                year = spinner.getSelectedItem().toString();
+                siddhu = spinner.getSelectedItem().toString();
             }
 
             @Override
@@ -590,7 +590,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("StudentDetails");
         students st = new students(period,faculty,section,prsntday,subject,room,time);
         System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
-        if(!st.getSub().equals("***") ) {
+        if(!st.getSub().equals("*") ) {
 
             databaseReference.child(section).child(prsntday).child(time).setValue(st);
         }
