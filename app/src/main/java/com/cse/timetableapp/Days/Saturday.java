@@ -1,4 +1,4 @@
-package com.cse.timetableapp;
+package com.cse.timetableapp.Days;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cse.timetableapp.FacultyData;
+import com.cse.timetableapp.MyRecyclerAdapter;
 import com.cse.timetableapp.R;
 
 import java.util.ArrayList;

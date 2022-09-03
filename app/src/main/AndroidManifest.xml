@@ -35,7 +35,7 @@
             android:name=".SubjectFacultyDealing"
             android:exported="false" />
         <activity
-            android:name=".FacultyWorkload"
+            android:name=".Workloads.FacultyWorkload"
             android:exported="false" />
         <activity
             android:name=".splashscreen"

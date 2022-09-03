@@ -1,16 +1,13 @@
 package com.cse.timetableapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,13 +17,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
-import com.cse.timetableapp.R;
+import com.cse.timetableapp.Days.Friday;
+import com.cse.timetableapp.Days.Monday;
+import com.cse.timetableapp.Days.Saturday;
+import com.cse.timetableapp.Days.StudentFriday;
+import com.cse.timetableapp.Days.StudentMonday;
+import com.cse.timetableapp.Days.StudentSaturday;
+import com.cse.timetableapp.Days.StudentThursday;
+import com.cse.timetableapp.Days.StudentTuesday;
+import com.cse.timetableapp.Days.StudentWednesday;
+import com.cse.timetableapp.Days.Thursday;
+import com.cse.timetableapp.Days.Tuesday;
+import com.cse.timetableapp.Days.Wednesday;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
