@@ -5,9 +5,10 @@
       <map>
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_admin.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_faculty_results.xml" value="0.25416666666666665" />
-        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_modidy_current_timetable.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_modidy_current_timetable.xml" value="0.25" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_opening2.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_splashscreen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_subject_faculty_dealing.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/faculty_search_item.xml" value="0.253125" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/faculty_tab_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/item.xml" value="0.25416666666666665" />
