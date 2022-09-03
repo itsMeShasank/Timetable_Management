@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,6 +24,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import jxl.Sheet;
@@ -177,6 +180,20 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                 c=0;
             }
         }
+
+        HashMap<String,ArrayList<String>> namesmap = MyApplication.namesmap;
+        for(int i=0;i<facultyDetails.size();i+=2){
+            String id = facultyDetails.get(i);
+            String name = facultyDetails.get(i+1);
+
+            String keyVal = name.replaceAll("[,.+^* ]","").toLowerCase(Locale.ROOT);
+            FacultyDetailsObject obj = new FacultyDetailsObject(name,id,namesmap.get(keyVal));
+            FirebaseDatabase.getInstance().getReference().child("FacultyDealing").child(keyVal).setValue(obj);
+
+
+
+        }
+
     }
 
     public static Map<Integer, List<String>> readJExcel(String filelocation, String sheetname) throws IOException, BiffException {

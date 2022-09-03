@@ -3,6 +3,8 @@ package com.cse.timetableapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +36,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -320,7 +323,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                             ArrayList<String> list = new ArrayList<>();
                             while(st1.hasMoreTokens()) {
                                 String facultyName = st1.nextToken().trim();
-                                facultyName = facultyName.replaceAll("[-+.^:, ]","");
+                                facultyName = facultyName.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                                 list.add(facultyName);
                             }
                             map.put(key,list);
@@ -390,13 +393,17 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             Log.e(name,namesmap.get(name)+" ");
         }
 
-
+        Log.e("Completed","Edo okati");
+        for(String name:subjects.keySet()){
+            Log.e(name,subjects.get(name)+" ");
+        }
         MyApplication.namesmap = namesmap;
-        //faculty(entireList, entireroomsList.get(0), subjects);
+        faculty(entireList, entireroomsList.get(0), subjects);
         //student(entireList,entireroomsList.get(0),subjects);
 
     }
 
+    @SuppressLint("NewApi")
     public void faculty(List<String> entireList, List<String> entireroomsList, HashMap<String, ArrayList> subjects) {
 
         int columncount = 0;
@@ -428,6 +435,10 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
                 String subject1 = copy1.substring(0,copy1.indexOf("("));
                 faculty = subjects.get(section.trim() + "," + subject1.trim());
+
+
+
+
             }else {
                 faculty = subjects.get(section.trim() + "," + entireList.get(sub).trim());
             }
@@ -436,10 +447,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty);
                 //
                 int t = 0;
+
+
                 while (t < faculty.size()) {
                     if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
                         String copy = entireList.get(sub);
                         String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
+                        facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                         String subject = copy.substring(0,copy.indexOf("("));
                         if(periodnumber != 8 && !Prsntday.contains("Sat")) {
                             System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
@@ -498,7 +512,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     if (!st.getSub().equals(subject)) {
                         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("FacultyDetails");
                         String name = st.getFaculty();
-                        String result = name.replaceAll("[-+.^:,]","");
+                        String result = name.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                         databaseReference1.child(result).child(st.getDay()).child(year).child(timing).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -523,7 +537,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 if(periodnumber!=8 && !prsntday.equals("Sat")) {
                     saveFaculties saveFaculties = new saveFaculties(prsntday, faculty, section, room, subject, timing, periodnumber);
                     String name = saveFaculties.getName();
-                    String result = name.replaceAll("[-+.^:,]","");
+                    String result = name.replaceAll("[-+.^:,]","").toLowerCase(Locale.ROOT);
                     databaseReference.child(result).child(prsntday).child(year).child(timing).setValue(saveFaculties).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -582,6 +596,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
                     String copy = entireList.get(sub);
                     String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
+                    facultyNameIDP = facultyNameIDP.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                     String subject = copy.substring(0,copy.indexOf("("));
                     //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+" "+entireroomsList.get(room)+", "+facultyNameIDP);
                     if(periodnumber!=8 && !Prsntday.contains("Sat")) {
