@@ -66,7 +66,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         };
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("/");
+                intent.setType("*/*");
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                 startActivityForResult(intent, 100);
 
@@ -232,6 +232,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         List<String>roomsList = new ArrayList<>();
         List<String>entireList = new ArrayList<>();
         HashMap<String,ArrayList> subjects = new HashMap<>();
+        HashMap<String,ArrayList> namesmap = new HashMap<>();
         List<List>entireroomsList = new ArrayList<>();
         for(Integer x :sheet.keySet())
         {
@@ -319,9 +320,21 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                             ArrayList<String> list = new ArrayList<>();
                             while(st1.hasMoreTokens()) {
                                 String facultyName = st1.nextToken().trim();
+                                facultyName = facultyName.replaceAll("[-+.^:,]","");
                                 list.add(facultyName);
                             }
                             map.put(key,list);
+
+
+                            for(String name:list){
+                                if(namesmap.containsKey(name))
+                                    namesmap.get(name).add(key);
+                                else{
+                                    ArrayList<String> ll = new ArrayList<>();
+                                    ll.add(key);
+                                    namesmap.put(name,ll);
+                                }
+                            }
                         }
                     }
                 }
@@ -373,7 +386,11 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         //System.out.println(entireList+"\n"+entireroomsList+"\n"+subjects);
 
 
-        faculty(entireList, entireroomsList.get(0), subjects);
+        for(String name:namesmap.keySet()){
+            Log.e(name,namesmap.get(name)+" ");
+        }
+
+        //faculty(entireList, entireroomsList.get(0), subjects);
         //student(entireList,entireroomsList.get(0),subjects);
 
     }
@@ -590,7 +607,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("StudentDetails");
         students st = new students(period,faculty,section,prsntday,subject,room,time);
         System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
-        if(!st.getSub().equals("*") ) {
+        if(!st.getSub().equals("***") ) {
 
             databaseReference.child(section).child(prsntday).child(time).setValue(st);
         }
