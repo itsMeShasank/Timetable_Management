@@ -10,6 +10,8 @@ public class FacultyDetailsObject implements Parcelable {
     String name,id;
     ArrayList<String> list;
 
+
+
     public FacultyDetailsObject() {
     }
 

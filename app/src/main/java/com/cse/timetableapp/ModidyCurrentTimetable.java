@@ -232,6 +232,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         String year=siddhu.substring(0,siddhu.indexOf(" "));
         String Rooms ="None";
         Log.e("Checking Heading Name",year+" "+siddhu);
+        MyApplication.namesmap.clear();
         List<String>roomsList = new ArrayList<>();
         List<String>entireList = new ArrayList<>();
         HashMap<String,ArrayList> subjects = new HashMap<>();
@@ -261,7 +262,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 int i;
                 for(i=0;i<curRow.size();i++) {
                     String value = curRow.get(i);
-                    if(value.contains("SCIRP") || value.contains("IDP")) {
+                    if(value.contains("SCIRP")) {
                         if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall") ||((value.contains("Library"))&&(value.contains("Lab")))) {
                             curRow.set(i, value);
                             //System.out.println(value);
@@ -278,7 +279,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         roomsList.add(roomdata);
                         value = value.substring(0, value.indexOf("("));
                         curRow.set(i, value);
-                    }else if(value.contains("Open") || value.contains("Test")){
+                    }else if(value.contains("Open") || value.contains("Test") || value.contains("IDP")){
                         roomsList.add("refer section ");
                     }else if(value.contains("Library") && value.contains("Lab")) {
                         String roomdata=null;
@@ -408,7 +409,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
         int columncount = 0;
         for (String key : entireList) {
-            if (key.contains("II") || key.contains("IV")) {
+            if (key.contains("II") || key.contains("IV") || key.contains("III")) {
                 columncount = 0;
             } else {
                 //student(entireList,entireroomsList,subjects);
@@ -432,12 +433,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 periodnumber = 1;
             }
             String copy1 = entireList.get(sub);
-            if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
+            if(entireList.get(sub).contains("SCIRP")) {
                 String subject1 = copy1.substring(0,copy1.indexOf("("));
                 faculty = subjects.get(section.trim() + "," + subject1.trim());
-
-
-
 
             }else {
                 faculty = subjects.get(section.trim() + "," + entireList.get(sub).trim());
@@ -450,18 +448,18 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
 
                 while (t < faculty.size()) {
-                    if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
+                    if(entireList.get(sub).contains("SCIRP")) {
                         String copy = entireList.get(sub);
                         String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                         String subject = copy.substring(0,copy.indexOf("("));
                         if(periodnumber != 8 && !Prsntday.contains("Sat")) {
-                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
+                            //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
                             facultyFirebase1(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                         }
                     }else {
                         if(periodnumber !=8 && !Prsntday.contains("Sat")){
-                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
+                            //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
                             facultyFirebase1(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(t).toString());
                         }
                     }
@@ -507,8 +505,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("snap: ",dataSnapshot.toString());
                 students st = dataSnapshot.getValue(students.class);
-                if(st.getPer()!=8) {
+                if(st != null && st.getPer()<8 && !subject.contains("Sat")) {
                     if (!st.getSub().equals(subject)) {
                         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("FacultyDetails");
                         String name = st.getFaculty();
@@ -534,10 +533,10 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             }
 
             private void save() {
-                if(periodnumber!=8 && !prsntday.equals("Sat")) {
+                if(periodnumber<8 && !subject.contains("Sat")) {
                     saveFaculties saveFaculties = new saveFaculties(prsntday, faculty, section, room, subject, timing, periodnumber);
                     String name = saveFaculties.getName();
-                    String result = name.replaceAll("[-+.^:,]","").toLowerCase(Locale.ROOT);
+                    String result = name.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                     databaseReference.child(result).child(prsntday).child(year).child(timing).setValue(saveFaculties).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -565,7 +564,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     private void student(List<String> entireList, List<String> entireroomsList, HashMap<String, ArrayList> subjects) {
         int columncount=0;
         for(String key : entireList) {
-            if(key.contains("II") || key.contains("IV")) {
+            if(key.contains("II") || key.contains("IV") || key.contains("III")) {
                 columncount=0;
             }else {
                 columncount+=1;
@@ -590,10 +589,12 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             }
             ArrayList faculty = subjects.get(section.trim()+","+entireList.get(sub).trim());
             if(faculty != null) {
-                //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty.get(0));
-                StudentFirebase(timings[periodnumber-1],periodnumber,section,Prsntday,entireList.get(sub),entireroomsList.get(room).toString(),faculty.get(0).toString());
+                if(periodnumber<8) {
+                    //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty.get(0));
+                    StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(0).toString());
+                }
             }else {
-                if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
+                if(entireList.get(sub).contains("SCIRP")) {
                     String copy = entireList.get(sub);
                     String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                     facultyNameIDP = facultyNameIDP.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
@@ -603,7 +604,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
                 }else {
-                    if(periodnumber!=8 && !Prsntday.contains("Sat")) {
+                    if(periodnumber<8) {
                         //System.out.println(periodnumber + ", " + timings[periodnumber - 1] + ", " + section + ", " + Prsntday + ", " + entireList.get(sub) + " " + entireroomsList.get(room) + ", " + "null");
                         StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "not mentioned");
                     }
@@ -623,9 +624,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("StudentDetails");
         students st = new students(period,faculty,section,prsntday,subject,room,time);
-        System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
-        if(!st.getSub().equals("***") ) {
 
+        if(!st.getSub().equals("***") && !st.getSub().contains("Sat") ) {
+            //System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
             databaseReference.child(section).child(prsntday).child(time).setValue(st);
         }
     }

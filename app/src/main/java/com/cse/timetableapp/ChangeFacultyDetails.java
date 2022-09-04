@@ -1,5 +1,6 @@
 package com.cse.timetableapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,11 +39,34 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
     Button button;
     String extension="";
+    HashMap<String,FacultyDetailsObject> facultydetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_faculty_details);
         askPermissionAndBrowseFile();
+
+        facultydetails = new HashMap<>();
+        FirebaseDatabase.getInstance().getReference().child("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap:snapshot.getChildren()){
+                    Log.e("CURRENT",snap.getKey());
+                    FacultyDetailsObject facultyDetailsObject= snap.getValue(FacultyDetailsObject.class);
+                    if(!(facultyDetailsObject.list == null))
+                        facultydetails.put(snap.getKey(),facultyDetailsObject);
+                }
+                printchesichupi();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
         button = findViewById(R.id.add_new_file);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +82,18 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void printchesichupi() {
+
+
+        for(String names:facultydetails.keySet()){
+            FacultyDetailsObject facultyDetailsObject = facultydetails.get(names);
+            if(facultyDetailsObject.list == null)
+                Log.e(facultyDetailsObject.name,"Add Directly");
+            else
+                Log.e(facultyDetailsObject.name,facultyDetailsObject.list.toString());
+        }
     }
 
     private void askPermissionAndBrowseFile()  {
@@ -185,13 +224,27 @@ public class ChangeFacultyDetails extends AppCompatActivity {
         for(int i=0;i<facultyDetails.size();i+=2){
             String id = facultyDetails.get(i);
             String name = facultyDetails.get(i+1);
-
             String keyVal = name.replaceAll("[,.+^* ]","").toLowerCase(Locale.ROOT);
-            FacultyDetailsObject obj = new FacultyDetailsObject(name,id,namesmap.get(keyVal));
+
+            ArrayList<String> subs = new ArrayList<>();
+
+            ArrayList<String> dummy = namesmap.get(keyVal);
+            if(dummy != null){
+                for (String str : dummy)
+                    subs.add(str);
+            }
+
+
+            if(facultydetails.containsKey(keyVal)){
+                ArrayList<String> subsDealing = facultydetails.get(keyVal).list;
+                if(subsDealing !=null) {
+                    for (String str : subsDealing)
+                        if(!subs.contains(str))
+                            subs.add(str);
+                }
+            }
+            FacultyDetailsObject obj = new FacultyDetailsObject(name,id,subs);
             FirebaseDatabase.getInstance().getReference().child("FacultyDealing").child(keyVal).setValue(obj);
-
-
-
         }
 
     }
