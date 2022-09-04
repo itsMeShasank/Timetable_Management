@@ -25,14 +25,15 @@
 
     <string-array name="Periods">
         <item>Period</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
+        <item>8:05-9:00</item>
+        <item>9:00-9:55</item>
+        <item>10:15-11:10</item>
+        <item>11:10-12:05</item>
+        <item>12:05-01:00</item>
+        <item>02:00-02:55</item>
+        <item>02:55-03:50</item>
+        <item>03:50-4:40</item>
+        <item>04:40-05:30</item>
     </string-array>
 
     <string-array name="FourthYears">

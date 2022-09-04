@@ -94,6 +94,7 @@ public class AdminActivity extends AppCompatActivity {
                 else{
                     Intent intent = new Intent(getApplicationContext(),FreeClasses.class);
                     intent.putExtra("period",selected_period);
+                    selected_day = selected_day.substring(0,3);
                     intent.putExtra("day",selected_day);
                     startActivity(intent);
                     finish();
@@ -122,6 +123,7 @@ public class AdminActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), selected_period+" "+selected_day, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),FreeFaculty.class);
                     intent.putExtra("period",selected_period);
+                    selected_day = selected_day.substring(0,3);
                     intent.putExtra("day",selected_day);
                     startActivity(intent);
                     finish();

@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FreeFaculty extends AppCompatActivity {
@@ -27,11 +28,13 @@ public class FreeFaculty extends AppCompatActivity {
     ListView listView;
     String period,day;
     com.google.android.material.floatingactionbutton.FloatingActionButton fab;
+    HashMap<String,FacultySearchItems> facultyDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_faculty);
 
+        facultyDetails = new HashMap<>();
         array = new ArrayList<>();
         rooms = new ArrayList<>();
         list = new ArrayList<>();
@@ -54,6 +57,37 @@ public class FreeFaculty extends AppCompatActivity {
 
         listView = findViewById(R.id.FacultylistView);
 
+        getFacultyIntoHashMap();
+
+
+
+
+
+    }
+
+
+    private  void getFacultyIntoHashMap(){
+        FirebaseDatabase.getInstance().getReference().child("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap:snapshot.getChildren()){
+                    FacultySearchItems child = snap.getValue(FacultySearchItems.class);
+                    facultyDetails.put(snap.getKey(),child);
+                }
+
+                completeDataFetch();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    private void completeDataFetch(){
+
 
         try {
             //Faculty Free Data
@@ -63,15 +97,19 @@ public class FreeFaculty extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot snap : snapshot.getChildren()) {
                         DataSnapshot s = snap.child(day);
-                        DataSnapshot sid = snap.child("Details");
-                        FacultyDetails facultyDetails = sid.getValue(FacultyDetails.class);
-                        if (!s.hasChild(period)) {
-                            array.add(snap.getKey());
-                            String id = snap.getKey();
-                            if (!id.contains("E0"))
-                                list.add(new FreeFacultyLoader(snap.getKey(), facultyDetails.getName()));
+                        for(DataSnapshot i:s.getChildren()){
+                            if(!i.hasChild(period)){
+                                array.add(snap.getKey());
+                                String id = snap.getKey();
+                                //if (!id.contains("E0"))
+                                if(facultyDetails.containsKey(snap.getKey()))
+                                    list.add(new FreeFacultyLoader(facultyDetails.get(snap.getKey()).getId(), facultyDetails.get(snap.getKey()).getName()));
+                                else{
+                                    Log.e("ee faculty Id ledu",snap.getKey());
+                                    list.add(new FreeFacultyLoader("0000", snap.getKey()));
+                                }
+                            }
                         }
-
                     }
                     FacultyAdapter facultyAdapter = new FacultyAdapter(getApplicationContext(), array);
                     FreeFacultyAdapter freeFacultyAdapter = new FreeFacultyAdapter(getApplicationContext(), R.layout.free_faculty_item, list);
@@ -88,7 +126,12 @@ public class FreeFaculty extends AppCompatActivity {
         }
 
 
+
+
+
+
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

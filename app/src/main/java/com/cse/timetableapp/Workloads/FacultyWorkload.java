@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cse.timetableapp.FacultyDetails;
 import com.cse.timetableapp.FacultyProfile;
+import com.cse.timetableapp.FacultySearchItems;
 import com.cse.timetableapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,12 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FacultyWorkload extends AppCompatActivity {
 
     ListView listView;
     List<WorkLoads> workLoads;
+    HashMap<String, FacultySearchItems> facultyDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,29 @@ public class FacultyWorkload extends AppCompatActivity {
 
         listView = findViewById(R.id.WorkloadlistView);
         workLoads = new ArrayList<>();
-        getWorkLoad();
+        facultyDetails = new HashMap<>();
+
+        getFacultyIntoHashMap();
+//        getWorkLoad();
+    }
+
+
+    private  void getFacultyIntoHashMap(){
+        FirebaseDatabase.getInstance().getReference().child("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap:snapshot.getChildren()){
+                    FacultySearchItems child = snap.getValue(FacultySearchItems.class);
+                    facultyDetails.put(snap.getKey(),child);
+                }
+                getWorkLoad();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void getWorkLoad(){
@@ -44,18 +69,29 @@ public class FacultyWorkload extends AppCompatActivity {
                 workLoads.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
 
+
+
+
                     String str = "siddhu";
-                    FacultyDetails facultyDetails= new FacultyDetails("1","siddhu","10");
+                    FacultyDetails facultyDetailsAdder= new FacultyDetails(" ","siddhu","10");
+                    if(facultyDetails.containsKey(snapshot1.getKey())){
+                        facultyDetailsAdder.setName(facultyDetails.get(snapshot1.getKey()).getName());
+                        facultyDetailsAdder.setId(facultyDetails.get(snapshot1.getKey()).getId());
+                    }else{
+                        facultyDetailsAdder.setName(snapshot1.getKey());
+                    }
                     int count = 0;
                     for(DataSnapshot snap:snapshot1.getChildren()){
                         if(snap.getKey().equals("Details")) {
-                            facultyDetails = snap.getValue(FacultyDetails.class);
-                        }else
-                            count += snap.getChildrenCount();
+                            facultyDetailsAdder = snap.getValue(FacultyDetails.class);
+                        }else{
+                            for(DataSnapshot i:snap.getChildren())
+                                count += i.getChildrenCount();
+                        }
                     }
                     String faculty_id = snapshot1.getKey();
                     if(!faculty_id.contains("E0") || faculty_id.contains("EEE0")){
-                    WorkLoads work = new WorkLoads(faculty_id,count+"",facultyDetails.getName());
+                    WorkLoads work = new WorkLoads(facultyDetailsAdder.getId(),count+"",facultyDetailsAdder.getName());
                     workLoads.add(work);
                     }
                 }
@@ -79,7 +115,7 @@ public class FacultyWorkload extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 WorkLoads work = workLoads.get(i);
                 Intent intent = new Intent(getApplicationContext(), FacultyProfile.class);
-                intent.putExtra("faculty",work);
+                intent.putExtra("faculty",work.faculty_id);
                 startActivity(intent);
             }
         });
