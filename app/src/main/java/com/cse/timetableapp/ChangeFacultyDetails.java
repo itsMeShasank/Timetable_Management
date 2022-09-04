@@ -86,7 +86,6 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
     private void printchesichupi() {
 
-
         for(String names:facultydetails.keySet()){
             FacultyDetailsObject facultyDetailsObject = facultydetails.get(names);
             if(facultyDetailsObject.list == null)

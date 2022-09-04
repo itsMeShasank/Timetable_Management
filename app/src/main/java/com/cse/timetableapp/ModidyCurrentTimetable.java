@@ -262,7 +262,32 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 int i;
                 for(i=0;i<curRow.size();i++) {
                     String value = curRow.get(i);
-                    if(value.contains("SCIRP")) {
+                    if(value.contains("(P)") || value.contains("(T)")) {
+                        if(value.contains("Hall")) {
+                            value = value.substring(0,value.indexOf(")")+1);
+                            String roomdata = value.substring(value.indexOf(")")+1,value.length());
+                            roomsList.add(roomdata);
+                        }
+                        if(value.contains("VPTF") || value.contains("VPSF")) {
+                            //DBMS (P/T) (VPTF-07)
+                            StringTokenizer st = new StringTokenizer(value," ");
+                            st.nextToken();
+                            st.nextToken();
+                            String roomVal = st.nextToken();
+                            String roomsdata = roomVal.substring(1, roomVal.length()-1);
+
+                            value = value.substring(0,value.indexOf(")")+1);
+                            roomsList.add(roomsdata);
+                        }
+                        else {
+                            value = value.substring(0, value.length());
+                            roomsList.add(Rooms);
+                        }
+
+                        curRow.set(i, value);
+
+                    }
+                    else if(value.contains("SCIRP")) {
                         if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall") ||((value.contains("Library"))&&(value.contains("Lab")))) {
                             curRow.set(i, value);
                             //System.out.println(value);
@@ -294,6 +319,10 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         String roomdata = value.substring(value.indexOf("N"), value.length());
                         roomsList.add(roomdata);
                         value = value.substring(0,value.indexOf("N"));
+                        curRow.set(i,value);
+                    }else if(value.contains("(CC Lab)")) {
+                        roomsList.add(value.substring(value.indexOf("("),value.length()));
+                        value = value.substring(0,value.indexOf("("));
                         curRow.set(i,value);
                     }
                     else {
@@ -346,45 +375,62 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     subjects.put(key, map.get(key));
                 }
             }
-            if(curRow.get(0).contains("Section"))
-            {
-                String nameSec=curRow.get(0);
+            if (curRow.get(0).contains("Section")) {
+                String nameSec = curRow.get(0);
                 Rooms = curRow.get(0);
-                if(!nameSec.contains("VPTF") || !nameSec.contains("VPSF")) {
-                    System.out.println(nameSec);
-                    StringTokenizer st=new StringTokenizer(nameSec," ");
+
+                if (!nameSec.contains("VPTF") || !nameSec.contains("VPSF") &&(!curRow.get(0).contains("AI&ML") || !curRow.get(0).contains("CS") || !curRow.get(0).contains("CSBS"))) {
+                    StringTokenizer st = new StringTokenizer(nameSec, " ");
                     st.nextToken();
                     st.nextToken();
-                    curSec = year+" - "+st.nextToken();
-                    Rooms = nameSec.substring(nameSec.indexOf("(")+1,nameSec.length()-1);
-                }else {
-                    StringTokenizer st=new StringTokenizer(nameSec," ");
-                    while(st.hasMoreTokens()) {
+                    curSec = year + " - " + st.nextToken();
+                    Rooms = nameSec.substring(nameSec.indexOf("(") + 1, nameSec.length() - 1);
+                } else {
+                    StringTokenizer st = new StringTokenizer(nameSec, " ");
+                    while (st.hasMoreTokens()) {
                         String in = st.nextToken();
 
-                        if(!in.contains("Section") && !in.contains(":") && !(in.contains("VPTF") || in.contains("VPSF")) && !nameSec.contains("Hall") && !nameSec.contains("NTR")) {
-                            curSec = year+" - "+in;
+                        if (!in.contains("Section") && !in.contains(":") && !(in.contains("VPTF") || in.contains("VPSF")) && !nameSec.contains("Hall") && !nameSec.contains("NTR")) {
+                            curSec = year + " - " + in;
                         }
-                        if(in.contains("VPTF") || in.contains("VPSF")) {
-                            in = in.substring(1, in.length()-1);
+                        if (in.contains("VPTF") || in.contains("VPSF")) {
+                            in = in.substring(1, in.length() - 1);
                             Rooms = in;
-                        }/*else if(nameSec.contains("Hall")) {
-                                in = nameSec.substring(nameSec.indexOf("(")+1, nameSec.indexOf(")"));
-                                Rooms = in;
-                                //curSec = year+" - "+in;
-                                //System.out.println("room hall : "+nameSec.substring(nameSec.indexOf("(")+1, nameSec.indexOf(")")));
-                            }else if(nameSec.contains("Library")) {
-                                in = nameSec.substring(nameSec.indexOf("(")+1, nameSec.indexOf(")"));
-                                Rooms = in;
-                                //curSec = year=" - "+in;
-                                //System.out.println("room Library : "+nameSec.substring(nameSec.indexOf("(")+1, nameSec.indexOf(")")+1));
-                            }*/
-                        else {
+                        }else {
                             Rooms = "None";
                         }
                     }
-
                 }
+            }
+            if(curRow.get(0).contains("AI&ML") || curRow.get(0).contains("CS") || curRow.get(0).contains("CSBS"))
+            {
+                //II AI&ML Section: A
+                //II AI&ML Section: A (VPTF -07)
+
+                String nameSec = curRow.get(0);
+                if(nameSec.contains("VPTF") || nameSec.contains("VPSF")) {
+                    StringTokenizer st = new StringTokenizer(nameSec, " ");
+                    String yy = st.nextToken();
+                    String spl = st.nextToken();
+                    st.nextToken();
+                    st.nextToken();
+                    String sec = st.nextToken();
+                    curSec = yy+" - "+spl+" - "+sec;
+                    String roomVal = st.nextToken();
+                    Rooms = roomVal.substring(1, roomVal.indexOf(")"));
+
+
+                }else {
+                    StringTokenizer st = new StringTokenizer(nameSec, " ");
+                    String yy = st.nextToken();
+                    String spl = st.nextToken();
+                    st.nextToken();
+                    st.nextToken();
+                    String sec = st.nextToken();
+                    curSec = yy+" - "+spl+" - "+sec;
+                    Rooms = "None";
+                }
+
             }
         }
         //System.out.println(entireList+"\n"+entireroomsList+"\n"+subjects);
@@ -412,7 +458,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             if (key.contains("II") || key.contains("IV") || key.contains("III")) {
                 columncount = 0;
             } else {
-                //student(entireList,entireroomsList,subjects);
+
                 columncount += 1;
             }
         }
@@ -453,13 +499,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                         String subject = copy.substring(0,copy.indexOf("("));
-                        if(periodnumber != 8 && !Prsntday.contains("Sat")) {
-                            //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
+                        if(periodnumber <8) {
+                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
                             facultyFirebase1(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                         }
                     }else {
-                        if(periodnumber !=8 && !Prsntday.contains("Sat")){
-                            //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
+                        if(periodnumber <8){
+                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
                             facultyFirebase1(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(t).toString());
                         }
                     }
@@ -477,24 +523,6 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         }
         //student(entireList,entireroomsList,subjects);
 
-    }
-
-    public void facultyFirebasefornull(String timing, int periodnumber, String section, String prsntday, String subject, String room, String faculty) {
-
-        DatabaseReference data = FirebaseDatabase.getInstance().getReference("StudentDetails");
-        DatabaseReference data1 = FirebaseDatabase.getInstance().getReference("FacultyDetails");
-        students st = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
-        data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.e("json : ",dataSnapshot.toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void facultyFirebase1(String timing, int periodnumber, String section, String prsntday, String subject, String room, String faculty) {
@@ -515,7 +543,6 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         databaseReference1.child(result).child(st.getDay()).child(year).child(timing).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-
                                 if(task.isSuccessful()) {
                                     DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
                                     students newstudent = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
@@ -533,6 +560,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             }
 
             private void save() {
+                // && faculty!=null p&s issue not assigned faculty
                 if(periodnumber<8 && !subject.contains("Sat")) {
                     saveFaculties saveFaculties = new saveFaculties(prsntday, faculty, section, room, subject, timing, periodnumber);
                     String name = saveFaculties.getName();
@@ -626,8 +654,15 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         students st = new students(period,faculty,section,prsntday,subject,room,time);
 
         if(!st.getSub().equals("***") && !st.getSub().contains("Sat") ) {
-            //System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
-            databaseReference.child(section).child(prsntday).child(time).setValue(st);
+            System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
+            databaseReference.child(section).child(prsntday).child(time).setValue(st).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()) {
+                        Log.e("yupee","done");
+                    }
+                }
+            });
         }
     }
 
@@ -638,7 +673,23 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     }
 
 
+    public void facultyFirebasefornull(String timing, int periodnumber, String section, String prsntday, String subject, String room, String faculty) {
 
+        DatabaseReference data = FirebaseDatabase.getInstance().getReference("StudentDetails");
+        DatabaseReference data1 = FirebaseDatabase.getInstance().getReference("FacultyDetails");
+        students st = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
+        data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("json : ",dataSnapshot.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 /*
 Faculties faculties;
