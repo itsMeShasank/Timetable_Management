@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -39,8 +40,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+
 
 
     TabLayout tabLayout;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     static final String filename = "remember";
     TextView textView;
     static int workload = 0;
+    HashMap<String,FacultySearchItems> facultyDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         //toolbar.setNavigationIcon(R.drawable.ic_toolbar);
 
 
+        facultyDetails = new HashMap<>();
         textView = findViewById(R.id.textViewinToolbar);
         textView.setText("");
         //Receive Arguments
@@ -74,13 +79,18 @@ public class MainActivity extends AppCompatActivity {
         if(flag.equalsIgnoreCase("student"))
             toolbar.setTitle("Section : "+val+" TimeTable");
         else{
-            toolbar.setTitle("Faculty ID : "+val);
+
+
+            FacultySearchItems details = getIntent().getParcelableExtra("FacultyDetails");
+            toolbar.setTitle("Faculty ID : "+details.getName());
         }
 
         //arrayLists
         assignValues();
 
-        //GetFacultyDatabase
+        getFacultyIntoHashMap();
+
+       /* //GetFacultyDatabase
         if(flag.equals("faculty")){
             workload = 0;
             GetDatabaseValues(val);
@@ -88,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         //GetStudentDatabase
         if(flag.equals("student"))
-            GetStudentDatabaseValues(val);
+            GetStudentDatabaseValues(val);*/
     }
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
@@ -141,6 +151,36 @@ public class MainActivity extends AppCompatActivity {
         sfridayList = new ArrayList<>();
         ssaturdayList = new ArrayList<>();
 
+    }
+
+    private  void getFacultyIntoHashMap(){
+        FirebaseDatabase.getInstance().getReference().child("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snap:snapshot.getChildren()){
+                    FacultySearchItems child = snap.getValue(FacultySearchItems.class);
+                    facultyDetails.put(snap.getKey(),child);
+                }
+
+                //GetFacultyDatabase
+                if(flag.equals("faculty")){
+                    workload = 0;
+                    GetDatabaseValues(val);
+                }
+
+                //GetStudentDatabase
+                if(flag.equals("student"))
+                    GetStudentDatabaseValues(val);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //new Modules tobe Addes
@@ -231,26 +271,29 @@ public class MainActivity extends AppCompatActivity {
                     if(!snap.getKey().equals("Details")) {
                         for(DataSnapshot snapper:snap.getChildren()){
 
-                            FacultyData data = snapper.getValue(FacultyData.class);
-                            workload++;
-                            if (snap.getKey().equals("Mon")) {
-                                mondayList.add(data);
-                                //Log.e("Data Added", mondayList.toString());
-                            } else if (snap.getKey().equals("Tue")) {
-                                tuesdayList.add(data);
-                                //Log.e("Data Added", tuesdayList.toString());
-                            } else if (snap.getKey().equals("Wed")) {
-                                wednesdayList.add(data);
-                                //Log.e("Data Added", wednesdayList.toString());
-                            } else if (snap.getKey().equals("Thu")) {
-                                thursdayList.add(data);
-                                //Log.e("Data Added", thursdayList.toString());
-                            } else if (snap.getKey().equals("Fri")) {
-                                fridayList.add(data);
-                                //Log.e("Data Added", fridayList.toString());
-                            } else if (snap.getKey().equals("Sat")) {
-                                saturdayList.add(data);
-                                //Log.e("Data Added", saturdayList.toString());
+                            for(DataSnapshot i:snapper.getChildren()){
+                                FacultyData data = i.getValue(FacultyData.class);
+                                data.setName(facultyDetails.get(val).getName());
+                                workload++;
+                                if (snap.getKey().equals("Mon")) {
+                                    mondayList.add(data);
+                                    //Log.e("Data Added", mondayList.toString());
+                                } else if (snap.getKey().equals("Tue")) {
+                                    tuesdayList.add(data);
+                                    //Log.e("Data Added", tuesdayList.toString());
+                                } else if (snap.getKey().equals("Wed")) {
+                                    wednesdayList.add(data);
+                                    //Log.e("Data Added", wednesdayList.toString());
+                                } else if (snap.getKey().equals("Thu")) {
+                                    thursdayList.add(data);
+                                    //Log.e("Data Added", thursdayList.toString());
+                                } else if (snap.getKey().equals("Fri")) {
+                                    fridayList.add(data);
+                                    //Log.e("Data Added", fridayList.toString());
+                                } else if (snap.getKey().equals("Sat")) {
+                                    saturdayList.add(data);
+                                    //Log.e("Data Added", saturdayList.toString());
+                                }
                             }
 
                         }
@@ -368,6 +411,8 @@ public class MainActivity extends AppCompatActivity {
                     if(!snap.getKey().equals("Details")){
                         for(DataSnapshot snapper:snap.getChildren()){
                             StudentData studentData = snapper.getValue(StudentData.class);
+                            if(facultyDetails.containsKey(studentData.faculty))
+                                studentData.setFaculty(facultyDetails.get(studentData.faculty).getName());
                             if(studentData.faculty.equals("not mentioned"))
                                 studentData.faculty = "-";
                             Log.e("Data read",studentData.getSub());

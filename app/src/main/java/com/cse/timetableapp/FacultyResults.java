@@ -58,6 +58,8 @@ public class FacultyResults extends AppCompatActivity {
                 }
             }
         });
+
+        ArrayList<String> idsForSendingNext = getIntent().getStringArrayListExtra("IdsForFaculty");
         ArrayList<FacultySearchItems> results = getIntent().getParcelableArrayListExtra("SearchResults");
 
         FacultySearchResultsAdapter adapter = new FacultySearchResultsAdapter(getApplicationContext(),R.layout.faculty_search_item,
@@ -68,9 +70,11 @@ public class FacultyResults extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FacultySearchItems result = results.get(i);
+                String idToSearch = idsForSendingNext.get(i);
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.putExtra("type","faculty");
-                intent.putExtra("text",result.getName());
+                intent.putExtra("text",idToSearch);
+                intent.putExtra("FacultyDetails",result);
                 startActivity(intent);
             }
         });

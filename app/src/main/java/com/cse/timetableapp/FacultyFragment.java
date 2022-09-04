@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +27,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FacultyFragment extends Fragment {
 
+
+    RadioButton name,id;
     com.google.android.material.button.MaterialButton button;
     com.google.android.material.textfield.TextInputEditText editText;
     com.google.android.material.checkbox.MaterialCheckBox checkBox;
@@ -43,6 +48,8 @@ public class FacultyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root =  inflater.inflate(R.layout.faculty_tab_fragment,container,false);
 
+        name = root.findViewById(R.id.SearchWithName);
+        id = root.findViewById(R.id.SearchingWithID);
         editText = root.findViewById(R.id.FacultyInputText);
         button = root.findViewById(R.id.FacultySubmitButton);
         textView = root.findViewById(R.id.adminLogin);
@@ -90,8 +97,12 @@ public class FacultyFragment extends Fragment {
             @Override
             public void onClick(View view){
                 String check = editText.getText().toString();
-                //callNext(check);
-                searchForMatchingName(check);
+                if(name.isChecked()){
+                    check = check.trim().toLowerCase(Locale.ROOT);
+                    searchForMatchingName(check);
+                }else{
+                    callNext(check);
+                }
             }
         });
         
@@ -108,19 +119,21 @@ public class FacultyFragment extends Fragment {
 
 
     public void searchForMatchingName(String name){
-        FirebaseDatabase.getInstance().getReference("FacultyDetails").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<FacultySearchItems> results = new ArrayList<>();
+                ArrayList<String> searchResults = new ArrayList<>();
                 for(DataSnapshot snap:snapshot.getChildren()){
 
                     String key = snap.getKey();
                     Log.e("snapOchinid",key+"    "+name);
                     if(key.contains(name)){
                         Log.e("Mathced","error");
-                        //FacultyData facultyData = snap.getValue(FacultyData.class);
-                        FacultySearchItems item = new FacultySearchItems(key,key);
-                        results.add(item);
+                        FacultySearchItems facultyData = snap.getValue(FacultySearchItems.class);
+                        //FacultySearchItems item = new FacultySearchItems(key,key);
+                        searchResults.add(snap.getKey());
+                        results.add(facultyData);
                     }
                 }
 
@@ -128,9 +141,31 @@ public class FacultyFragment extends Fragment {
                     Log.e("Name",i.getName());
                 }*/
 
-                if(results.size()>0){
+                if(results.size()==1){
+
+                    SharedPreferences preferences=getActivity().getSharedPreferences(filename,Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("faculty_id",results.get(0).getId());
+                    editor.putString("section","");
+                    editor.apply();
+
+
+
+
+
+
+
+                    Intent intent = new Intent(root.getContext(),MainActivity.class);
+                    intent.putExtra("type","faculty");
+                    intent.putExtra("text",searchResults.get(0));
+                    intent.putExtra("FacultyDetails",results.get(0));
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                else if(results.size()>1){
                     Intent intent = new Intent(getContext(), FacultyResults.class);
                     intent.putParcelableArrayListExtra("SearchResults", results);
+                    intent.putStringArrayListExtra("IdsForFaculty",searchResults);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getActivity(), "No Matching Key Words", Toast.LENGTH_SHORT).show();
@@ -153,7 +188,6 @@ public class FacultyFragment extends Fragment {
             editor.putString("section","");
             editor.apply();
 
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
             String str = "";
             char ch[] = check.toCharArray();
             int flag =0;
@@ -161,6 +195,7 @@ public class FacultyFragment extends Fragment {
                 flag++;
             str = new String(ch,flag,ch.length-flag);
 
+           /* DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
             Query checkData = databaseReference.child(str);
             checkData.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -181,6 +216,56 @@ public class FacultyFragment extends Fragment {
                         Toast.makeText(root.getContext(), "Check Input!!!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });*/
+
+
+
+            FirebaseDatabase.getInstance().getReference("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String str = "";
+                    char ch[] = check.toCharArray();
+                    int flag =0;
+                    while(ch[flag]=='0')
+                        flag++;
+                    str = new String(ch,flag,ch.length-flag);
+                    for(DataSnapshot snap:snapshot.getChildren()){
+                        FacultySearchItems facultyData = snap.getValue(FacultySearchItems.class);
+                        String key = facultyData.getId();
+                        Log.e("snapOchinid",key+"    "+name);
+                        if(key.equalsIgnoreCase(str)){
+                            Log.e("Mathced","error");
+
+                            if(checkBox.isChecked()){
+                                SharedPreferences preferences = getActivity().getSharedPreferences(filename, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("remember","true");
+                                editor.apply();
+                                Toast.makeText(getContext(), "Login Saved", Toast.LENGTH_SHORT).show();
+                            }
+
+                            Intent intent = new Intent(getContext(),MainActivity.class);
+                            intent.putExtra("type","faculty");
+                            intent.putExtra("text",snap.getKey());
+                            intent.putExtra("FacultyDetails",facultyData);
+                            startActivity(intent);
+
+
+
+                        }
+                    }
+
+                /*for(FacultySearchItems i:results){
+                    Log.e("Name",i.getName());
+                }*/
+                }
+
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {

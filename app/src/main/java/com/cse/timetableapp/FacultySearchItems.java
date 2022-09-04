@@ -3,22 +3,26 @@ package com.cse.timetableapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class FacultySearchItems implements Parcelable {
 
     private String name,id;
-
+    private ArrayList<String> list;
 
     public FacultySearchItems() {
     }
 
-    public FacultySearchItems(String name, String id) {
+    public FacultySearchItems(String name, String id, ArrayList<String> list) {
         this.name = name;
         this.id = id;
+        this.list = list;
     }
 
     protected FacultySearchItems(Parcel in) {
         name = in.readString();
         id = in.readString();
+        list = in.createStringArrayList();
     }
 
     public static final Creator<FacultySearchItems> CREATOR = new Creator<FacultySearchItems>() {
@@ -49,6 +53,14 @@ public class FacultySearchItems implements Parcelable {
         this.id = id;
     }
 
+    public ArrayList<String> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<String> list) {
+        this.list = list;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -58,5 +70,6 @@ public class FacultySearchItems implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(id);
+        parcel.writeStringList(list);
     }
 }

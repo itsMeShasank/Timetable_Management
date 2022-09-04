@@ -25,6 +25,30 @@
         android:nextFocusForward="@+id/FacultySubmitButton"
         />
 
+
+    <RadioGroup
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/SearchWithName"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/SearchWithName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search With Name"/>
+        <RadioButton
+            android:id="@+id/SearchingWithID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search With Id"/>
+
+
+    </RadioGroup>
+
     <com.google.android.material.checkbox.MaterialCheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
