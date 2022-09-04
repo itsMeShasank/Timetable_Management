@@ -83,6 +83,7 @@
         <item>Select a Section</item>
         <item>II</item>
         <item>III</item>
+        <item>IV</item>
     </string-array>
     <string-array name="secondYearsSubject">
         <item>"Select a Subject</item>
@@ -113,6 +114,14 @@
         <item>IDP</item>
         <item>CN</item>
         <item>CN LAB</item>
+    </string-array>
+
+
+    <string-array name="fourthYearsSubject">
+        <item>"Select a Subject</item>
+        <item>CC</item>
+        <item>BDA</item>
+        <item>ML</item>
     </string-array>
     <string-array name="Subjects">
         <item>Subject</item>

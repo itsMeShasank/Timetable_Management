@@ -64,6 +64,14 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
+
+                    if(year_spinnner.getSelectedItem().toString().equals("IV")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.fourthYearsSubject, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+
                 }
 
                 @Override
@@ -97,14 +105,24 @@ public class SubjectFacultyDealing extends AppCompatActivity {
 
     public void getDataFromFirebase(String str){
         subjectFaculties.clear();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDealing");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
                 for (DataSnapshot snap : snapshot.getChildren()) {
+                    FacultySearchItems item = snap.getValue(FacultySearchItems.class);
+                    if(item.getList() != null){
+                        for (String i : item.getList()) {
+                            if (i.contains(str)) {
+                                subjectFaculties.add(new SubjectFaculty(item.getId(), item.getName(), i));
+                            }
+                        }
+                    }
 
-                        DataSnapshot s = snap.child("Details");
+
+
+                        /*DataSnapshot s = snap.child("Details");
                             FacultyDetails facultyDetails = null;
                             if (s.exists()) {
                                 facultyDetails = s.getValue(FacultyDetails.class);
@@ -116,7 +134,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                                             subjectFaculties.add(new SubjectFaculty(facultyDetails.getId(), facultyDetails.getName(), section));
                                         }
                                     }
-                            }
+                            }*/
 
 
                 }
