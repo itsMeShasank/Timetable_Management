@@ -29,6 +29,13 @@
         android:text="browse" />
 
 
+    <Button
+        android:layout_margin="40dp"
+        android:id="@+id/details_dummy_object"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="DUMMY" />
 
 
 </LinearLayout>

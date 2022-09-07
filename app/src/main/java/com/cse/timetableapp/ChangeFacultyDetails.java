@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +38,7 @@ import jxl.read.biff.BiffException;
 
 public class ChangeFacultyDetails extends AppCompatActivity {
 
-    Button button;
+    Button button,dummy_button;
     String extension="";
     HashMap<String,FacultyDetailsObject> facultydetails;
     @Override
@@ -52,7 +53,7 @@ public class ChangeFacultyDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap:snapshot.getChildren()){
                     Log.e("CURRENT",snap.getKey());
-                    FacultyDetailsObject facultyDetailsObject= snap.getValue(FacultyDetailsObject.class);
+                    FacultyDetailsObject facultyDetailsObject = snap.getValue(FacultyDetailsObject.class);
                     if(!(facultyDetailsObject.list == null))
                         facultydetails.put(snap.getKey(),facultyDetailsObject);
                 }
@@ -82,6 +83,14 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
             }
         });
+
+        dummy_button = findViewById(R.id.details_dummy_object);
+        dummy_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDetailsOfFaculty();
+            }
+        });
     }
 
     private void printchesichupi() {
@@ -93,6 +102,173 @@ public class ChangeFacultyDetails extends AppCompatActivity {
             else
                 Log.e(facultyDetailsObject.name,facultyDetailsObject.list.toString());
         }
+
+
+
+
+
+
+
+        Log.e("Fire Base Data","Done Retreiving Data");
+
+
+
+
+
+
+    }
+
+
+    private  void changeDetailsOfFaculty(){
+
+        //Firebase Data in FacultyDetails
+        //Current Loaded Details in NamesMap
+        HashMap<String, ArrayList<String>> namesmap = MyApplication.namesmap;
+        /*System.out.println("******************* NAMESMAP *************");
+        for(String name:namesmap.keySet()){
+            System.out.print("--------------"+name+"-------------     :");
+            ArrayList<String> currentSubs = namesmap.get(name);
+            for(String sub:currentSubs){
+                System.out.print(sub);
+
+            }
+            System.out.println();
+        }
+        System.out.println("********************************************************************************");
+        for(String name:facultydetails.keySet()){
+            System.out.print("--------------"+name+"-------------     :");
+            ArrayList<String> currentSubs = facultydetails.get(name).list;
+            for(String sub:currentSubs){
+                System.out.print(sub);
+
+            }
+            System.out.println();
+
+        }
+        System.out.println("********************************************************************************");*/
+
+        for(String name:facultydetails.keySet()){
+
+
+            FirebaseDatabase.getInstance().getReference().child("FacultyDetails").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+
+                    ArrayList<String> valuesToRemove = new ArrayList<>();
+                    ArrayList<String> finalSubs = new ArrayList<>();
+
+                    String FirebaseYear = MyApplication.FirebaseYear;
+                    System.out.println("--------------"+name+"-------------     :");
+
+
+                    ArrayList<String> databaseSubs = facultydetails.get(name).list;
+                    String currentYear = MyApplication.currentYear;
+                    finalSubs = (ArrayList<String>) databaseSubs.clone();
+                    if(namesmap.containsKey(name)){
+                        ArrayList<String> currentSubs = namesmap.get(name);
+
+                        System.out.print("Database :     ");
+                        for(String sub:databaseSubs)
+                            if(sub.startsWith(currentYear))
+                                System.out.print(sub+" ;");
+                        System.out.println();
+               /* for(String sub:currentSubs)
+                    if(sub.startsWith(currentYear))
+                        System.out.print(sub+" ;");
+                System.out.println();*/
+                        ArrayList<String> subs = new ArrayList<>();
+
+                        ArrayList<String> dummy = namesmap.get(name);
+                        if(dummy != null){
+                            for (String str : dummy)
+                                subs.add(str);
+                        }
+                        if(facultydetails.containsKey(name)){
+                            ArrayList<String> subsDealing = facultydetails.get(name).list;
+                            if(subsDealing !=null) {
+                                for (String str : subsDealing)
+                                    if(!subs.contains(str))
+                                        subs.add(str);
+                            }
+                        }
+                        System.out.print("Current File : ");
+                        for(String sub:currentSubs)
+                            if(sub.startsWith(currentYear))
+                                System.out.print(sub+" ;");
+                        System.out.println();
+
+                        for(String str:databaseSubs){
+                            if(str.startsWith(currentYear)){
+                                if(!currentSubs.contains(str)){
+                                    subs.remove(str);
+                                    valuesToRemove.add(str);
+                                }
+                            }
+                        }
+
+                        System.out.print("All Merged :   ");
+                        for(String sub:subs)
+                            if(sub.startsWith(currentYear))
+                                System.out.print(sub+" ;");
+                        System.out.println();
+
+                        finalSubs = (ArrayList<String>) subs.clone();
+
+                    }else{
+                        System.out.print("Ivi Complete ga poyayi  ");
+                        for(String sub:databaseSubs) {
+                            if (sub.startsWith(currentYear)) {
+                                System.out.print(sub + " ;");
+                                valuesToRemove.add(sub);
+                                finalSubs.remove(sub);
+                                //sub
+                            }
+                        }
+                        System.out.println();
+                    }
+
+                    for(String str:valuesToRemove){
+                        for(DataSnapshot snap:snapshot.getChildren()){
+                            for(DataSnapshot i:snap.getChildren()){
+                                String key = i.getKey();
+                                if(key.equals(FirebaseYear)){
+                                    for(DataSnapshot j:i.getChildren()){
+                                        FacultyData data = j.getValue(FacultyData.class);
+                                        str = str.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
+                                        String compare = data.getSectionId()+","+data.getShortVal();
+                                        compare = compare.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
+                                        if(str.equalsIgnoreCase(compare)){
+                                            System.out.println("Update at "+name+" "+i.getKey()+" "+j.getKey()+" ");
+                                            FirebaseDatabase.getInstance().getReference("FacultyDetails").child(name)
+                                                    .child(snap.getKey()).child(i.getKey()).child(j.getKey()).removeValue();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    FirebaseDatabase.getInstance().getReference("FacultyDealing").child(name).child("list").setValue(finalSubs);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+
+
+        }
+
+
+
+
     }
 
     private void askPermissionAndBrowseFile()  {
@@ -220,6 +396,8 @@ public class ChangeFacultyDetails extends AppCompatActivity {
         }
 
         HashMap<String,ArrayList<String>> namesmap = MyApplication.namesmap;
+
+
         for(int i=0;i<facultyDetails.size();i+=2){
             String id = facultyDetails.get(i);
             String name = facultyDetails.get(i+1);
@@ -242,8 +420,14 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                             subs.add(str);
                 }
             }
+
+
+            /* Firebase Calling Function*/
+
+            /*
             FacultyDetailsObject obj = new FacultyDetailsObject(name,id,subs);
             FirebaseDatabase.getInstance().getReference().child("FacultyDealing").child(keyVal).setValue(obj);
+            */
         }
 
     }

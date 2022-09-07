@@ -81,6 +81,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 year = spinner.getSelectedItem().toString();
                 siddhu = spinner.getSelectedItem().toString();
+                MyApplication.FirebaseYear = year;
             }
 
             @Override
@@ -230,6 +231,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             days.add(x);
         String curSec="None";
         String year=siddhu.substring(0,siddhu.indexOf(" "));
+        MyApplication.currentYear = year;
         String Rooms ="None";
         Log.e("Checking Heading Name",year+" "+siddhu);
         MyApplication.namesmap.clear();
@@ -445,7 +447,11 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             Log.e(name,subjects.get(name)+" ");
         }
         MyApplication.namesmap = namesmap;
-        faculty(entireList, entireroomsList.get(0), subjects);
+
+        /*    Firebase Calling Functions    */
+
+
+        //faculty(entireList, entireroomsList.get(0), subjects);
         //student(entireList,entireroomsList.get(0),subjects);
 
     }
