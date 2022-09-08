@@ -53,20 +53,55 @@ public class SubjectFacultyDealing extends AppCompatActivity {
             year_spinnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(year_spinnner.getSelectedItem().toString().equals("III")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("II")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.Subjects, android.R.layout.simple_spinner_item);
+                                R.array.SecondYearCSE, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
-                    if(year_spinnner.getSelectedItem().toString().equals("II")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("II - AIML")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.secondYearsSubject, android.R.layout.simple_spinner_item);
+                                R.array.SecondYearAIMLCSE, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
-
-                    if(year_spinnner.getSelectedItem().toString().equals("IV")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("II - CS")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.SecondYearCSCSE, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("II - CSBS")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.SecondYearCSBSCSE, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("III")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.ThirdYearCSE, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("III - AIML")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.ThirdYearAIMLCSE, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("III - CS")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.ThirdYearCSCSE, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("III - CSBS")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.ThirdYearCSBSCSE, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner.setAdapter(adapter);
+                    }
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("IV")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.fourthYearsSubject, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -84,7 +119,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    String str = spinner.getSelectedItem().toString();
+                    String str = spinner.getSelectedItem().toString().trim();
                     if (!str.equals("Subject")) {
                         subjectFaculties.clear();
                         getDataFromFirebase(str);
@@ -109,6 +144,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         loadingDialog.load();
         subjectFaculties.clear();
+        String current_selected = year_spinnner.getSelectedItem().toString().trim();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDealing");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

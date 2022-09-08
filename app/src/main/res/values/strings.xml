@@ -76,9 +76,156 @@
     <string-array name="years">
         <item>Select a Section</item>
         <item>II</item>
+        <item>II - AIML</item>
+        <item>II - CS</item>
+        <item>II - CSBS</item>
         <item>III</item>
+        <item>III - AIML</item>
+        <item>III - CS</item>
+        <item>III - CSBS</item>
         <item>IV</item>
     </string-array>
+
+    <string-array name="SecondYearCSE">
+        <item>Select a Subject</item>
+        <item>OOPS</item>
+        <item>DBMS</item>
+        <item>DS</item>
+        <item>PP</item>
+        <item>P&amp;S</item>
+        <item>ES</item>
+        <item>DS (P)</item>
+        <item>DS (T)</item>
+        <item>DBMS (P)</item>
+        <item>DBMS (T)</item>
+        <item>OOPS (P)</item>
+        <item>PP (P)</item>
+        <item>MS</item>
+    </string-array>
+
+
+    <string-array name="SecondYearAIMLCSE">
+        <item>Select a Subject</item>
+        <item>OOPS</item>
+        <item>DBMS</item>
+        <item>DS</item>
+        <item>AI</item>
+        <item>DLD</item>
+        <item>ES</item>
+        <item>OOPS (P)</item>
+        <item>DBMS (P)</item>
+        <item>DBMS (T)</item>
+        <item>DS (P)</item>
+        <item>DS (T)</item>
+        <item>AI (P)</item>
+        <item>AI (T)</item>
+        <item>MS</item>
+    </string-array>
+
+    <string-array name="SecondYearCSCSE">
+        <item>Select a Subject</item>
+        <item>OOPS</item>
+        <item>DBMS</item>
+        <item>DS</item>
+        <item>IPP</item>
+        <item>DLDCO</item>
+        <item>ES</item>
+        <item>OOPS (P)</item>
+        <item>DBMS (P)</item>
+        <item>DBMS (T)</item>
+        <item>DLDCO (T)</item>
+        <item>DS (P)</item>
+        <item>DS (T)</item>
+        <item>IPP (P)</item>
+        <item>IPP (T)</item>
+        <item>MS</item>
+    </string-array>
+
+
+    <string-array name="SecondYearCSBSCSE">
+        <item>Select a Subject</item>
+        <item>OOPS Using C++ </item>
+        <item>SE</item>
+        <item>CS</item>
+        <item>FLAT</item>
+        <item>Technical Seminor </item>
+        <item>ES</item>
+        <item>OOPS Using C++ (P)</item>
+        <item>SE (P)</item>
+        <item>CS (P)</item>
+        <item>COA</item>
+        <item>IDP</item>
+        <item>DS (T)</item>
+        <item>IPP (P)</item>
+        <item>IPP (T)</item>
+        <item>MS</item>
+    </string-array>
+
+
+    <string-array name="ThirdYearCSE">
+        <item>Select a Subject</item>
+        <item>DMT</item>
+        <item>CN</item>
+        <item>SE</item>
+        <item>OS</item>
+        <item>NPTEL</item>
+        <item>Employability Skills </item>
+        <item>SE Lab</item>
+        <item>SS Lab</item>
+        <item>DMT Lab</item>
+        <item>CN Lab</item>
+        <item>OS Lab</item>
+        <item>IDP</item>
+    </string-array>
+
+    <string-array name="ThirdYearCSCSE">
+        <item>Select a Subject</item>
+        <item>SE</item>
+        <item>NS</item>
+        <item>WN</item>
+        <item>CSL</item>
+        <item>NPTEL</item>
+        <item>Employability Skills </item>
+        <item>SE Lab</item>
+        <item>NS Lab</item>
+        <item>WN Lab</item>
+        <item>SS Lab</item>
+        <item>IDP</item>
+    </string-array>
+
+    <string-array name="ThirdYearAIMLCSE">
+        <item>Select a Subject</item>
+        <item>CN</item>
+        <item>DL</item>
+        <item>ADS</item>
+        <item>OS</item>
+        <item>NPTEL</item>
+        <item>Employability Skills </item>
+        <item>CN Lab</item>
+        <item>DL Lab</item>
+        <item>ADS Lab</item>
+        <item>SS Lab</item>
+        <item>IDP</item>
+    </string-array>
+
+    <string-array name="ThirdYearCSBSCSE">
+        <item>Select a Subject</item>
+        <item>ML</item>
+        <item>DT</item>
+        <item>CD</item>
+        <item>MRMM</item>
+        <item>BCVS</item>
+        <item>Employability Skills </item>
+        <item>ML Lab</item>
+        <item>DT Lab</item>
+        <item>BS</item>
+        <item>ITK</item>
+        <item>IDP</item>
+    </string-array>
+
+
+
+
     <string-array name="secondYearsSubject">
         <item>"Select a Subject</item>
         <item>OR</item>
@@ -116,6 +263,8 @@
         <item>CC</item>
         <item>BDA</item>
         <item>ML</item>
+        <item>CC Lab</item>
+        <item>BDA Lab</item>
     </string-array>
     <string-array name="Subjects">
         <item>Subject</item>
