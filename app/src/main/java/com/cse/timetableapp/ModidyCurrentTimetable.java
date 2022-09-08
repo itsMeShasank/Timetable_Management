@@ -176,13 +176,19 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             while (true) {
                 try {
                     if (!((len = in.read(buffer)) != -1)) break;
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    loadingDialog.dismisss();
+                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+                    m.customDialog(e.getMessage());
                 }
                 try {
                     out.write(buffer, 0, len);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    loadingDialog.dismisss();
+                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+                    m.customDialog(e.getMessage());
                 }
             }
             // Contents are copied!
@@ -190,20 +196,29 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 getdata();
             } catch (Exception e) {
                 e.printStackTrace();
+                loadingDialog.dismisss();
+                ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+                m.customDialog(e.getMessage());
             }
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    loadingDialog.dismisss();
+                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+                    m.customDialog(e.getMessage());
                 }
             }
             if (out != null){
                 try {
                     out.close();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    loadingDialog.dismisss();
+                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+                    m.customDialog(e.getMessage());
                 }
             }
         }
