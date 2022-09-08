@@ -266,7 +266,18 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     public  void getdata() throws BiffException, IOException {
 
 
-        Map<Integer,List<String>>sheet=readJExcel(Environment.getExternalStorageDirectory().toString()+"/TimeTable/data"+extension, year);
+        Map<Integer,List<String>>sheet= null;
+        try {
+            sheet = readJExcel(Environment.getExternalStorageDirectory().toString()+"/TimeTable/data"+extension, year);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        } catch (BiffException e) {
+            e.printStackTrace();
+            return;
+        }
+
+
         Set<String> days=new HashSet<String>();
         for(String x:new String[]{"Mon","Tue","Wed","Thu","Fri","Sat"})
             days.add(x);
