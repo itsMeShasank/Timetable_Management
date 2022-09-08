@@ -25,7 +25,8 @@ public class AdminActivity extends AppCompatActivity {
 
     Spinner periods,days;
     String selected_period,selected_day;
-    Button free_periods,free_faculty,faculty_workload,subject_faculty,changetimetable,change_faculty_details;
+    Button free_periods,free_faculty;
+    androidx.cardview.widget.CardView faculty_workload,subject_faculty,changetimetable,change_faculty_details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,22 +34,9 @@ public class AdminActivity extends AppCompatActivity {
 
 
 
-        change_faculty_details = findViewById(R.id.change_faculty_details);
-        change_faculty_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    startActivity(new Intent(getApplicationContext(),ChangeFacultyDetails.class));
-            }
-        });
 
-        subject_faculty = findViewById(R.id.subject_faculty);
-        subject_faculty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),SubjectFacultyDealing.class));
-                finish();
-            }
-        });
+
+
 
         selected_period = "";
         periods = findViewById(R.id.spinner_period);
@@ -131,6 +119,10 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         faculty_workload=findViewById(R.id.faculty_workload);
         faculty_workload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +130,17 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), FacultyWorkload.class));
             }
         });
+
+        subject_faculty = findViewById(R.id.subject_faculty);
+        subject_faculty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),SubjectFacultyDealing.class));
+                finish();
+            }
+        });
+
+
         changetimetable = findViewById(R.id.change_timetable);
         changetimetable.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +160,15 @@ public class AdminActivity extends AppCompatActivity {
                 finish();
 
 
+            }
+        });
+
+
+        change_faculty_details = findViewById(R.id.change_faculty_details);
+        change_faculty_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ChangeFacultyDetails.class));
             }
         });
 
