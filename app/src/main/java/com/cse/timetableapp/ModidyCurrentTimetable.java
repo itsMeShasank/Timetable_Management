@@ -189,6 +189,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     loadingDialog.dismisss();
                     ModidyCurrentTimetable m = new ModidyCurrentTimetable();
                     m.customDialog(e.getMessage());
+                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+                    m.customDialog(e.getMessage());
                 }
             }
             // Contents are copied!
