@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             FacultySearchItems details = getIntent().getParcelableExtra("FacultyDetails");
-            toolbar.setTitle("Faculty ID : "+details.getName());
+            toolbar.setTitle("Name : "+details.getName());
         }
 
         //arrayLists
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences preferences = getApplication().getSharedPreferences(filename, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("remember","false");
+                editor.putString("section","");
                 editor.apply();
                 Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(),StartUpActivity.class));

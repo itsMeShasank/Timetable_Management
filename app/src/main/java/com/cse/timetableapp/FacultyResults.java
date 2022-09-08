@@ -71,6 +71,18 @@ public class FacultyResults extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FacultySearchItems result = results.get(i);
                 String idToSearch = idsForSendingNext.get(i);
+
+
+
+                if(checkBox.isChecked()){
+                    SharedPreferences preferences = FacultyResults.this.getSharedPreferences(filename, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("faculty_id", results.get(i).getId());
+                    editor.putString("type", "name");
+                    editor.putString("section", "");
+                    editor.putString("isFacultySaved","yes");
+                    editor.apply();
+                }
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.putExtra("type","faculty");
                 intent.putExtra("text",idToSearch);

@@ -34,6 +34,7 @@ import java.util.Locale;
 public class FacultyFragment extends Fragment {
 
 
+    LoadingDialog loadingDialog;
     RadioButton name,id;
     com.google.android.material.button.MaterialButton button;
     com.google.android.material.textfield.TextInputEditText editText;
@@ -48,6 +49,7 @@ public class FacultyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root =  inflater.inflate(R.layout.faculty_tab_fragment,container,false);
 
+        loadingDialog = new LoadingDialog(getActivity());
         name = root.findViewById(R.id.SearchWithName);
         id = root.findViewById(R.id.SearchingWithID);
         editText = root.findViewById(R.id.FacultyInputText);
@@ -61,8 +63,18 @@ public class FacultyFragment extends Fragment {
         if(check.equalsIgnoreCase("true")){
 
             faculty_id =preferences.getString("faculty_id","").toString();
-            if(!faculty_id.equals(""))
-                callNext(faculty_id);
+            System.out.println("Saved   "+faculty_id);
+            if(!faculty_id.equals("")){
+                System.out.println(faculty_id);
+                loadingDialog.load();
+                String type = preferences.getString("type","").toString();
+                System.out.println(type);
+                if(type.equals("name"))
+                    searchForMatchingName(faculty_id);
+                else
+                    callNext(faculty_id);
+
+            }
 
 
         }else if(!check.equalsIgnoreCase("true")){
@@ -96,7 +108,8 @@ public class FacultyFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                String check = editText.getText().toString();
+                String check = editText.getText().toString().trim();
+                loadingDialog.load();
                 if(name.isChecked()){
                     check = check.trim().toLowerCase(Locale.ROOT);
                     searchForMatchingName(check);
@@ -143,31 +156,33 @@ public class FacultyFragment extends Fragment {
 
                 if(results.size()==1){
 
-                    SharedPreferences preferences=getActivity().getSharedPreferences(filename,Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("faculty_id",results.get(0).getId());
-                    editor.putString("section","");
-                    editor.apply();
+                    if(checkBox.isChecked()){
+                        SharedPreferences preferences = getActivity().getSharedPreferences(filename, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("faculty_id", searchResults.get(0));
+                        editor.putString("type", "name");
+                        editor.putString("section", "");
+                        editor.putString("isFacultySaved","yes");
+                        editor.apply();
+                    }
 
-
-
-
-
-
-
+                    loadingDialog.dismisss();
                     Intent intent = new Intent(root.getContext(),MainActivity.class);
                     intent.putExtra("type","faculty");
                     intent.putExtra("text",searchResults.get(0));
                     intent.putExtra("FacultyDetails",results.get(0));
                     startActivity(intent);
                     getActivity().finish();
+
                 }
                 else if(results.size()>1){
+                    loadingDialog.dismisss();
                     Intent intent = new Intent(getContext(), FacultyResults.class);
                     intent.putParcelableArrayListExtra("SearchResults", results);
                     intent.putStringArrayListExtra("IdsForFaculty",searchResults);
                     startActivity(intent);
                 }else{
+                    loadingDialog.dismisss();
                     Toast.makeText(getActivity(), "No Matching Key Words", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -246,10 +261,13 @@ public class FacultyFragment extends Fragment {
                                 SharedPreferences preferences = getActivity().getSharedPreferences(filename, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.putString("remember","true");
+                                editor.putString("type","id");
+                                editor.putString("isFacultySaved","yes");
                                 editor.apply();
                                 Toast.makeText(getContext(), "Login Saved", Toast.LENGTH_SHORT).show();
                             }
 
+                            loadingDialog.dismisss();
                             Intent intent = new Intent(getContext(),MainActivity.class);
                             intent.putExtra("type","faculty");
                             intent.putExtra("text",snap.getKey());

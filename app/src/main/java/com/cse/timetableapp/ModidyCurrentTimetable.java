@@ -2,9 +2,11 @@ package com.cse.timetableapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -210,26 +212,60 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
     public static Map<Integer, List<String>> readJExcel(String fileLocation,String sheetname)
             throws IOException, BiffException {
-
         Map<Integer, List<String>> data = new HashMap<>();
+        try {
 
-        Workbook workbook = Workbook.getWorkbook(new File(fileLocation));
-        Sheet sheet = workbook.getSheet(sheetname);
-        int rows = sheet.getRows();
-        int columns = sheet.getColumns();
 
-        for (int i = 0; i < rows; i++) {
-            data.put(i, new ArrayList<String>());
-            for (int j = 0; j < columns; j++) {
-                data.get(i)
-                        .add(sheet.getCell(j, i)
-                                .getContents());
+            Workbook workbook = Workbook.getWorkbook(new File(fileLocation));
+            Sheet sheet = workbook.getSheet(sheetname);
+            int rows = sheet.getRows();
+            int columns = sheet.getColumns();
+
+            for (int i = 0; i < rows; i++) {
+                data.put(i, new ArrayList<String>());
+                for (int j = 0; j < columns; j++) {
+                    data.get(i)
+                            .add(sheet.getCell(j, i)
+                                    .getContents());
+                }
             }
+
+        } catch (jxl.read.biff.BiffException e) {
+            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+            m.customDialog("Excel Sheet Format Check");
+        } catch(java.util.NoSuchElementException e) {
+            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+            m.customDialog("Remove Image And University Name");
+        }catch(java.lang.NullPointerException e){
+            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+            m.customDialog("Please Select Correct Sheet Name");
+        }catch(Exception e){
+            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
+            m.customDialog("Verify Excel Sheet");
         }
+
         return data;
     }
 
+
+    private void customDialog(String Message) {
+
+        AlertDialog.Builder alertDialog =  new AlertDialog.Builder(ModidyCurrentTimetable.this);
+        alertDialog.setMessage("Error!!    "+Message)
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        alertDialog.show();
+    }
+
+
     public  void getdata() throws BiffException, IOException {
+
+
         Map<Integer,List<String>>sheet=readJExcel(Environment.getExternalStorageDirectory().toString()+"/TimeTable/data"+extension, year);
         Set<String> days=new HashSet<String>();
         for(String x:new String[]{"Mon","Tue","Wed","Thu","Fri","Sat"})

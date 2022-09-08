@@ -63,6 +63,7 @@ public class StudentFragment extends Fragment {
                     SharedPreferences preferences = getActivity().getSharedPreferences(filename, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("remember","true");
+                    editor.putString("isFacultySaved","no");
                     editor.apply();
                     Toast.makeText(getContext(), "Login Saved", Toast.LENGTH_SHORT).show();
 

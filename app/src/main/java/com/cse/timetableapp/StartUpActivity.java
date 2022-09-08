@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -21,7 +22,8 @@ public class StartUpActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     MyViewPager myViewPager;
-
+    SharedPreferences preferences;
+    static final String filename = "remember";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +50,27 @@ public class StartUpActivity extends AppCompatActivity {
         FacultyFragment facultyFragment = new FacultyFragment();
         myViewPager.AddFragment(facultyFragment,"Faculty");
 
+        String checkingFaculty = "";
+
+        preferences = StartUpActivity.this.getSharedPreferences(filename, Context.MODE_PRIVATE);
+        String check = preferences.getString("remember","");
+        if(check.equalsIgnoreCase("true")){
+
+            checkingFaculty =preferences.getString("isFacultySaved","").toString();
+
+
+
+        }
+
+
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         viewPager.setAdapter(myViewPager);
         tabLayout.setupWithViewPager(viewPager);
-
+        if(checkingFaculty.equals("yes")){
+            TabLayout.Tab tab = tabLayout.getTabAt(3);
+            tab.select();
+        }
 
     }
 
