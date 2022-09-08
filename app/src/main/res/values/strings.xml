@@ -76,11 +76,11 @@
     <string-array name="years">
         <item>Select a Section</item>
         <item>II</item>
-        <item>II - AIML</item>
+        <item>II - AI&amp;ML</item>
         <item>II - CS</item>
         <item>II - CSBS</item>
         <item>III</item>
-        <item>III - AIML</item>
+        <item>III - AI&amp;ML</item>
         <item>III - CS</item>
         <item>III - CSBS</item>
         <item>IV</item>

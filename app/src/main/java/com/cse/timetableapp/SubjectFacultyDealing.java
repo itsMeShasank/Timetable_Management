@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SubjectFacultyDealing extends AppCompatActivity {
@@ -59,7 +62,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
-                    if(year_spinnner.getSelectedItem().toString().trim().equals("II - AIML")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("II - AI&ML")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.SecondYearAIMLCSE, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -83,7 +86,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
-                    if(year_spinnner.getSelectedItem().toString().trim().equals("III - AIML")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("III - AI&ML")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.ThirdYearAIMLCSE, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -154,9 +157,17 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                     FacultySearchItems item = snap.getValue(FacultySearchItems.class);
                     if(item.getList() != null){
                         for (String i : item.getList()) {
-                            if (i.contains(str)) {
-                                subjectFaculties.add(new SubjectFaculty(item.getId(), item.getName(), i));
-                            }
+                            String strs[] = i.split(",");
+                            String check = strs[1];
+                            check = check.trim();
+
+                            String currentSection = strs[0].substring(0,strs[0].lastIndexOf("-")).trim();
+                            String toPrint =  strs[0].substring(strs[0].lastIndexOf("-")+1).trim();
+                            Log.e("Faculty",item.getName());
+                            Log.e("current_slectec",current_selected);
+                            Log.e("Curret_Section",currentSection);
+                            if(str.equalsIgnoreCase(check) && (currentSection.compareTo(current_selected)==0))
+                                subjectFaculties.add(new SubjectFaculty(item.getId(),item.getName(),toPrint));
                         }
                     }
 
@@ -179,6 +190,15 @@ public class SubjectFacultyDealing extends AppCompatActivity {
 
                 }
 
+                Collections.sort(subjectFaculties, new Comparator<SubjectFaculty>() {
+                    @Override
+                    public int compare(SubjectFaculty i, SubjectFaculty j) {
+                        if(i.section.compareTo(j.section) > 0)
+                            return 1;
+                        else
+                            return -1;
+                    }
+                });
 
                 SubjectFacultyAdapter subjectFacultyAdapter = new SubjectFacultyAdapter(getApplicationContext(),R.layout.subjectfacultyitem,subjectFaculties);
                 listView.setAdapter(subjectFacultyAdapter);
