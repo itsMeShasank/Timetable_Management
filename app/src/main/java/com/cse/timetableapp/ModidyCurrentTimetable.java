@@ -47,6 +47,7 @@ import jxl.read.biff.BiffException;
 public class ModidyCurrentTimetable extends AppCompatActivity {
 
 
+    HashMap<String,ArrayList> subjects = new HashMap<>();
     LoadingDialog loadingDialog;
     Button button,save,cancel;
     public String year = "Select Year";
@@ -241,7 +242,6 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         MyApplication.namesmap.clear();
         List<String>roomsList = new ArrayList<>();
         List<String>entireList = new ArrayList<>();
-        HashMap<String,ArrayList> subjects = new HashMap<>();
         HashMap<String,ArrayList<String>> namesmap = new HashMap<>();
         List<List>entireroomsList = new ArrayList<>();
         for(Integer x :sheet.keySet())
@@ -570,27 +570,35 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             }
 
             private void save() {
-                // && faculty!=null p&s issue not assigned faculty
-                Log.e("save method","vachaa");
-                if(periodnumber<8 && !subject.contains("Sat") && !faculty.equals("")) {
+                if(periodnumber<8) {
                     saveFaculties saveFaculties = new saveFaculties(prsntday, faculty, section, room, subject, timing, periodnumber);
                     String name = saveFaculties.getName();
-                    String result = name.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
+                    String result = name.replaceAll("[-+.^:,]","");
                     databaseReference.child(result).child(prsntday).child(year).child(timing).setValue(saveFaculties).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
-                                DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
-                                students newstudent = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
-                                studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
-                                System.out.println("faculty ki eyna theruvathae student changed");
+                                String key = section+","+subject;
+                                ArrayList<String> faculties = subjects.get(key.trim());
+                                if(faculties.size()>=2) {
+                                    System.out.println(periodnumber+", "+faculties.get(0)+", "+section+", "+prsntday+", "+subject+", "+room+", "+timing);
+                                    DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
+                                    students newstudent = new students(periodnumber,faculties.get(0),section,prsntday,subject,room,timing);
+                                    studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
+                                    Log.e("lab data : ","saved");
+                                }
+                                else {
+                                    System.out.println(periodnumber+", "+faculty+", "+section+", "+prsntday+", "+subject+", "+room+", "+timing);
+                                    DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
+                                    students newstudent = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
+                                    studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
+                                    Log.e("non lab data : ","saved");
+                                }
+
                             }
                         }
                     });
                     //System.out.println("save cheystaaa poo");
-                }
-                else {
-                    Log.e("else ","pawr");
                 }
             }
 
