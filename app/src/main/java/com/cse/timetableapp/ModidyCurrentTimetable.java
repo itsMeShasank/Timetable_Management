@@ -179,8 +179,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     loadingDialog.dismisss();
-                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-                    m.customDialog(e.getMessage());
+                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
                 try {
                     out.write(buffer, 0, len);
@@ -189,8 +188,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     loadingDialog.dismisss();
                    /* ModidyCurrentTimetable m = new ModidyCurrentTimetable();
                     m.customDialog(e.getMessage());*/
-                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-                    m.customDialog(e.getMessage());
+                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
             }
             // Contents are copied!
@@ -199,8 +197,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 loadingDialog.dismisss();
-                ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-                m.customDialog(e.getMessage());
+                Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
             }
         } finally {
             if (in != null) {
@@ -209,8 +206,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     loadingDialog.dismisss();
-                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-                    m.customDialog(e.getMessage());
+                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
             }
             if (out != null){
@@ -219,8 +215,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     loadingDialog.dismisss();
-                    ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-                    m.customDialog(e.getMessage());
+                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
             }
         }
