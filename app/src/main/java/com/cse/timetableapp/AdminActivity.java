@@ -2,13 +2,16 @@ package com.cse.timetableapp;
 
 import static com.cse.timetableapp.MainActivity.filename;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,8 +28,10 @@ public class AdminActivity extends AppCompatActivity {
 
     Spinner periods,days;
     String selected_period,selected_day;
-    Button free_periods,free_faculty;
+    androidx.cardview.widget.CardView free_periods,free_faculty;
     androidx.cardview.widget.CardView faculty_workload,subject_faculty,changetimetable,change_faculty_details;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +43,7 @@ public class AdminActivity extends AppCompatActivity {
 
 
 
-        selected_period = "";
+        /*selected_period = "";
         periods = findViewById(R.id.spinner_period);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                 R.array.Periods, android.R.layout.simple_spinner_item);
@@ -117,11 +122,148 @@ public class AdminActivity extends AppCompatActivity {
                     finish();
                 }
             }
+        });*/
+
+
+
+
+
+
+
+
+        free_periods = findViewById(R.id.FreeClassesCard);
+
+        free_periods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder;
+                AlertDialog alert;
+                builder = new AlertDialog.Builder(AdminActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dg = inflater.inflate(R.layout.dailogue_display,null);
+                builder.setView(dg);
+                Spinner periods;
+                periods = dg.findViewById(R.id.spinner_period);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.Periods, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                periods.setAdapter(adapter);
+
+                Spinner days;
+                days = dg.findViewById(R.id.spinner_day);
+                ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.days, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                days.setAdapter(adapter1);
+
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                        String selected_day = days.getSelectedItem().toString();
+                        String selected_period = periods.getSelectedItem().toString();
+                        if(!selected_day.equalsIgnoreCase("Day") && !selected_period.equalsIgnoreCase("Period")){
+                            Intent intent = new Intent(AdminActivity.this,FreeClasses.class);
+                            intent.putExtra("period",selected_period);
+                            selected_day = selected_day.substring(0,3);
+                            intent.putExtra("day",selected_day);
+                            startActivity(intent);
+                            finish();
+
+
+                        }else{
+                            Toast.makeText(AdminActivity.this, "Please Choose Valid Option", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+                builder.setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setCancelable(false);
+
+                alert = builder.create();
+                alert.show();
+
+
+            }
         });
 
 
+        free_faculty = findViewById(R.id.freeFacultyCard);
+        free_faculty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder;
+                AlertDialog alert;
+                builder = new AlertDialog.Builder(AdminActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dg = inflater.inflate(R.layout.dailogue_display,null);
+                builder.setView(dg);
+                Spinner periods;
+                periods = dg.findViewById(R.id.spinner_period);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.Periods, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                periods.setAdapter(adapter);
+
+                Spinner days;
+                days = dg.findViewById(R.id.spinner_day);
+                ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.days, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                days.setAdapter(adapter1);
 
 
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String selected_day = days.getSelectedItem().toString();
+                        String selected_period = periods.getSelectedItem().toString();
+                        if(!selected_day.equalsIgnoreCase("Day") && !selected_period.equalsIgnoreCase("Period")){
+
+
+                            Intent intent = new Intent(AdminActivity.this,FreeFaculty.class);
+                            intent.putExtra("period",selected_period);
+                            selected_day = selected_day.substring(0,3);
+                            intent.putExtra("day",selected_day);
+                            startActivity(intent);
+                            finish();
+
+
+                        }else{
+                            Toast.makeText(AdminActivity.this, "Please Choose Valid Option", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+                builder.setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setCancelable(false);
+
+                alert = builder.create();
+                alert.show();
+
+
+            }
+        });
 
         faculty_workload=findViewById(R.id.faculty_workload);
         faculty_workload.setOnClickListener(new View.OnClickListener() {
@@ -182,8 +324,6 @@ public class AdminActivity extends AppCompatActivity {
         editor.putString("remember","false");
         editor.apply();
         Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
-        //startActivity(new Intent(getApplicationContext(),StartUpActivity.class));
-
         finish();
     }
 }

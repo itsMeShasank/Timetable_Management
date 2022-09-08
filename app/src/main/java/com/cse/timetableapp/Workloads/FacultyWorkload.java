@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cse.timetableapp.FacultyDetails;
 import com.cse.timetableapp.FacultyProfile;
 import com.cse.timetableapp.FacultySearchItems;
+import com.cse.timetableapp.LoadingDialog;
 import com.cse.timetableapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +27,10 @@ import java.util.List;
 
 public class FacultyWorkload extends AppCompatActivity {
 
+    LoadingDialog loadingDialog;
     ListView listView;
     List<WorkLoads> workLoads;
+    ArrayList<String> facultyids;
     HashMap<String, FacultySearchItems> facultyDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,9 @@ public class FacultyWorkload extends AppCompatActivity {
         listView = findViewById(R.id.WorkloadlistView);
         workLoads = new ArrayList<>();
         facultyDetails = new HashMap<>();
-
+        facultyids = new ArrayList<>();
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.load();
         getFacultyIntoHashMap();
 //        getWorkLoad();
     }
@@ -89,10 +94,12 @@ public class FacultyWorkload extends AppCompatActivity {
                                 count += i.getChildrenCount();
                         }
                     }
+
                     String faculty_id = snapshot1.getKey();
                     if(!faculty_id.contains("E0") || faculty_id.contains("EEE0")){
                     WorkLoads work = new WorkLoads(facultyDetailsAdder.getId(),count+"",facultyDetailsAdder.getName());
                     workLoads.add(work);
+                    facultyids.add(faculty_id);
                     }
                 }
                 Log.e("After",workLoads.toString());
@@ -113,17 +120,27 @@ public class FacultyWorkload extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Log.e("clicked","yupe");
                 WorkLoads work = workLoads.get(i);
+                String actualId = work.getFaculty_id();
+                work.faculty_id = facultyids.get(i);
+                System.out.println(work.getFaculty_name());
+                System.out.println(work.getFaculty_id());
                 Intent intent = new Intent(getApplicationContext(), FacultyProfile.class);
-                intent.putExtra("faculty",work.faculty_id);
+                intent.putExtra("faculty",work);
+                intent.putExtra("actualId",actualId);
                 startActivity(intent);
             }
         });
+
+
+        loadingDialog.dismisss();
     }
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+
         finish();
     }
 }

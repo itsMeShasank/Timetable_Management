@@ -246,4 +246,20 @@
         tools:layout_editor_absoluteX="254dp"
         tools:layout_editor_absoluteY="540dp" /></LinearLayout>
     </LinearLayout>
+
+    <TextView android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:fontFamily="casual"
+        android:textColor="@color/black"
+        android:layout_marginBottom="30dp"
+        android:text="\u00A9 2022 Dept. of CSE     |     All Rights Reserved"/>
+
 </LinearLayout>

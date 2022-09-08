@@ -16,7 +16,7 @@
         android:src="@drawable/vignanlogohighres"
         android:layout_marginTop="50sp"/>
 
-    <Spinner
+    <!--<Spinner
         android:id="@+id/spinner_day"
         android:layout_width="216dp"
         android:layout_height="48dp"
@@ -55,7 +55,7 @@
         android:layout_marginTop="25dp"
         android:textAllCaps="false"
         android:layout_marginLeft="10dp"
-         />
+         />-->
 
 
     <ScrollView
@@ -66,12 +66,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/FreeClassesCard"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="10dp"
@@ -97,7 +96,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card1"
+                android:id="@+id/freeFacultyCard"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="10dp"
@@ -219,9 +218,7 @@
         </LinearLayout>
 
 
-
     </ScrollView>
-
 
     <TextView android:layout_height="0dp"
         android:layout_width="fill_parent"

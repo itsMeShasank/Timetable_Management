@@ -17,10 +17,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class FreeFaculty extends AppCompatActivity {
 
+    LoadingDialog loadingDialog;
     ArrayList<String> array;
     DatabaseReference databaseReference;
     ArrayList<String> rooms;
@@ -34,6 +36,8 @@ public class FreeFaculty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_faculty);
 
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.load();
         facultyDetails = new HashMap<>();
         array = new ArrayList<>();
         rooms = new ArrayList<>();
@@ -92,6 +96,7 @@ public class FreeFaculty extends AppCompatActivity {
         try {
             //Faculty Free Data
             databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
+            HashSet<String> addedList = new HashSet<>();
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -102,9 +107,14 @@ public class FreeFaculty extends AppCompatActivity {
                                 array.add(snap.getKey());
                                 String id = snap.getKey();
                                 //if (!id.contains("E0"))
-                                if(facultyDetails.containsKey(snap.getKey()))
-                                    list.add(new FreeFacultyLoader(facultyDetails.get(snap.getKey()).getId(), facultyDetails.get(snap.getKey()).getName()));
-                                else{
+
+                                if(facultyDetails.containsKey(snap.getKey())) {
+                                    FreeFacultyLoader loader = new FreeFacultyLoader(facultyDetails.get(snap.getKey()).getId(), facultyDetails.get(snap.getKey()).getName());
+                                    if(!addedList.contains(id)){
+                                        list.add(loader);
+                                        addedList.add(id);
+                                    }
+                                }else{
                                     Log.e("ee faculty Id ledu",snap.getKey());
                                     list.add(new FreeFacultyLoader("0000", snap.getKey()));
                                 }
@@ -125,10 +135,7 @@ public class FreeFaculty extends AppCompatActivity {
             Log.e("Exception",e.toString());
         }
 
-
-
-
-
+        loadingDialog.dismisss();
 
     }
 

@@ -22,6 +22,7 @@ import java.util.List;
 
 public class SubjectFacultyDealing extends AppCompatActivity {
 
+    LoadingDialog loadingDialog;
     com.google.android.material.floatingactionbutton.FloatingActionButton fab;
     Spinner spinner,year_spinnner;
     ListView listView;
@@ -87,6 +88,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                     if (!str.equals("Subject")) {
                         subjectFaculties.clear();
                         getDataFromFirebase(str);
+
                     } else {
                         //Toast.makeText(SubjectFacultyDealing.this, "Please Select a Subject", Toast.LENGTH_SHORT).show();
                     }
@@ -104,6 +106,8 @@ public class SubjectFacultyDealing extends AppCompatActivity {
     }
 
     public void getDataFromFirebase(String str){
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.load();
         subjectFaculties.clear();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDealing");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -142,6 +146,8 @@ public class SubjectFacultyDealing extends AppCompatActivity {
 
                 SubjectFacultyAdapter subjectFacultyAdapter = new SubjectFacultyAdapter(getApplicationContext(),R.layout.subjectfacultyitem,subjectFaculties);
                 listView.setAdapter(subjectFacultyAdapter);
+
+                loadingDialog.dismisss();
             }
 
             @Override

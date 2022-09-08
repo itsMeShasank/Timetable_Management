@@ -1,14 +1,19 @@
 package com.cse.timetableapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +42,6 @@ public class secondyearStudent extends Fragment {
 
         button = root.findViewById(R.id.studentSubmit);
         checkBox = root.findViewById(R.id.login_checkbox);
-
 
         //CheckBox Setup And Preferences
         preferences = getActivity().getSharedPreferences(filename, Context.MODE_PRIVATE);
@@ -100,12 +104,19 @@ public class secondyearStudent extends Fragment {
             @Override
             public void onClick(View view) {
                 selected_class = spinner.getSelectedItem().toString();
+
                 callNext();
             }
         });
 
         return root;
     }
+/*
+if(isConectedToInternet(secondyearStudent.this)) {
+                    customDialog();
+                }
+ */
+
 
     public void callNext(){
         if(selected_class.equals("") || selected_class.equals("Section")){

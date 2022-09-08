@@ -50,4 +50,7 @@ dependencies {
 
     implementation files('libs\\jxl-2.6.12.jar')
 
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
 }

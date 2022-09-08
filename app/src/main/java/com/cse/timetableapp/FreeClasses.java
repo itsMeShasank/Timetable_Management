@@ -27,12 +27,15 @@ public class FreeClasses extends AppCompatActivity {
     ArrayList<String> rooms;
     String period,day;
     ListView listView;
+    LoadingDialog loadingDialog;
     com.google.android.material.floatingactionbutton.FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_classes);
 
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.load();
 
         fab = findViewById(R.id.fab_free_classes);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +85,8 @@ public class FreeClasses extends AppCompatActivity {
             class_types.add(str+" "+room_details.get(str));
         FacultyAdapter facultyAdapter= new FacultyAdapter(getApplicationContext(),class_types);
         listView.setAdapter(facultyAdapter);
+
+        loadingDialog.dismisss();
     }
 
 

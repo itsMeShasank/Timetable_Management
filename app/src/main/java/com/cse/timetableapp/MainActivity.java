@@ -1,14 +1,20 @@
 package com.cse.timetableapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +51,8 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
 
+    LoadingDialog loadingDialog;
+
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -69,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         //toolbar.setNavigationIcon(R.drawable.ic_toolbar);
 
 
+
+
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.load();
         facultyDetails = new HashMap<>();
         textView = findViewById(R.id.textViewinToolbar);
         textView.setText("");
@@ -100,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
         if(flag.equals("student"))
             GetStudentDatabaseValues(val);*/
     }
+
+
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.itemlist,menu);
@@ -390,6 +408,8 @@ public class MainActivity extends AppCompatActivity {
             textView.setTextColor(Color.parseColor("#FF0000"));
         }
 
+        loadingDialog.dismisss();
+
     }
 
 
@@ -533,6 +553,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        loadingDialog.dismisss();
 
 
     }

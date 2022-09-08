@@ -69,9 +69,14 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
 
         button = findViewById(R.id.add_new_file);
+
+        if(MyApplication.namesmap.size() == 0) {
+            button.setEnabled(false);
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String[] mimetypes =
                         { "application/vnd.ms-excel",
                                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -85,9 +90,15 @@ public class ChangeFacultyDetails extends AppCompatActivity {
         });
 
         dummy_button = findViewById(R.id.details_dummy_object);
+        if(MyApplication.namesmap.size() == 0) {
+           dummy_button.setEnabled(false);
+        }
         dummy_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 changeDetailsOfFaculty();
             }
         });
@@ -102,20 +113,7 @@ public class ChangeFacultyDetails extends AppCompatActivity {
             else
                 Log.e(facultyDetailsObject.name,facultyDetailsObject.list.toString());
         }
-
-
-
-
-
-
-
         Log.e("Fire Base Data","Done Retreiving Data");
-
-
-
-
-
-
     }
 
 
@@ -424,10 +422,8 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
             /* Firebase Calling Function*/
 
-            /*
             FacultyDetailsObject obj = new FacultyDetailsObject(name,id,subs);
             FirebaseDatabase.getInstance().getReference().child("FacultyDealing").child(keyVal).setValue(obj);
-            */
         }
 
     }

@@ -27,6 +27,7 @@ public class FacultyProfile extends AppCompatActivity {
         setContentView(R.layout.activity_faculty_profile);
 
         Intent intent = getIntent();
+        String actualId = intent.getStringExtra("actualId");
         WorkLoads work =  intent.getParcelableExtra("faculty");
         id = work.getFaculty_id();
         labs = 0;
@@ -42,7 +43,7 @@ public class FacultyProfile extends AppCompatActivity {
         t7 = findViewById(R.id.faculty_profile_theory);
 
 
-        t1.setText(id);
+        t1.setText(actualId);
         t2.setText(work.getFaculty_name());
         t3.setText(work.getWorkload());
         t4.setText(labs+" ");
@@ -58,26 +59,28 @@ public class FacultyProfile extends AppCompatActivity {
             @Override
 
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot snap:snapshot.getChildren()){
+                for(DataSnapshot i:snapshot.getChildren()){
                     Log.e("hello","hello");
-                  if(!snap.getKey().equals("Details")) {
-                        for(DataSnapshot snapper:snap.getChildren()){
+                  for(DataSnapshot snap : i.getChildren()) {
+                      if(!snap.getKey().equals("Details")) {
+                          for(DataSnapshot snapper:snap.getChildren()){
 
-                            FacultyData data = snapper.getValue(FacultyData.class);
-                            String sub = data.getShortVal();
-                            if(sub.contains("Lab"))
-                                labs++;
-                            else if(sub.contains("IDP"))
-                                idp++;
-                            else if(sub.contains("Coding"))
-                                coding++;
-                            else
-                                theory++;
+                              FacultyData data = snapper.getValue(FacultyData.class);
+                              String sub = data.getShortVal();
+                              if(sub.contains("Lab") || sub.contains("(P)") || sub.contains("(T)"))
+                                  labs++;
+                              else if(sub.contains("IDP") || sub.contains("SCIRP"))
+                                  idp++;
+                              else if(sub.contains("Coding"))
+                                  coding++;
+                              else
+                                  theory++;
 
 
-                        }
+                          }
 
-                    }
+                      }
+                  }
                 }
                 fillVals();
 

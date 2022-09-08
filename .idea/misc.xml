@@ -33,6 +33,13 @@
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/friday_layout.xml" value="0.1" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/monday_layout.xml" value="0.1" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/saturday_layout.xml" value="0.1" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/activity_admin.xml" value="0.25" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/activity_change_faculty_details.xml" value="0.25" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/activity_faculty_profile.xml" value="0.25" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/activity_modidy_current_timetable.xml" value="0.25" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/activity_opening2.xml" value="0.25" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/custom_loading_dialog.xml" value="0.25" />
+        <entry key="..\:/andriod applications/Timetable_Management/app/src/main/res/layout/dailogue_display.xml" value="0.25" />
       </map>
     </option>
   </component>

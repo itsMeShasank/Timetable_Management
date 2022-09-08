@@ -37,7 +37,7 @@
     </string-array>
 
     <string-array name="FourthYears">
-        <item>Period</item>
+        <item>Section</item>
         <item>IV - A</item>
         <item>IV - B</item>
         <item>IV - C</item>
@@ -53,17 +53,9 @@
         <item>III - C</item>
         <item>III - D</item>
         <item>III - E</item>
-        <item>III - F</item>
-        <item>III - G</item>
-        <item>DSUP - 1</item>
-        <item>DSUP - 2</item>
-        <item>IOT - 1</item>
-        <item>IOT - 2</item>
-        <item>MCES</item>
-        <item>MCES - 2</item>
-        <item>PGI</item>
-        <item>ME</item>
-        <item>BIR</item>
+        <item>III - AIML - A</item>
+        <item>III - CS - A</item>
+        <item>III - CSBS - A</item>
 
     </string-array>
     <string-array name="secondyears">
@@ -73,9 +65,13 @@
         <item>II - C</item>
         <item>II - D</item>
         <item>II - E</item>
-        <item>II-AI-ML</item>
-        <item>II-CS</item>
-        <item>II-CSBS</item>
+        <item>II - F</item>
+        <item>II - G</item>
+        <item>II - H</item>
+        <item>II - AIML - A</item>
+        <item>II - AIML - B</item>
+        <item>II - CS - A</item>
+        <item>II - CSBS - A</item>
     </string-array>
     <string-array name="years">
         <item>Select a Section</item>

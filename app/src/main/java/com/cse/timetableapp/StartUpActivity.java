@@ -4,8 +4,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 
 import com.cse.timetableapp.R;
 import com.google.android.material.tabs.TabLayout;
@@ -20,6 +26,10 @@ public class StartUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_up);
+
+        if(!isConectedToInternet(this)) {
+            customDialog();
+        }
 
         tabLayout = findViewById(R.id.OpenTabLayout);
         viewPager = findViewById(R.id.OpenViewPager);
@@ -43,6 +53,43 @@ public class StartUpActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
+    }
+
+    private boolean isConectedToInternet(StartUpActivity start) {
+
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) start.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+            Log.e("vachaa","if");
+            return true;
+        }else {
+            Log.e("vachaa","else");
+            return false;
+        }
+    }
+
+    private void customDialog() {
+
+        AlertDialog.Builder alertDialog =  new AlertDialog.Builder(StartUpActivity.this);
+        alertDialog.setMessage("Please Connect to Internet to proceed further.")
+                .setCancelable(false)
+                .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
     }
 
     @Override
