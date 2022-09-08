@@ -176,19 +176,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             while (true) {
                 try {
                     if (!((len = in.read(buffer)) != -1)) break;
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
-                    loadingDialog.dismisss();
-                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
                 try {
                     out.write(buffer, 0, len);
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
-                    loadingDialog.dismisss();
-                   /* ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-                    m.customDialog(e.getMessage());*/
-                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
             }
             // Contents are copied!
@@ -196,26 +190,20 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 getdata();
             } catch (Exception e) {
                 e.printStackTrace();
-                loadingDialog.dismisss();
-                Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
             }
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
-                    loadingDialog.dismisss();
-                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
             }
             if (out != null){
                 try {
                     out.close();
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
-                    loadingDialog.dismisss();
-                    Toast.makeText(this, "Error!! Check Excel Sheet", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -225,7 +213,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     public static Map<Integer, List<String>> readJExcel(String fileLocation,String sheetname)
             throws IOException, BiffException {
         Map<Integer, List<String>> data = new HashMap<>();
-        try {
+
 
 
             Workbook workbook = Workbook.getWorkbook(new File(fileLocation));
@@ -241,21 +229,6 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                                     .getContents());
                 }
             }
-
-        } catch (jxl.read.biff.BiffException e) {
-            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-            m.customDialog("Excel Sheet Format Check");
-        } catch(java.util.NoSuchElementException e) {
-            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-            m.customDialog("Remove Image And University Name");
-        }catch(java.lang.NullPointerException e){
-            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-            m.customDialog("Please Select Correct Sheet Name");
-        }catch(Exception e){
-            ModidyCurrentTimetable m = new ModidyCurrentTimetable();
-            m.customDialog("Verify Excel Sheet");
-        }
-
         return data;
     }
 
@@ -278,18 +251,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     public  void getdata() throws BiffException, IOException {
 
 
-        Map<Integer,List<String>>sheet= null;
-        try {
-            sheet = readJExcel(Environment.getExternalStorageDirectory().toString()+"/TimeTable/data"+extension, year);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } catch (BiffException e) {
-            e.printStackTrace();
-            return;
-        }
-
-
+        Map<Integer,List<String>>sheet=readJExcel(Environment.getExternalStorageDirectory().toString()+"/TimeTable/data"+extension, year);
         Set<String> days=new HashSet<String>();
         for(String x:new String[]{"Mon","Tue","Wed","Thu","Fri","Sat"})
             days.add(x);
