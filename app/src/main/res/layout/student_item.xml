@@ -37,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10sp">
+            android:paddingLeft="10sp"
+            android:paddingRight="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
@@ -72,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10sp">
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
@@ -107,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
                 android:layout_weight="1"
-                android:text="1034"
+                android:text="Pushya Maam"
                 android:id="@+id/faculty_id"
                 android:textSize="15sp"
                 android:textColor="@color/black"

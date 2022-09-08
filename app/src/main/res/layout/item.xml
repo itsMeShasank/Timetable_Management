@@ -41,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10sp">
+            android:paddingRight="10dp"
+            android:paddingLeft="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
@@ -83,8 +84,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10sp">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0sp"
                 android:layout_weight="1"
-                android:text="1034"
+                android:text="Pushya Maam"
                 android:id="@+id/room_id"
                 android:textSize="15sp"
                 android:textColor="@color/black"
