@@ -14,8 +14,8 @@ android {
         applicationId "com.cse.timetableapp"
         minSdk 21
         targetSdk 31
-        versionCode 22971415
-        versionName "1.0.0"
+        versionCode 22971416
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

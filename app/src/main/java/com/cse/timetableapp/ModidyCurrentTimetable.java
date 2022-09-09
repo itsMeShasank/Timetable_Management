@@ -531,13 +531,18 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                         String subject = copy.substring(0,copy.indexOf("("));
                         if(periodnumber <8) {
-                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
-                            facultyFirebase1(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
+                            //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
+                            facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                         }
                     }else {
                         if(periodnumber <8){
                             System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
-                            facultyFirebase1(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(t).toString());
+                            //System.out.println(faculty.get(t).equals(""));
+                            if(faculty.get(t).equals("") || faculty == null) {
+                                facultyFirebase1(2,timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(),"notmentioned");
+                            }else {
+                                facultyFirebase1(2, timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(t).toString());
+                            }
                         }
                     }
                     t += 1;
@@ -556,25 +561,30 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
     }
 
-    public void facultyFirebase1(String timing, int periodnumber, String section, String prsntday, String subject, String room, String faculty) {
+    public void facultyFirebase1(int x,String timing, int periodnumber, String section, String prsntday, String subject, String room, String faculty) {
         int t=0;
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
         DatabaseReference data = FirebaseDatabase.getInstance().getReference("StudentDetails");
 
+
+
+
         data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.e("snap: ",dataSnapshot.toString());
+                //Log.e("snap: ",dataSnapshot.toString());
                 students st = dataSnapshot.getValue(students.class);
                 if(st != null && st.getPer()<8 && !subject.contains("Sat")) {
                     if (!st.getSub().equals(subject)) {
                         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("FacultyDetails");
                         String name = st.getFaculty();
+                        //System.out.println(name);
                         String result = name.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                         databaseReference1.child(result).child(st.getDay()).child(year).child(timing).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()) {
+
                                     DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
                                     students newstudent = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
                                     studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
@@ -594,6 +604,10 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 if(periodnumber<8) {
                     saveFaculties saveFaculties = new saveFaculties(prsntday, faculty, section, room, subject, timing, periodnumber);
                     String name = saveFaculties.getName();
+
+                    /*if(!name.equals("")) {
+                        System.out.println("facultyyyyy "+name);
+                    }*/
                     String result = name.replaceAll("[-+.^:,]","");
                     databaseReference.child(result).child(prsntday).child(year).child(timing).setValue(saveFaculties).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
