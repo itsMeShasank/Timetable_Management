@@ -13,23 +13,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cse.timetableapp.Workloads.FacultyWorkload;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
 
     Spinner periods,days;
     String selected_period,selected_day;
     androidx.cardview.widget.CardView free_periods,free_faculty;
-    androidx.cardview.widget.CardView faculty_workload,subject_faculty,changetimetable,change_faculty_details;
+    androidx.cardview.widget.CardView faculty_workload,subject_faculty,changetimetable,change_faculty_details,classroomTimeTable;
 
 
     @Override
@@ -311,6 +310,64 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),ChangeFacultyDetails.class));
+            }
+        });
+
+
+        classroomTimeTable = findViewById(R.id.ClassRoomTimeTable);
+        classroomTimeTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder;
+                AlertDialog alert;
+                builder = new AlertDialog.Builder(AdminActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dg = inflater.inflate(R.layout.free_classes_dialogue_box,null);
+                builder.setView(dg);
+
+                AutoCompleteTextView editBox = dg.findViewById(R.id.FreeClassesAutoCOmplete);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.ClassRooms, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                editBox.setAdapter(adapter);
+                String[] myResArray = getResources().getStringArray(R.array.ClassRooms);
+                List<String> classes = Arrays.asList(myResArray);
+                for(String str:classes)
+                    System.out.println(str);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.e("Idigo","idigo");
+                        String selected_class = editBox.getText().toString();
+                        Log.e("Selected Class",selected_class);
+                        if(!selected_class.equalsIgnoreCase("Select Room") && classes.contains(selected_class)){
+                            Intent intent = new Intent(AdminActivity.this,ClassRoomTimeTable.class);
+                            intent.putExtra("classRoom",selected_class);
+                            startActivity(intent);
+
+
+                        }else{
+                            Toast.makeText(AdminActivity.this, "Please Choose Valid Option", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+                builder.setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setCancelable(false);
+
+                alert = builder.create();
+                alert.show();
+
+
             }
         });
 

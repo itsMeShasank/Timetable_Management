@@ -224,8 +224,6 @@
     </string-array>
 
 
-
-
     <string-array name="secondYearsSubject">
         <item>"Select a Subject</item>
         <item>OR</item>
@@ -298,5 +296,39 @@
         <item>IV - CSE</item>
     </string-array>
 
+
+    <string-array name="ClassRooms">
+        <item>Select Room</item>
+       <item>VPTF-01</item>
+        <item>VPTF-02</item>
+        <item>VPTF-03</item>
+       <item>VPTF-04</item>
+        <item>VPTF-05</item>
+       <item>VPTF-06</item>
+       <item>VPTF-07</item>
+        <item>VPTF-08</item>
+       <item>VPTF-09</item>
+        <item>VPTF 12</item>
+        <item>VPSF-01</item>
+        <item>VPSF-02</item>
+        <item>VPSF-03</item>
+        <item>VPSF-04</item>
+        <item>VPSF-05</item>
+        <item>VPSF-06</item>
+        <item>VPSF-07</item>
+        <item>VPSF-08</item>
+        <item>VPSF-09</item>
+        <item>VPSF-10</item>
+        <item>VPSF-11</item>
+        <item>VPSF-12</item>
+        <item>CC-Lab</item>
+        <item>Srujana Seminar Hall - H Block</item>
+        <item>NTR Library (3rd floor)</item>
+        <item>NTR Library(2nd floor Lab 03)</item>
+        <item>Library - Lab 03</item>
+        <item>Srujana Hall -  H - Block</item>
+        <item>Srujana Hall</item>
+
+    </string-array>
 
 </resources>

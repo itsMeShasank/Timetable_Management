@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Class Room"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="@color/black"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/FreeClassesAutoCOmplete"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:hint="Enter Class Room Id"
+        android:completionThreshold="2"/>
+
+
+
+</LinearLayout>

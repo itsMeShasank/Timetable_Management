@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_admin.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_change_faculty_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_class_room_time_table.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_classroom_time_table.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_faculty_results.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_free_faculty.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
@@ -12,13 +14,17 @@
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_opening2.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_splashscreen.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/activity_subject_faculty_dealing.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/dailogue_display.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/faculty_search_item.xml" value="0.253125" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/faculty_tab_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/free_classes_dialogue_box.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/item.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/monday_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/student_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/layout/workload_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/menu/itemlist.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Projects/Timetable_Management/app/src/main/res/menu/timetableoptions.xml" value="0.25416666666666665" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_admin.xml" value="0.24615384615384617" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_admin_login.xml" value="0.24615384615384617" />
         <entry key="..\:/andriod applications/TabTesting/app/src/main/res/layout/activity_contact.xml" value="0.2" />
