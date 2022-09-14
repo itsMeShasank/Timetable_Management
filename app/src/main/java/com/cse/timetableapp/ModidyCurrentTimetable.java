@@ -370,11 +370,12 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall") ||((value.contains("Library"))&&(value.contains("Lab")))) {
                             curRow.set(i, value);
                             //System.out.println(value);
-                            String roomdata = null;
+                            String roomdata = "refer section";
                             roomdata = value.substring(value.indexOf("(")+1, value.indexOf(")"));
                             roomsList.add(roomdata);
                             //value = value.substring(0, value.indexOf("("));
-
+                        }else {
+                            roomsList.add("refer section");
                         }
                     }
                     else if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall")) {
@@ -384,6 +385,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         value = value.substring(0, value.indexOf("("));
                         curRow.set(i, value);
                     }else if(value.contains("Open") || value.contains("Test") || value.contains("IDP")){
+                        curRow.set(i,value);
                         roomsList.add("refer section ");
                     }else if(value.contains("Library") && value.contains("Lab")) {
                         String roomdata=null;
@@ -435,7 +437,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                                     String facultyName = st1.nextToken().trim();
                                     facultyName = facultyName.replaceAll("[-+.^:, ]", "").toLowerCase(Locale.ROOT);
                                     list.add(facultyName);
-                                }
+                               }
                                 map.put(key, list);
 
 
@@ -460,13 +462,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             if (curRow.get(0).contains("Section")) {
                 String nameSec = curRow.get(0);
                 Rooms = curRow.get(0);
-
-                if (!nameSec.contains("VPTF") || !nameSec.contains("VPSF") &&(!curRow.get(0).contains("AI&ML") || !curRow.get(0).contains("CS") || !curRow.get(0).contains("CSBS"))) {
+                if ((!nameSec.contains("VPTF") && !nameSec.contains("VPSF")) &&(!curRow.get(0).contains("AI&ML") || !curRow.get(0).contains("CS") || !curRow.get(0).contains("CSBS"))) {
                     StringTokenizer st = new StringTokenizer(nameSec, " ");
                     st.nextToken();
                     st.nextToken();
                     curSec = year + " - " + st.nextToken();
                     Rooms = nameSec.substring(nameSec.indexOf("(") + 1, nameSec.length() - 1);
+                    System.out.println("nenu vacheysaaa : "+nameSec);
                 } else {
                     StringTokenizer st = new StringTokenizer(nameSec, " ");
                     while (st.hasMoreTokens()) {
@@ -483,6 +485,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         }
                     }
                 }
+                System.out.println(Rooms+" deafault room");
+
             }
             if((curRow.get(0).contains("AI&ML") || curRow.get(0).contains("CS") || curRow.get(0).contains("CSBS"))&&(curRow.get(0).contains("Section")))
             {
@@ -575,48 +579,58 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             //faculty = subjects.get(section.trim() + "," + entireList.get(sub).trim());
             String facultyNameIDP= null;
             if (faculty != null) {
-                //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty);
+                //System.out.println("every thing : "+periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty);
                 //
                 int t = 0;
 
 
                 while (t < faculty.size()) {
 
-                    if(entireList.get(sub).contains("SCIRP") || (entireList.get(sub).contains("IDP"))) {
-
+                    if(entireList.get(sub).contains("SCIRP") || (entireList.get(sub).contains("IDP") && (entireList.get(sub).contains("VPTF") || entireList.get(sub).contains("VPTF")))) {
+                        //System.out.println("scirp, idp aethe neny : "+entireList.get(sub));
                         String copy = entireList.get(sub);
-                         facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
+                        facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                         String subject = copy.substring(0,copy.indexOf("("));
                         if(periodnumber <8) {
-                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
-                            //facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
+                            //System.out.println("faculty luu vunaruu : "+periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
+                            facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                         }
                     }else {
                         if(periodnumber <8){
-                            System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
-                            System.out.println(faculty.get(t).equals(""));
-                            /*if(faculty.get(t).equals("") || faculty == null) {
+
+                            //System.out.println("faculty vunaru : "+periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+", "+entireroomsList.get(room)+", "+faculty.get(t));
+                            //System.out.println("scrip kadu : "+entireList.get(sub));
+                            if(faculty.get(t).equals("") || faculty == null) {
                                 facultyFirebase1(2,timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(),"notmentioned");
                             }else {
                                 facultyFirebase1(2, timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(t).toString());
-                            }*/
+                            }
                         }
                     }
                     t += 1;
                 }
             }else {
-                String subject= "";
-                //&&((entireList.get(sub).contains("VPTF") && (entireList.get(sub).contains("VPSF")))&&
-                if((entireList.get(sub).contains("IDP") && periodnumber < 8) ){
-                    String copy = entireList.get(sub);
-                     facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
-                    facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
-                     subject = copy.substring(0,copy.indexOf("("));
+
+                if (periodnumber < 8) {
+                    if ((entireList.get(sub).contains("IDP") || entireList.get(sub).contains("SCIRP")) &&((!entireList.get(sub).contains("VPTF") && !entireList.get(sub).contains("VPSF") && !entireList.get(sub).contains("NTR") && !entireList.get(sub).contains("Library"))) && periodnumber < 8) {
+                        String copy = entireList.get(sub);
+                        facultyNameIDP = copy.substring(copy.indexOf("P")+1,copy.length()-1);
+                        copy = copy.substring(0,copy.indexOf("P")+1);
+                        facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, copy, entireroomsList.get(room).toString(), facultyNameIDP);
+                    }
+                    else if(((entireList.get(sub).contains("IDP") || entireList.get(sub).contains("SCIRP")) &&((entireList.get(sub).contains("VPTF") || entireList.get(sub).contains("VPSF") || entireList.get(sub).contains("NTR") || entireList.get(sub).contains("Library")))) && periodnumber < 8) {
+                        String copy = entireList.get(sub);
+                        facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
+                        facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
+                         String subject = copy.substring(0,copy.indexOf("("));
+                        facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday,subject, entireroomsList.get(room).toString(), facultyNameIDP);
+                    }
+                    else {
+
+                        facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "None");
+                    }
                 }
-                System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
-                //System.out.println(entireList.get(sub));
-                //facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "None");
             }
             subcount += 1;
             roomcount += 1;
@@ -633,16 +647,18 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
         DatabaseReference data = FirebaseDatabase.getInstance().getReference("StudentDetails");
 
-        Log.e(section,prsntday+"   "+faculty);
-        Log.e("Excel : " +subject,"Firebase : ");
+        /*Log.e(section,prsntday+"   "+faculty);
+        Log.e("Excel : " +subject,"Firebase : ");*/
+
+        System.out.println(timing+"  "+periodnumber+"  "+section+"  "+prsntday+"  "+subject+"  "+room+"  "+faculty);
 
         data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.e("snap: ",dataSnapshot.toString());
                 students st = dataSnapshot.getValue(students.class);
-                /*Log.e(section,prsntday);
-                Log.e("Excel : " +subject,"Firebase : "+st.getSub());*/
+                Log.e(section,prsntday);
+                Log.e("Excel : " +subject,"Firebase : "+st.getSub());
 
 
                 if (!faculty.equalsIgnoreCase("None")) {
@@ -703,9 +719,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     saveFaculties saveFaculties = new saveFaculties(prsntday, faculty, section, room, subject, timing, periodnumber);
                     String name = saveFaculties.getName();
 
-                    /*if(!name.equals("")) {
+                    if(!name.equals("")) {
                         System.out.println("facultyyyyy "+name);
-                    }*/
+                    }
                     String result = name.replaceAll("[-+.^:,]","");
                     databaseReference.child(result).child(prsntday).child(year).child(timing).setValue(saveFaculties).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
