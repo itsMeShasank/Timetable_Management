@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class FreeClasses extends AppCompatActivity {
 
@@ -55,15 +56,15 @@ public class FreeClasses extends AppCompatActivity {
 
         rooms = new ArrayList<>();
         assignVals();
-        databaseReference = FirebaseDatabase.getInstance().getReference("ClassDetails");
+        databaseReference = FirebaseDatabase.getInstance().getReference("StudentDetails");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snap:snapshot.getChildren()){
                     StudentData studentData = snap.child(day).child(period).getValue(StudentData.class);
                     if(!(studentData==null)){
-                    Log.e(studentData.getSec(),studentData.getRoom());
-                    rooms.remove(studentData.getRoom());
+                        Log.e(studentData.getSec(),studentData.getRoom());
+                        removeFromLists(studentData.getRoom());
                     }
                 }
                 assignData();
@@ -113,6 +114,16 @@ public class FreeClasses extends AppCompatActivity {
         room_details.put("VPTF-6","CLASS");
         room_details.put("VPTF-7","CLASS");
         room_details.put("VPTF-8","CLASS");
+        room_details.put("VPTF-9","CLASS");
+        room_details.put("VPTF-12","CLASS");
+
+        room_details.put("CC-Lab","LAB");
+        room_details.put("Srujana Seminar Hall - H Block","CLASS");
+        room_details.put("NTR Library (3rd floor)","CLASS");
+        room_details.put("NTR Library(2nd floor Lab 03)","LAB");
+        room_details.put("Library - Lab 03","LAB");
+
+
         rooms.add("VPSF-1");
         rooms.add("VPSF-2");
         rooms.add("VPSF-3");
@@ -135,12 +146,80 @@ public class FreeClasses extends AppCompatActivity {
         rooms.add("VPTF-7");
         rooms.add("VPTF-8");
         rooms.add("VPTF-9");
-        rooms.add("VPTF-10");
+        rooms.add("VPTF-12");
+
+        rooms.add("CC-Lab");
+        rooms.add("Srujana Seminar Hall - H Block");
+        rooms.add("NTR Library (3rd floor)");
+        rooms.add("Srujana Seminar Hall - H Block");
+        rooms.add("NTR Library(2nd floor Lab 03)");
+        rooms.add("Library - Lab 03");
+        rooms.add("Srujana Hall -  H - Block");
+        rooms.add("Srujana Hall");
+
+
+
+        /*
+        *
+        *   <string-array name="ClassRooms">
+        <item>Select Room</item>
+       <item>VPTF-01</item>
+        <item>VPTF-02</item>
+        <item>VPTF-03</item>
+       <item>VPTF-04</item>
+        <item>VPTF-05</item>
+       <item>VPTF-06</item>
+       <item>VPTF-07</item>
+        <item>VPTF-08</item>
+       <item>VPTF-09</item>
+        <item>VPTF 12</item>
+        <item>VPSF-01</item>
+        <item>VPSF-02</item>
+        <item>VPSF-03</item>
+        <item>VPSF-04</item>
+        <item>VPSF-05</item>
+        <item>VPSF-06</item>
+        <item>VPSF-07</item>
+        <item>VPSF-08</item>
+        <item>VPSF-09</item>
+        <item>VPSF-10</item>
+        <item>VPSF-11</item>
+        <item>VPSF-12</item>
+        <item>CC-Lab</item>
+        <item>Srujana Seminar Hall - H Block</item>
+        <item>NTR Library (3rd floor)</item>
+        <item>NTR Library(2nd floor Lab 03)</item>
+        <item>Library - Lab 03</item>
+        <item>Srujana Hall -  H - Block</item>
+        <item>Srujana Hall</item>
+
+    </string-array>
+        *
+        *
+        *
+        *
+        *
+        *
+        *
+        * */
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(),AdminActivity.class));
         finish();
+    }
+
+
+    private void removeFromLists(String str){
+        for(int i=0;i<rooms.size();i++){
+            String temp = rooms.get(i);
+            str = str.replaceAll("[-,.0 ]","").toLowerCase(Locale.ROOT);
+            temp = temp.replaceAll("[-,.0 ]","").toLowerCase(Locale.ROOT);
+            if(str.equalsIgnoreCase(temp)){
+                rooms.remove(i);
+                return;
+            }
+        }
     }
 }

@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +53,7 @@ import jxl.read.biff.BiffException;
 public class ModidyCurrentTimetable extends AppCompatActivity {
 
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 100;
     HashMap<String,ArrayList> subjects = new HashMap<>();
     LoadingDialog loadingDialog;
     Button button,save,cancel;
@@ -63,6 +68,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modidy_current_timetable);
         askPermissionAndBrowseFile();
+        //askPermissionAndWriteFile();
 
 
         loadingDialog = new LoadingDialog(this);
@@ -107,7 +113,27 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
 
 
+    /*private void askPermissionAndWriteFile(){
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(ModidyCurrentTimetable.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ModidyCurrentTimetable.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(ModidyCurrentTimetable.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+        }
+    }*/
 
 
 
@@ -117,7 +143,27 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     //@RequiresApi(api = Build.VERSION_CODES.R)
 
     //@RequiresApi(api = Build.VERSION_CODES.R)
-    private void askPermissionAndBrowseFile()  {
+    private void askPermissionAndBrowseFile()/*{
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(ModidyCurrentTimetable.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ModidyCurrentTimetable.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(ModidyCurrentTimetable.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+        }
+    }*/  {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (Environment.isExternalStorageManager()){
 

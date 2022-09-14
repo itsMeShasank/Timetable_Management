@@ -56,7 +56,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
             year_spinnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(year_spinnner.getSelectedItem().toString().trim().equals("II")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("II - CSE")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.SecondYearCSE, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -80,7 +80,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
-                    if(year_spinnner.getSelectedItem().toString().trim().equals("III")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("III - CSE")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.ThirdYearCSE, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -104,7 +104,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                         spinner.setAdapter(adapter);
                     }
-                    if(year_spinnner.getSelectedItem().toString().trim().equals("IV")) {
+                    if(year_spinnner.getSelectedItem().toString().trim().equals("IV - CSE")) {
                         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
                                 R.array.fourthYearsSubject, android.R.layout.simple_spinner_item);
                         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -147,8 +147,19 @@ public class SubjectFacultyDealing extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         loadingDialog.load();
         subjectFaculties.clear();
+
+
         String current_selected = year_spinnner.getSelectedItem().toString().trim();
+        if(current_selected.equalsIgnoreCase("II - CSE"))
+            current_selected = "II";
+        if(current_selected.equalsIgnoreCase("III - CSE"))
+            current_selected = "III";
+        if(current_selected.equalsIgnoreCase("IV - CSE"))
+            current_selected = "IV";
+
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDealing");
+        String finalCurrent_selected = current_selected;
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
@@ -164,9 +175,9 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                             String currentSection = strs[0].substring(0,strs[0].lastIndexOf("-")).trim();
                             String toPrint =  strs[0].substring(strs[0].lastIndexOf("-")+1).trim();
                             Log.e("Faculty",item.getName());
-                            Log.e("current_slectec",current_selected);
+                            Log.e("current_slectec", finalCurrent_selected);
                             Log.e("Curret_Section",currentSection);
-                            if(str.equalsIgnoreCase(check) && (currentSection.compareTo(current_selected)==0))
+                            if(str.equalsIgnoreCase(check) && (currentSection.compareTo(finalCurrent_selected)==0))
                                 subjectFaculties.add(new SubjectFaculty(item.getId(),item.getName(),toPrint));
                         }
                     }
