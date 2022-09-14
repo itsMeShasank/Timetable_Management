@@ -34,15 +34,15 @@ public class AdminLogin extends AppCompatActivity {
             public void onClick(View v) {
                 String str = username.getText().toString();
                 String str2 = password.getText().toString();
-                /*startActivity(new Intent(getApplicationContext(),AdminActivity.class));
-                finish();*/
+                startActivity(new Intent(getApplicationContext(),AdminActivity.class));
+                finish();
 
-                if(str.equalsIgnoreCase("admin") && str2.equals("cse_123")){
+                /*if(str.equalsIgnoreCase("admin") && str2.equals("cse_123")){
                     startActivity(new Intent(getApplicationContext(),AdminActivity.class));
                     finish();
                 }else {
                     Toast.makeText(getApplicationContext(), "Check Username and Password", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 
