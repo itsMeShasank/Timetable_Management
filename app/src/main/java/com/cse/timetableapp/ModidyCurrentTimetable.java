@@ -61,6 +61,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
     public static String siddhu = "";
     String extension="";
     Spinner spinner;
+
+    ArrayList<String> temporaryFacultyList;
+
     String[] timings = {"8:05-9:00","9:00-9:55","10:15-11:10","11:10-12:05","12:05-01:00","02:00-02:55","02:55-03:50","03:50-4:40","04:40-05:30"};
 
     @Override
@@ -70,6 +73,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         askPermissionAndBrowseFile();
         //askPermissionAndWriteFile();
 
+
+
+        temporaryFacultyList = new ArrayList<>();
 
         loadingDialog = new LoadingDialog(this);
         button = findViewById(R.id.browse);
@@ -971,6 +977,44 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
+    public void getFacultyCLassSection(String section,String year, String subject){
+        temporaryFacultyList.clear();
+        FirebaseDatabase.getInstance().getReference().child("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot!=null){
+                    for(DataSnapshot faculty:snapshot.getChildren()){
+                        FacultySearchItems item = faculty.getValue(FacultySearchItems.class);
+
+                        ArrayList<String> subs = item.getList();
+                        for(String sub:subs){
+                            String parts[] = sub.split(",");
+                            String[] part1 = parts[0].split("-");
+
+
+                            String curr_year = part1[0];
+                            String curr_sec = part1[1];
+                            String curr_sub = parts[1];
+
+                            if(curr_year.equalsIgnoreCase(year) && curr_sub.equalsIgnoreCase(subject) && curr_sec.equalsIgnoreCase(section)){
+                                temporaryFacultyList.add(faculty.getKey());
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
