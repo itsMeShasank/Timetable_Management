@@ -322,8 +322,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             List<String>curRow=sheet.get(x);
             if(days.contains(curRow.get(0)))
             {
-                curRow.remove(3);
-                curRow.remove(6);
+                if(year.contains("II") || year.contains("IV")) {
+                    curRow.remove(3);
+                    curRow.remove(6);
+                }else {
+                    curRow.remove(3);
+                    curRow.remove(5);
+                }
                 String prev="None";
                 ListIterator<String> it=curRow.listIterator();
                 while(it.hasNext())
@@ -341,70 +346,78 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 int i;
                 for(i=0;i<curRow.size();i++) {
                     String value = curRow.get(i);
+
                     if(value.contains("(P)") || value.contains("(T)")) {
+                        String roomdata =null;
                         if(value.contains("Hall")) {
+                            if(!value.contains("3rd floor")) {
+                            roomdata = value.substring(value.lastIndexOf("(")+1,value.length()-1);
+                            }else {
+                                roomdata = value.substring(value.indexOf(")")+1,value.length()-1);
+                            }
                             value = value.substring(0,value.indexOf(")")+1);
-                            String roomdata = value.substring(value.indexOf(")")+1,value.length());
                             roomsList.add(roomdata);
                         }
-                        if(value.contains("VPTF") || value.contains("VPSF")) {
+                        else if(value.contains("VPTF") || value.contains("VPSF")) {
                             //DBMS (P/T) (VPTF-07)
-                            StringTokenizer st = new StringTokenizer(value," ");
-                            st.nextToken();
-                            st.nextToken();
-                            String roomVal = st.nextToken();
-                            String roomsdata = roomVal.substring(1, roomVal.length()-1);
-
+                            String roomsdata = value.substring(value.lastIndexOf("(")+1,value.length()-1);
                             value = value.substring(0,value.indexOf(")")+1);
                             roomsList.add(roomsdata);
                         }
                         else {
-                            value = value.substring(0, value.length());
+                            value = value.substring(0, value.indexOf(")")+1);
                             roomsList.add(Rooms);
                         }
-
                         curRow.set(i, value);
+                        //roomsList.add(roomdata);
 
                     }
                     else if(value.contains("SCIRP") || value.contains("IDP")) {
+
                         if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall") ||((value.contains("Library"))&&(value.contains("Lab")))) {
                             curRow.set(i, value);
-                            //System.out.println(value);
                             String roomdata = "refer section";
                             roomdata = value.substring(value.indexOf("(")+1, value.indexOf(")"));
                             roomsList.add(roomdata);
-                            //value = value.substring(0, value.indexOf("("));
                         }else {
                             roomsList.add("refer section");
                         }
                     }
-                    else if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall")) {
+                    else if(value.contains("VPTF") || value.contains("VPSF") || value.contains("Hall") || value.contains("VBF") || value.contains("VBS") || value.contains("VBT") || value.contains("VSF")) {
+
                         String roomdata = null;
                         roomdata = value.substring(value.indexOf("(")+1, value.indexOf(")"));
                         roomsList.add(roomdata);
                         value = value.substring(0, value.indexOf("("));
                         curRow.set(i, value);
                     }else if(value.contains("Open") || value.contains("Test") || value.contains("IDP")){
+
                         curRow.set(i,value);
                         roomsList.add("refer section ");
                     }else if(value.contains("Library") && value.contains("Lab")) {
+                        System.out.println("LIBRARY && Lab :: "+value);
                         String roomdata=null;
                         roomdata = value.substring(value.indexOf("(")+1, value.indexOf(")"));
                         roomsList.add(roomdata);
                         value = value.substring(0,value.indexOf("(")-1);
                         curRow.set(i, value);
                     }else if(value.equals("Library")) {
+
                         String roomdata = value;
                         roomsList.add(roomdata);
                     }else if(value.contains("NTR")) {
+
                         String roomdata = value.substring(value.indexOf("N"), value.length());
                         roomsList.add(roomdata);
                         value = value.substring(0,value.indexOf("N"));
                         curRow.set(i,value);
-                    }else if(value.contains("(CC Lab)")) {
+                    }else if(value.contains("(CC Lab)")  || value.contains("MAT Lab") || value.contains("CP Lab") || value.contains("Floor") || value.contains("floor") || value.contains("CSE")) {
+
                         roomsList.add(value.substring(value.indexOf("("),value.length()));
                         value = value.substring(0,value.indexOf("("));
                         curRow.set(i,value);
+                    }else if(value.contains("Sports")) {
+                        roomsList.add("-");
                     }
                     else {
                         roomsList.add(Rooms);
@@ -459,6 +472,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     subjects.put(key, map.get(key));
                 }
             }
+
             if (curRow.get(0).contains("Section")) {
                 String nameSec = curRow.get(0);
                 Rooms = curRow.get(0);
@@ -485,7 +499,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         }
                     }
                 }
-                System.out.println(Rooms+" deafault room");
+                //System.out.println(Rooms+" deafault room");
 
             }
             if((curRow.get(0).contains("AI&ML") || curRow.get(0).contains("CS") || curRow.get(0).contains("CSBS"))&&(curRow.get(0).contains("Section")))
@@ -519,7 +533,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
             }
         }
-        //System.out.println(entireList+"\n"+entireroomsList+"\n"+subjects);
+
+
+        System.out.println(entireList+"\n"+entireroomsList+"\n"+subjects);
 
 
         for(String name:namesmap.keySet()){
@@ -551,6 +567,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
                 columncount += 1;
             }
+        }
+        if(columncount > 10) {
+            columncount = 8;
         }
         int sub = 2, room = 1, subcount = 0, roomcount = 0, periodnumber = 1;
         String Prsntday = null, section = null;
@@ -615,7 +634,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 if (periodnumber < 8) {
                     if ((entireList.get(sub).contains("IDP") || entireList.get(sub).contains("SCIRP")) &&((!entireList.get(sub).contains("VPTF") && !entireList.get(sub).contains("VPSF") && !entireList.get(sub).contains("NTR") && !entireList.get(sub).contains("Library"))) && periodnumber < 8) {
                         String copy = entireList.get(sub);
-                        facultyNameIDP = copy.substring(copy.indexOf("P")+1,copy.length()-1);
+                        facultyNameIDP = copy.substring(copy.indexOf("P")+1,copy.length());
+                        facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                         copy = copy.substring(0,copy.indexOf("P")+1);
                         facultyFirebase1(1,timings[periodnumber - 1], periodnumber, section, Prsntday, copy, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
@@ -651,14 +671,12 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         Log.e("Excel : " +subject,"Firebase : ");*/
 
         System.out.println(timing+"  "+periodnumber+"  "+section+"  "+prsntday+"  "+subject+"  "+room+"  "+faculty);
-
         data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.e("snap: ",dataSnapshot.toString());
                 students st = dataSnapshot.getValue(students.class);
                 Log.e(section,prsntday);
-                Log.e("Excel : " +subject,"Firebase : "+st.getSub());
 
 
                 if (!faculty.equalsIgnoreCase("None")) {
@@ -727,21 +745,26 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
+
+                                // null values for faculites
                                 String key = section+","+subject;
                                 ArrayList<String> faculties = subjects.get(key.trim());
-                                if(faculties.size()>=2) {
-                                    System.out.println(periodnumber+", "+faculties.get(0)+", "+section+", "+prsntday+", "+subject+", "+room+", "+timing);
-                                    DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
-                                    students newstudent = new students(periodnumber,faculties.get(0),section,prsntday,subject,room,timing);
-                                    studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
-                                    Log.e("lab data : ","saved");
-                                }
-                                else {
-                                    System.out.println(periodnumber+", "+faculty+", "+section+", "+prsntday+", "+subject+", "+room+", "+timing);
-                                    DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
-                                    students newstudent = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
-                                    studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
-                                    Log.e("non lab data : ","saved");
+
+                                if (faculties !=null) {
+                                    if(faculties.size()>=2) {
+                                        System.out.println(periodnumber+", "+faculties.get(0)+", "+section+", "+prsntday+", "+subject+", "+room+", "+timing);
+                                        DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
+                                        students newstudent = new students(periodnumber,faculties.get(0),section,prsntday,subject,room,timing);
+                                        studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
+                                        Log.e("lab data : ","saved");
+                                    }
+                                    else {
+                                        System.out.println(periodnumber+", "+faculty+", "+section+", "+prsntday+", "+subject+", "+room+", "+timing);
+                                        DatabaseReference studentsaving = FirebaseDatabase.getInstance().getReference("StudentDetails");
+                                        students newstudent = new students(periodnumber,faculty,section,prsntday,subject,room,timing);
+                                        studentsaving.child(section).child(prsntday).child(timing).setValue(newstudent);
+                                        Log.e("non lab data : ","saved");
+                                    }
                                 }
 
                             }
@@ -757,7 +780,6 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
             }
         });
-
 
         //modifyFacultyDetails();
 

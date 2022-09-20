@@ -267,7 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="100dp"
                         android:layout_marginBottom="15dp"
-                        android:src="@drawable/francis1" />
+                        android:src="@drawable/freeclass" />
 
                     <TextView
                         android:layout_width="wrap_content"

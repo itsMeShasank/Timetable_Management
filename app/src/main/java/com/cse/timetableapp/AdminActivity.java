@@ -40,8 +40,6 @@ public class AdminActivity extends AppCompatActivity {
 
 
 
-
-
         /*selected_period = "";
         periods = findViewById(R.id.spinner_period);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),

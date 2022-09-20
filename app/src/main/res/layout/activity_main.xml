@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cse.timetableapp.MainActivity"
+
     android:orientation="vertical">
 
     <include
@@ -19,11 +20,10 @@
         app:tabIndicatorColor="@color/black"
          android:id="@+id/TestTabLayout"/>
 
-
-
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:id="@+id/ViewPager"/>
 
 </LinearLayout>

@@ -113,11 +113,6 @@ public class MainActivity extends AppCompatActivity {
             GetStudentDatabaseValues(val);*/
     }
 
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.itemlist,menu);
