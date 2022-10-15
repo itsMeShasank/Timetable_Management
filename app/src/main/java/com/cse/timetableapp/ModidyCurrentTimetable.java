@@ -687,6 +687,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             }else {
 
                 if (periodnumber < 8) {
+                    // honors/ scirp or honors/library periods kii
                     if ((entireList.get(sub).contains("IDP") || entireList.get(sub).contains("SCIRP")) &&((!entireList.get(sub).contains("VPTF") && !entireList.get(sub).contains("VPSF") && !entireList.get(sub).contains("NTR") && !entireList.get(sub).contains("Library"))) && periodnumber < 8) {
                         String copy = entireList.get(sub);
                         facultyNameIDP = copy.substring(copy.indexOf("P")+1,copy.length());
@@ -699,6 +700,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                          String subject = copy.substring(0,copy.indexOf("("));
+                        if (namesmap.containsKey(subject))
+                            namesmap.get(facultyNameIDP).add(subject);
+                        else {
+                            ArrayList<String> ll = new ArrayList<>();
+                            ll.add(subject);
+                            namesmap.put(facultyNameIDP, ll);
+                        }
                         facultyFirebase1(5,timings[periodnumber - 1], periodnumber, section, Prsntday,subject, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
                     else {
