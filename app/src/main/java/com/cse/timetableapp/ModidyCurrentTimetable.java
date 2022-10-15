@@ -386,11 +386,13 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         roomsList.add(roomdata);
                         value = value.substring(0, value.indexOf("("));
                         curRow.set(i, value);
-                    }else if(value.contains("Open") || value.contains("Test") || value.contains("IDP")){
+                    }
+                    else if(value.contains("Open") || value.contains("Test") || value.contains("IDP")){
 
                         curRow.set(i,value);
                         roomsList.add("refer section ");
-                    }else if(value.contains("Library") && value.contains("Lab")) {
+                    }
+                    else if(value.contains("Library") && value.contains("Lab")) {
                         String roomdata=null;
                         roomdata = value.substring(value.indexOf("(")+1, value.indexOf(")"));
                         roomsList.add(roomdata);
@@ -400,13 +402,15 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
                         String roomdata = value;
                         roomsList.add(roomdata);
-                    }else if(value.contains("NTR")) {
+                    }
+                    else if(value.contains("NTR")) {
 
                         String roomdata = value.substring(value.indexOf("N"), value.length());
                         roomsList.add(roomdata);
                         value = value.substring(0,value.indexOf("N"));
                         curRow.set(i,value);
-                    }else if(value.contains("(CC Lab)")  || value.contains("MAT Lab") || value.contains("CP Lab") || value.contains("Floor") || value.contains("floor") || value.contains("CSE")) {
+                    }
+                    else if(value.contains("(CC Lab)")  || value.contains("MAT Lab") || value.contains("CP Lab") || value.contains("Floor") || value.contains("floor") || value.contains("CSE")) {
 
                         roomsList.add(value.substring(value.indexOf("("),value.length()));
                         value = value.substring(0,value.indexOf("("));
@@ -695,6 +699,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         copy = copy.substring(0,copy.indexOf("P")+1);
                         facultyFirebase1(4,timings[periodnumber - 1], periodnumber, section, Prsntday, copy, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
+                    //scrip contains ntr as room
                     else if(((entireList.get(sub).contains("IDP") || entireList.get(sub).contains("SCIRP")) &&((entireList.get(sub).contains("VPTF") || entireList.get(sub).contains("VPSF") || entireList.get(sub).contains("NTR") || entireList.get(sub).contains("Library")))) && periodnumber < 8) {
                         String copy = entireList.get(sub);
                         facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
@@ -1074,8 +1079,60 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 columncount+=1;
             }
         }
-
-        String[] timings = {"8:05-9:00","9:00-9:55","10:15-11:10","11:10-12:05","12:05-01:00","02:00-02:55","02:55-03:50","03:50-4:40","04:40-05:30"};
+        int c=0;
+        List<String>entireListwithoutrepeation = new ArrayList<>();
+        List<String>entireroomsListwithoutrepeation = new ArrayList<>();
+        List<String>repeationdays = new ArrayList<>();
+        for(int period=0;period < entireList.size();period++) {
+            if(c <= columncount) {
+                //System.out.println(c);
+                repeationdays.add(entireList.get(period));
+            }
+            if(c == columncount) {
+                int x = columncount;
+                while(x > 8) {
+                    repeationdays.remove(x-1);
+                    x-=1;
+                }
+                for(String value : repeationdays) {
+                    entireListwithoutrepeation.add(value);
+                }
+                repeationdays.clear();
+                c=-1;
+            }
+            c+=1;
+        }
+        entireList.clear();
+        for(String value : entireListwithoutrepeation) {
+            entireList.add(value);
+        }
+        repeationdays.clear();
+        columncount-=1;
+        for(int period=0;period < entireroomsList.size();period++) {
+            if(c <= columncount) {
+                //System.out.println(c);
+                repeationdays.add(entireroomsList.get(period));
+            }
+            if(c == columncount) {
+                int x = columncount;
+                while(x > 7) {
+                    repeationdays.remove(x-1);
+                    x-=1;
+                }
+                for(String value : repeationdays) {
+                    entireroomsListwithoutrepeation.add(value);
+                }
+                repeationdays.clear();
+                c=-1;
+            }
+            c+=1;
+        }
+        entireroomsList.clear();
+        for(String value : entireroomsListwithoutrepeation) {
+            entireroomsList.add(value);
+        }
+        System.out.println(entireList+"\n"+entireroomsList);
+        String[] timings = {"08:05-09:00","09:00-09:55","10:15-11:10","11:10-12:05","12:05-01:00","02:00-02:55","02:55-03:50","03:50-4:40","04:40-05:30"};
         int sub=2,room=1,subcount=0,roomcount=0,periodnumber=1;
         String Prsntday=null,section=null;
         while(sub < entireList.size() && room < entireroomsList.size()) {
@@ -1098,7 +1155,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(0).toString());
                 }
             }else {
-                if(entireList.get(sub).contains("SCIRP")) {
+                if(entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) {
                     String copy = entireList.get(sub);
                     String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                     facultyNameIDP = facultyNameIDP.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
