@@ -47,6 +47,19 @@ public class ChangeFacultyDetails extends AppCompatActivity {
         setContentView(R.layout.activity_change_faculty_details);
         askPermissionAndBrowseFile();
 
+
+
+        System.out.println("Current PLayList lo unnavi************************");
+        HashMap<String, ArrayList<String>> namesmap = MyApplication.namesmap;
+        for(String name:namesmap.keySet()){
+            ArrayList<String> subs = namesmap.get(name);
+            System.out.print(name+" : ");
+            for(String str:subs)
+                System.out.print(str+" , ");
+            System.out.println();
+        }
+        System.out.println("******************************************************");
+
         facultydetails = new HashMap<>();
         FirebaseDatabase.getInstance().getReference().child("FacultyDealing").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

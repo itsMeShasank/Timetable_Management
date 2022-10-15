@@ -45,6 +45,8 @@ public class FreeClasses extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),AdminActivity.class));
                 finish();
 
+
+
             }
         });
         period="";
@@ -121,8 +123,6 @@ public class FreeClasses extends AppCompatActivity {
         room_details.put("Srujana Seminar Hall - H Block","CLASS");
         room_details.put("NTR Library (3rd floor)","CLASS");
         room_details.put("NTR Library(2nd floor Lab 03)","LAB");
-        room_details.put("Library - Lab 03","LAB");
-
 
         rooms.add("VPSF-1");
         rooms.add("VPSF-2");
@@ -151,11 +151,8 @@ public class FreeClasses extends AppCompatActivity {
         rooms.add("CC-Lab");
         rooms.add("Srujana Seminar Hall - H Block");
         rooms.add("NTR Library (3rd floor)");
-        rooms.add("Srujana Seminar Hall - H Block");
         rooms.add("NTR Library(2nd floor Lab 03)");
         rooms.add("Library - Lab 03");
-        rooms.add("Srujana Hall -  H - Block");
-        rooms.add("Srujana Hall");
 
 
 

@@ -547,8 +547,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         /*    Firebase Calling Functions    */
 
         System.out.println(entireList+"\n"+entireroomsList+"\n");
-        faculty(entireList, entireroomsList.get(0), subjects);
-        //student(entireList,entireroomsList.get(0),subjects);
+        //faculty(entireList, entireroomsList.get(0), subjects);
+        student(entireList,entireroomsList.get(0),subjects);
 
     }
 
@@ -653,7 +653,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 while (t < faculty.size()) {
 
                     if(entireList.get(sub).contains("SCIRP") || (entireList.get(sub).contains("IDP") && (entireList.get(sub).contains("VPTF") || entireList.get(sub).contains("VPTF")))) {
-                        //System.out.println("scirp, idp aethe neny : "+entireList.get(sub));
+                        System.out.println("********************SCIIRP********************");
                         String copy = entireList.get(sub);
                         facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
@@ -700,11 +700,12 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                         facultyNameIDP = facultyNameIDP.replaceAll("[.,+ ]","").toLowerCase(Locale.ROOT);
                          String subject = copy.substring(0,copy.indexOf("("));
-                        if (namesmap.containsKey(subject))
-                            namesmap.get(facultyNameIDP).add(subject);
+
+                        if (namesmap.containsKey(facultyNameIDP))
+                            namesmap.get(facultyNameIDP).add(section+","+subject);
                         else {
                             ArrayList<String> ll = new ArrayList<>();
-                            ll.add(subject);
+                            ll.add(section+","+subject);
                             namesmap.put(facultyNameIDP, ll);
                         }
                         facultyFirebase1(5,timings[periodnumber - 1], periodnumber, section, Prsntday,subject, entireroomsList.get(room).toString(), facultyNameIDP);
@@ -734,8 +735,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         Log.e("Excel : " +subject,"Firebase : ");*/
 
 
-        System.out.println(x+timing+"  "+periodnumber+"  "+section+"  "+prsntday+"  "+subject+"  "+room+"  "+faculty);
-        /*if(faculty == null || faculty.equals("") || faculty.equals(" ")) {
+        System.out.println(timing+"  "+periodnumber+"  "+section+"  "+prsntday+"  "+subject+"  "+room+"  "+faculty);
+        if(faculty == null || faculty.equals("") || faculty.equals(" ")) {
             faculty = "None";
         }
         String finalFaculty = faculty;
@@ -879,7 +880,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
         //modifyFacultyDetails();
         MyApplication.namesmap = namesmap;
