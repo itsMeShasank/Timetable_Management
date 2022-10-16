@@ -152,7 +152,6 @@ public class FreeClasses extends AppCompatActivity {
         rooms.add("Srujana Seminar Hall - H Block");
         rooms.add("NTR Library (3rd floor)");
         rooms.add("NTR Library(2nd floor Lab 03)");
-        rooms.add("Library - Lab 03");
 
 
 

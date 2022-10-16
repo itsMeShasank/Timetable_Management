@@ -68,7 +68,7 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                 for(DataSnapshot snap:snapshot.getChildren()){
                     Log.e("CURRENT",snap.getKey());
                     FacultyDetailsObject facultyDetailsObject = snap.getValue(FacultyDetailsObject.class);
-                    if(!(facultyDetailsObject.list == null))
+                    //if(!(facultyDetailsObject.list == null))
                         facultydetails.put(snap.getKey(),facultyDetailsObject);
                 }
                 printchesichupi();
@@ -193,7 +193,8 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                     System.out.println("Current Year :"+currentYear+" **********************");
 
                     ArrayList<String> databaseSubs = facultydetails.get(name).list;
-                    finalSubs = (ArrayList<String>) databaseSubs.clone();
+                    if(databaseSubs != null && databaseSubs.size() > 0)
+                        finalSubs = (ArrayList<String>) databaseSubs.clone();
 
                     //This code is written on 15-10-2022
 
@@ -201,13 +202,15 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                         ArrayList<String> currentDatabaseSubs = new ArrayList<>();
                         ArrayList<String> finalList = new ArrayList<>();
 
-                        for(String str:databaseSubs){
-                            int i = str.lastIndexOf("-");
-                            String sub = str.substring(0,i).trim();
-                            if(sub.equals(currentYear)){
-                                currentDatabaseSubs.add(str);
-                            }else
-                                finalList.add(str);
+                        if (databaseSubs != null && databaseSubs.size()>0) {
+                            for(String str:databaseSubs){
+                                int i = str.lastIndexOf("-");
+                                String sub = str.substring(0,i).trim();
+                                if(sub.equals(currentYear)){
+                                    currentDatabaseSubs.add(str);
+                                }else
+                                    finalList.add(str);
+                            }
                         }
 
                         ArrayList<String> currentFileSubs = new ArrayList<>();
