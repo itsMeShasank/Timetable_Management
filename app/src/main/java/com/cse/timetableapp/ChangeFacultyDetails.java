@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -174,23 +175,133 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                     System.out.println("--------------"+name+"-------------     :");
 
 
-                    ArrayList<String> databaseSubs = facultydetails.get(name).list;
+
                     String currentYear = MyApplication.currentYear;
+                    currentYear =  MyApplication.FirebaseYear;
+                    if(currentYear.equals("III - CSE"))
+                        currentYear = "III";
+                    if(currentYear.equals("II - CSE"))
+                        currentYear = "II";
+                    if(currentYear.equals("IV - CSE"))
+                        currentYear = "IV";
+
+                    /*if(currentYear.equals("III - AI&ML"))
+                        currentYear = "III - AIML";
+                    if(currentYear.equals("II - AI&ML"))
+                        currentYear = "II - AI&ML";*/
+
+                    System.out.println("Current Year :"+currentYear+" **********************");
+
+                    ArrayList<String> databaseSubs = facultydetails.get(name).list;
                     finalSubs = (ArrayList<String>) databaseSubs.clone();
-                    if(namesmap.containsKey(name)){
-                        ArrayList<String> currentSubs = namesmap.get(name);
+
+                    //This code is written on 15-10-2022
+
+                    if (namesmap.containsKey(name)) {
+                        ArrayList<String> currentDatabaseSubs = new ArrayList<>();
+                        ArrayList<String> finalList = new ArrayList<>();
+
+                        for(String str:databaseSubs){
+                            int i = str.lastIndexOf("-");
+                            String sub = str.substring(0,i).trim();
+                            if(sub.equals(currentYear)){
+                                currentDatabaseSubs.add(str);
+                            }else
+                                finalList.add(str);
+                        }
+
+                        ArrayList<String> currentFileSubs = new ArrayList<>();
+                        currentFileSubs =  MyApplication.namesmap.get(name);
+
+                        System.out.print("Final Database Subjects : ");
+                        for(String str:currentDatabaseSubs)
+                            System.out.print(str+" ;");
+                        System.out.println();
+
+                        for(String str:currentDatabaseSubs){
+                            if(!currentFileSubs.contains(str)){
+                                valuesToRemove.add(str);
+                            }
+                        }
+
+
+                        if(currentFileSubs.size()>0){
+                            System.out.print("Final Current Subjects  : ");
+                            for(String str:currentFileSubs){
+                                System.out.print(str+" ;");
+                                finalList.add(str);
+                            }
+                            System.out.println();
+                        }
+
+
+                        System.out.print("Final List              : ");
+                        for(String str:finalList){
+                            System.out.print(str+" ; ");
+                        }
+                        System.out.println();
+
+
+                        for(String str:valuesToRemove){
+                            for(DataSnapshot snap:snapshot.getChildren()){
+                                for(DataSnapshot i:snap.getChildren()){
+                                    String key = i.getKey();
+                                    if(key.equals(FirebaseYear)){
+                                        for(DataSnapshot j:i.getChildren()){
+                                            FacultyData data = j.getValue(FacultyData.class);
+                                            str = str.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
+                                            String compare = data.getSectionId()+","+data.getShortVal();
+                                            compare = compare.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
+                                            if(str.equalsIgnoreCase(compare)){
+                                                System.out.println("Update at "+name+" "+i.getKey()+" "+j.getKey()+" ");
+                                                FirebaseDatabase.getInstance().getReference("FacultyDetails").child(name)
+                                                        .child(snap.getKey()).child(i.getKey()).child(j.getKey()).removeValue();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        HashSet<String> hashset = new HashSet<>();
+                        for(String str:finalList)
+                            hashset.add(str);
+                        ArrayList<String> ideInkaLast = new ArrayList<>();
+                        for(String str:hashset)
+                            ideInkaLast.add(str);
+                        FirebaseDatabase.getInstance().getReference("FacultyDealing").child(name).child("list").setValue(ideInkaLast);
+
+
+                    }
+
+
+
+
+
+
+
+                    /*if(namesmap.containsKey(name)){
+
+
+
+
+
 
                         System.out.print("Database :     ");
-                        for(String sub:databaseSubs)
-                            if(sub.startsWith(currentYear))
+                        for(String sub:databaseSubs){
+                            int ind = sub.lastIndexOf("-");
+                            String check = sub.substring(0,ind).trim();
+                            //System.out.println("From  "+sub+" Taken  "+check);
+                            if(check.equals(currentYear))
                                 System.out.print(sub+" ;");
+                        }
                         System.out.println();
-               /* for(String sub:currentSubs)
+               *//* for(String sub:currentSubs)
                     if(sub.startsWith(currentYear))
                         System.out.print(sub+" ;");
-                System.out.println();*/
+                System.out.println();*//*
                         ArrayList<String> subs = new ArrayList<>();
-
                         ArrayList<String> dummy = namesmap.get(name);
                         if(dummy != null){
                             for (String str : dummy)
@@ -204,6 +315,9 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                                         subs.add(str);
                             }
                         }
+
+
+                        ArrayList<String> currentSubs = namesmap.get(name);
                         System.out.print("Current File : ");
                         for(String sub:currentSubs)
                             if(sub.startsWith(currentYear))
@@ -211,7 +325,12 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                         System.out.println();
 
                         for(String str:databaseSubs){
-                            if(str.startsWith(currentYear)){
+                            int ind = str.lastIndexOf("-");
+                            String check = str.substring(0,ind).trim();
+                            System.out.println("From  "+str+" Taken  "+check);
+
+
+                            if(str.equals(currentYear)){
                                 if(!currentSubs.contains(str)){
                                     subs.remove(str);
                                     valuesToRemove.add(str);
@@ -227,7 +346,8 @@ public class ChangeFacultyDetails extends AppCompatActivity {
 
                         finalSubs = (ArrayList<String>) subs.clone();
 
-                    }else{
+                    }
+                    else{
                         System.out.print("Ivi Complete ga poyayi  ");
                         for(String sub:databaseSubs) {
                             if (sub.startsWith(currentYear)) {
@@ -238,9 +358,12 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                             }
                         }
                         System.out.println();
-                    }
+                    }*/
 
-                    for(String str:valuesToRemove){
+
+
+                    //This is firebaseCall
+                    /*for(String str:valuesToRemove){
                         for(DataSnapshot snap:snapshot.getChildren()){
                             for(DataSnapshot i:snap.getChildren()){
                                 String key = i.getKey();
@@ -260,8 +383,7 @@ public class ChangeFacultyDetails extends AppCompatActivity {
                             }
                         }
                     }
-
-                    FirebaseDatabase.getInstance().getReference("FacultyDealing").child(name).child("list").setValue(finalSubs);
+                    FirebaseDatabase.getInstance().getReference("FacultyDealing").child(name).child("list").setValue(finalSubs);*/
 
                 }
 

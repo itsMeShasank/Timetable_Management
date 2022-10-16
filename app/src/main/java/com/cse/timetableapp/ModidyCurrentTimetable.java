@@ -551,8 +551,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         /*    Firebase Calling Functions    */
 
         System.out.println(entireList+"\n"+entireroomsList+"\n");
-        //faculty(entireList, entireroomsList.get(0), subjects);
-        student(entireList,entireroomsList.get(0),subjects);
+        faculty(entireList, entireroomsList.get(0), subjects);
+        //student(entireList,entireroomsList.get(0),subjects);
 
     }
 
@@ -1153,8 +1153,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             ArrayList faculty = subjects.get(section.trim()+","+entireList.get(sub).trim());
             if(faculty != null) {
                 if(periodnumber<8) {
-                    System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty.get(0));
-                    //StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(0).toString());
+                    //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty.get(0));
+                    StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(0).toString());
                 }
             }else {
                 if((entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) && entireList.contains("Honors/Scirp") && entireList.contains("Library/Scirp")) {
@@ -1162,14 +1162,14 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                     facultyNameIDP = facultyNameIDP.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                     String subject = copy.substring(0,copy.indexOf("("));
-                    System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+" "+entireroomsList.get(room)+", "+facultyNameIDP);
+                    //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+" "+entireroomsList.get(room)+", "+facultyNameIDP);
                     if(periodnumber!=8 && !Prsntday.contains("Sat")) {
-                        //StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
+                        StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
                 }else {
                     if(periodnumber<8) {
-                        System.out.println(periodnumber + ", " + timings[periodnumber - 1] + ", " + section + ", " + Prsntday + ", " + entireList.get(sub) + " " + entireroomsList.get(room) + ", " + "not mentioned");
-                        //StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "not mentioned");
+                        //System.out.println(periodnumber + ", " + timings[periodnumber - 1] + ", " + section + ", " + Prsntday + ", " + entireList.get(sub) + " " + entireroomsList.get(room) + ", " + "not mentioned");
+                        StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "not mentioned");
                     }
                 }
                 //StudentFirebase(timings[periodnumber-1],periodnumber,section,Prsntday,entireList.get(sub),entireroomsList.get(room).toString(),"not mentioned");
