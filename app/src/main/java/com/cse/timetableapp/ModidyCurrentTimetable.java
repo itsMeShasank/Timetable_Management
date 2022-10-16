@@ -551,8 +551,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         /*    Firebase Calling Functions    */
 
         System.out.println(entireList+"\n"+entireroomsList+"\n");
-        faculty(entireList, entireroomsList.get(0), subjects);
-        //student(entireList,entireroomsList.get(0),subjects);
+        //faculty(entireList, entireroomsList.get(0), subjects);
+        student(entireList,entireroomsList.get(0),subjects);
 
     }
 
@@ -1134,7 +1134,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         }
         System.out.println(entireList+"\n"+entireroomsList);
         columncount=8;
-        String[] timings = {"08:05-09:00","09:00-09:55","10:15-11:10","11:10-12:05","12:05-01:00","02:00-02:55","02:55-03:50","03:50-4:40","04:40-05:30"};
+        //String[] timings = {"08:05-09:00","09:00-09:55","10:15-11:10","11:10-12:05","12:05-01:00","02:00-02:55","02:55-03:50","03:50-4:40","04:40-05:30"};
         int sub=2,room=1,subcount=0,roomcount=0,periodnumber=1;
         String Prsntday=null,section=null;
         while(sub < entireList.size() && room < entireroomsList.size()) {
@@ -1157,18 +1157,19 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                     StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(0).toString());
                 }
             }else {
-                if((entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) && entireList.contains("Honors/Scirp") && entireList.contains("Library/Scirp")) {
+                //System.out.println(entireList.get(sub)+"*****");
+                if((entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) && !entireList.get(sub).contains("Honors/Scirp") && !entireList.contains("Library/Scirp")) {
                     String copy = entireList.get(sub);
                     String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).indexOf(")")+1,entireList.get(sub).length());
                     facultyNameIDP = facultyNameIDP.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
                     String subject = copy.substring(0,copy.indexOf("("));
-                    //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+" "+entireroomsList.get(room)+", "+facultyNameIDP);
+                    //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+subject+", "+entireroomsList.get(room)+", "+facultyNameIDP);
                     if(periodnumber!=8 && !Prsntday.contains("Sat")) {
                         StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
                 }else {
                     if(periodnumber<8) {
-                        //System.out.println(periodnumber + ", " + timings[periodnumber - 1] + ", " + section + ", " + Prsntday + ", " + entireList.get(sub) + " " + entireroomsList.get(room) + ", " + "not mentioned");
+                        //System.out.println(periodnumber + ", " + timings[periodnumber - 1] + ", " + section + ", " + Prsntday + ", " + entireList.get(sub) + ", " + entireroomsList.get(room) + ", " + "not mentioned");
                         StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "not mentioned");
                     }
                 }
@@ -1190,14 +1191,14 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
         if(!st.getSub().equals("***") && !st.getSub().contains("Sat") ) {
             System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
-            databaseReference.child(section).child(prsntday).child(time).setValue(st).addOnCompleteListener(new OnCompleteListener<Void>() {
+            /*databaseReference.child(section).child(prsntday).child(time).setValue(st).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
                         Log.e("yupee","done");
                     }
                 }
-            });
+            });*/
         }
     }
 
