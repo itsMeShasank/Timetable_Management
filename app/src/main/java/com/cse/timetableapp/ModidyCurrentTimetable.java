@@ -1188,7 +1188,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("StudentDetails");
         students st = new students(period,faculty,section,prsntday,subject,room,time);
-
+        //..hello jsd
         if(!st.getSub().equals("***") && !st.getSub().contains("Sat") ) {
             System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
             /*databaseReference.child(section).child(prsntday).child(time).setValue(st).addOnCompleteListener(new OnCompleteListener<Void>() {
