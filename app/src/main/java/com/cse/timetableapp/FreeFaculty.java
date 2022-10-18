@@ -59,6 +59,10 @@ public class FreeFaculty extends AppCompatActivity {
         period = intent.getStringExtra("period");
         day = intent.getStringExtra("day");
 
+        Log.e("Period",period);
+        Log.e("Day",day);
+
+
         listView = findViewById(R.id.FacultylistView);
 
         getFacultyIntoHashMap();
@@ -93,6 +97,7 @@ public class FreeFaculty extends AppCompatActivity {
     private void completeDataFetch(){
 
 
+
         try {
             //Faculty Free Data
             databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDetails");
@@ -100,6 +105,7 @@ public class FreeFaculty extends AppCompatActivity {
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    int count = 1;
                     for (DataSnapshot snap : snapshot.getChildren()) {
                         DataSnapshot s = snap.child(day);
                         for(DataSnapshot i:s.getChildren()){
@@ -116,7 +122,7 @@ public class FreeFaculty extends AppCompatActivity {
                                     }
                                 }else{
                                     Log.e("ee faculty Id ledu",snap.getKey());
-                                    list.add(new FreeFacultyLoader("0000", snap.getKey()));
+                                    list.add(new FreeFacultyLoader("NCS"+(count++), snap.getKey()));
                                 }
                             }
                         }

@@ -807,6 +807,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         DatabaseReference studentsaving1 = FirebaseDatabase.getInstance().getReference("StudentDetails");
 
                         if(st == null && finalFaculty !=null) {
+                            System.out.println("COMING HERE AT NIGHT");
                             students students = new students(periodnumber, finalFaculty,section,prsntday,subject,room,timing);
                             FacultyData facultyData = new FacultyData(prsntday, finalFaculty,section,subject,room,timing,periodnumber);
                             String result = finalFaculty.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);

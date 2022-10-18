@@ -21,7 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 public class SubjectFacultyDealing extends AppCompatActivity {
 
@@ -123,12 +125,14 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     String str = spinner.getSelectedItem().toString().trim();
-                    if (!str.equals("Subject")) {
+                    if (!str.equals("Select a Subject")) {
                         subjectFaculties.clear();
                         getDataFromFirebase(str);
 
                     } else {
                         //Toast.makeText(SubjectFacultyDealing.this, "Please Select a Subject", Toast.LENGTH_SHORT).show();
+                        subjectFaculties.clear();
+                        getYearWiseFaculty(year_spinnner.getSelectedItem().toString());
                     }
                 }
 
@@ -166,19 +170,116 @@ public class SubjectFacultyDealing extends AppCompatActivity {
             {
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     FacultySearchItems item = snap.getValue(FacultySearchItems.class);
+
                     if(item.getList() != null){
                         for (String i : item.getList()) {
-                            String strs[] = i.split(",");
-                            String check = strs[1];
-                            check = check.trim();
 
-                            String currentSection = strs[0].substring(0,strs[0].lastIndexOf("-")).trim();
-                            String toPrint =  strs[0].substring(strs[0].lastIndexOf("-")+1).trim();
-                            Log.e("Faculty",item.getName());
-                            Log.e("current_slectec", finalCurrent_selected);
-                            Log.e("Curret_Section",currentSection);
-                            if(str.equalsIgnoreCase(check) && (currentSection.compareTo(finalCurrent_selected)==0))
-                                subjectFaculties.add(new SubjectFaculty(item.getId(),item.getName(),toPrint));
+
+                            if (i != null) {
+                                Log.e("CUrrent Subject",""+i);
+                                String strs[] = i.split(",");
+                                String check = strs[1];
+                                check = check.trim();
+
+                                String currentSection = strs[0].substring(0,strs[0].lastIndexOf("-")).trim();
+                                String toPrint =  strs[0].substring(strs[0].lastIndexOf("-")+1).trim();
+                                Log.e("Faculty",item.getName());
+                                Log.e("current_slectec", finalCurrent_selected);
+                                Log.e("Curret_Section",currentSection);
+                                if(str.equalsIgnoreCase(check) && (currentSection.compareTo(finalCurrent_selected)==0))
+                                    subjectFaculties.add(new SubjectFaculty(item.getId(),item.getName(),toPrint));
+                            }
+                        }
+                    }
+
+
+
+                        /*DataSnapshot s = snap.child("Details");
+                            FacultyDetails facultyDetails = null;
+                            if (s.exists()) {
+                                facultyDetails = s.getValue(FacultyDetails.class);
+                                    String arr[] = facultyDetails.getSubject().split(",");
+                                    for (int i = 0; i < arr.length; i += 1) {
+                                        String sid = arr[i];
+                                        if (sid.equals(str)) {
+                                            String section = arr[i + 1];
+                                            subjectFaculties.add(new SubjectFaculty(facultyDetails.getId(), facultyDetails.getName(), section));
+                                        }
+                                    }
+                            }*/
+
+
+                }
+
+                Collections.sort(subjectFaculties, new Comparator<SubjectFaculty>() {
+                    @Override
+                    public int compare(SubjectFaculty i, SubjectFaculty j) {
+                        if(i.section.compareTo(j.section) > 0)
+                            return 1;
+                        else
+                            return -1;
+                    }
+                });
+
+                SubjectFacultyAdapter subjectFacultyAdapter = new SubjectFacultyAdapter(getApplicationContext(),R.layout.subjectfacultyitem,subjectFaculties);
+                listView.setAdapter(subjectFacultyAdapter);
+
+                loadingDialog.dismisss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getYearWiseFaculty(String year){
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.load();
+        subjectFaculties.clear();
+
+
+        String current_selected = year_spinnner.getSelectedItem().toString().trim();
+        if(current_selected.equalsIgnoreCase("II - CSE"))
+            current_selected = "II";
+        if(current_selected.equalsIgnoreCase("III - CSE"))
+            current_selected = "III";
+        if(current_selected.equalsIgnoreCase("IV - CSE"))
+            current_selected = "IV";
+
+        current_selected = current_selected.toLowerCase(Locale.ROOT);
+
+        HashSet<String> hashset = new HashSet<>();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDealing");
+        String finalCurrent_selected = current_selected;
+        String finalCurrent_selected1 = current_selected;
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    FacultySearchItems item = snap.getValue(FacultySearchItems.class);
+
+                    if(item.getList() != null){
+                        for (String i : item.getList()) {
+
+
+                            if (i != null) {
+                                Log.e("CUrrent Subject",""+i);
+                                String strs[] = i.split(",");
+                                String check = strs[0].substring(0,strs[0].indexOf("-")).toLowerCase(Locale.ROOT);
+                                check = check.trim();
+
+
+
+
+                                if(check.equalsIgnoreCase(finalCurrent_selected1) && !hashset.contains(item.getId())){
+                                    subjectFaculties.add(new SubjectFaculty(item.getId(),item.getName(),""));
+                                    hashset.add(item.getId());
+                                }
+                            }
                         }
                     }
 
