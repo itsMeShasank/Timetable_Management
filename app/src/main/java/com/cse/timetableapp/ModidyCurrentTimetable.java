@@ -1159,7 +1159,9 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 periodnumber=1;
             }
             ArrayList faculty = subjects.get(section.trim()+","+entireList.get(sub).trim());
+
             if(faculty != null) {
+
                 if(periodnumber<8) {
                     //System.out.println(periodnumber+", "+timings[periodnumber-1]+", "+section+", "+Prsntday+", "+entireList.get(sub)+" "+entireroomsList.get(room)+", "+faculty.get(0));
                     StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), faculty.get(0).toString());
@@ -1167,7 +1169,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
             }else {
                 //System.out.println(entireList.get(sub)+"*****");
                 if((entireList.get(sub).contains("SCIRP") || entireList.get(sub).contains("IDP")) && !entireList.get(sub).contains("Honors/Scirp") && !entireList.contains("Library/Scirp")&& !entireList.get(sub).contains("Honors/SCIRP") && !entireList.contains("Library/SCIRP")) {
-                    System.out.println(entireList.get(sub)+"*****If Loki ochiindi****");
+                    //System.out.println(entireList.get(sub)+"*****If Loki ochiindi****");
                     String copy = entireList.get(sub);
                     String facultyNameIDP = entireList.get(sub).substring(entireList.get(sub).lastIndexOf(")")+1,entireList.get(sub).length());
                     facultyNameIDP = facultyNameIDP.replaceAll("[-+.^:, ]","").toLowerCase(Locale.ROOT);
@@ -1177,7 +1179,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, subject, entireroomsList.get(room).toString(), facultyNameIDP);
                     }
                 }else {
-                    System.out.println(entireList.get(sub)+"*****ELse Loki ochiindi****");
+                    //System.out.println(entireList.get(sub)+"*****ELse Loki ochiindi****");
                     if(periodnumber<8) {
                         //System.out.println(periodnumber + ", " + timings[periodnumber - 1] + ", " + section + ", " + Prsntday + ", " + entireList.get(sub) + ", " + entireroomsList.get(room) + ", " + "not mentioned");
                         StudentFirebase(timings[periodnumber - 1], periodnumber, section, Prsntday, entireList.get(sub), entireroomsList.get(room).toString(), "not mentioned");

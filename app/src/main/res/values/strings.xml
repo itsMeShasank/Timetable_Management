@@ -94,6 +94,8 @@
         <item>PP</item>
         <item>P&amp;S</item>
         <item>ES</item>
+        <item>P&amp;S (T)</item>
+        <item>ES (T)</item>
         <item>DS (P)</item>
         <item>DS (T)</item>
         <item>DBMS (P)</item>
@@ -114,6 +116,7 @@
         <item>ES</item>
         <item>OOPS (P)</item>
         <item>DBMS (P)</item>
+        <item>DLD (T)</item>
         <item>DBMS (T)</item>
         <item>DS (P)</item>
         <item>DS (T)</item>
@@ -221,6 +224,7 @@
         <item>BS</item>
         <item>ITK</item>
         <item>IDP</item>
+        <item>IIPE</item>
     </string-array>
 
 
