@@ -145,37 +145,69 @@ public class FreeFaculty extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int count = 1;
 
+                    int added = 1;
 
 
                     for(DataSnapshot snap:snapshot.getChildren()){
 
+
+
                         if(snap.hasChild(day)){
 
-                            int flag = 0;
 
-                            for(DataSnapshot years:snap.getChildren()){
-                                if(years.hasChild(day)){
-                                    flag = 1;
-                                    break;
+                            Log.e("Faculty Name","  "+snap.getKey());
+
+
+
+                            for(DataSnapshot days:snap.getChildren()){
+                                if(days.getKey().equals(day)){
+                                    int flag = 0;
+                                    System.out.println(days.getKey());
+                                    for(DataSnapshot years:days.getChildren()){
+
+                                        if(years.hasChild(period)){
+                                            flag = 1;
+                                            break;
+                                        }
+                                   /* for(DataSnapshot periods:years.getChildren()){
+                                        System.out.println(periods.getKey()+"");
+                                    }*/
+
+
+                                    }
+                                    if(flag==0){
+                                        addedList.add(snap.getKey());
+
+                                        if (facultyDetails.containsKey(snap.getKey())) {
+                                            FreeFacultyLoader facultyLoader = new FreeFacultyLoader(facultyDetails.get(snap.getKey()).getId(), facultyDetails.get(snap.getKey()).getName());
+                                            list.add(facultyLoader);
+                                            added++;
+                                        } else {
+                                            added++;
+                                            list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
+                                        }
+                                    }
+
+                               /* if(years.hasChild(period)){
+                                        flag = 1;
+                                        break;
+                                }*/
+
+
                                 }
                             }
-                            if(flag==0){
-                                addedList.add(snap.getKey());
 
-                                if (facultyDetails.containsKey(snap.getKey())) {
-                                    FreeFacultyLoader facultyLoader = new FreeFacultyLoader(facultyDetails.get(snap.getKey()).getId(), facultyDetails.get(snap.getKey()).getName());
-                                    list.add(facultyLoader);
-                                } else {
-                                    list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
-                                }
-                            }
 
                         }else{
+
+                            Log.e("Added when no day ",snap.getKey()+" ");
                             addedList.add(snap.getKey());
                             if (facultyDetails.containsKey(snap.getKey())) {
                                 FreeFacultyLoader facultyLoader = new FreeFacultyLoader(facultyDetails.get(snap.getKey()).getId(), facultyDetails.get(snap.getKey()).getName());
                                 list.add(facultyLoader);
+                                added++;
                             } else {
+                                added++;
                                 list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
                             }
                         }
@@ -185,7 +217,15 @@ public class FreeFaculty extends AppCompatActivity {
                     Collections.sort(list, new Comparator<FreeFacultyLoader>() {
                         @Override
                         public int compare(FreeFacultyLoader i, FreeFacultyLoader j) {
-                            if(i.facultyid.compareTo(j.facultyid) > 0)
+                            String a = i.facultyid;
+                            String b = j.facultyid;
+                            if(a.length() == 3)
+                                a = "0"+a;
+                            if(b.length()==3)
+                                b = "0"+b;
+
+
+                            if(a.compareTo(b) > 0)
                                 return 1;
                             else
                                 return -1;
@@ -223,6 +263,8 @@ public class FreeFaculty extends AppCompatActivity {
 
                         }
                     }*/
+
+                    System.out.println("Total added "+added);
                     FacultyAdapter facultyAdapter = new FacultyAdapter(getApplicationContext(), array);
                     FreeFacultyAdapter freeFacultyAdapter = new FreeFacultyAdapter(getApplicationContext(), R.layout.free_faculty_item, list);
                     listView.setAdapter(freeFacultyAdapter);
