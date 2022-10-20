@@ -71,7 +71,30 @@ public class FreeFaculty extends AppCompatActivity {
 
 
         periodt.setText(period);
-        dayt.setText(day+"day");
+        //dayt.setText(day+"day");
+
+
+
+        switch(day){
+            case "Mon":
+                dayt.setText("Monday");
+                break;
+            case "Tue":
+                dayt.setText("Tuesday");
+                break;
+            case "Wed":
+                dayt.setText("Wednesday");
+                break;
+            case "Thu":
+                dayt.setText("Thursday");
+                break;
+            case "Fri":
+                dayt.setText("Friday");
+                break;
+            case "Sat":
+                dayt.setText("Saturday");
+                break;
+        }
 
 
         Log.e("Period",period);

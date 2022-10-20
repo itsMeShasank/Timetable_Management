@@ -269,7 +269,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                             if (i != null) {
                                 Log.e("CUrrent Subject",""+i);
                                 String strs[] = i.split(",");
-                                String check = strs[0].substring(0,strs[0].indexOf("-")).toLowerCase(Locale.ROOT);
+                                String check = strs[0].substring(0,strs[0].lastIndexOf("-")).toLowerCase(Locale.ROOT);
                                 check = check.trim();
 
 
