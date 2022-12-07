@@ -25,6 +25,8 @@ public class FacultyResults extends AppCompatActivity {
     View root;
     SharedPreferences preferences;
     static final String filename = "remember";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

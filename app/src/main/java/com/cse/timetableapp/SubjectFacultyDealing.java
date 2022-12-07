@@ -162,7 +162,7 @@ public class SubjectFacultyDealing extends AppCompatActivity {
             current_selected = "IV";
 
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FacultyDealing");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TimeTableData").child("FacultyDealing");
         String finalCurrent_selected = current_selected;
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -305,7 +305,17 @@ public class SubjectFacultyDealing extends AppCompatActivity {
                 Collections.sort(subjectFaculties, new Comparator<SubjectFaculty>() {
                     @Override
                     public int compare(SubjectFaculty i, SubjectFaculty j) {
-                        if(i.section.compareTo(j.section) > 0)
+                        String a = i.id;
+                        String b = j.id;
+
+                        if(a.length()==3)
+                            a = "0"+a;
+                        if(b.length() == 3)
+                            b = "0"+b;
+
+                        a = a.trim();
+                        b = b.trim();
+                        if(a.compareTo(b) > 0)
                             return 1;
                         else
                             return -1;

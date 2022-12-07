@@ -183,8 +183,8 @@ public class FreeFaculty extends AppCompatActivity {
                                             list.add(facultyLoader);
                                             added++;
                                         } else {
-                                            added++;
-                                            list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
+                                            //added++;
+                                            //list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
                                         }
                                     }
 
@@ -207,8 +207,8 @@ public class FreeFaculty extends AppCompatActivity {
                                 list.add(facultyLoader);
                                 added++;
                             } else {
-                                added++;
-                                list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
+                                //added++;
+                                //list.add(new FreeFacultyLoader("NCS"+(count++),snap.getKey()));
                             }
                         }
 

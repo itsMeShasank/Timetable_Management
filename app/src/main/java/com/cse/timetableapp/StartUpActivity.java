@@ -24,6 +24,8 @@ public class StartUpActivity extends AppCompatActivity {
     MyViewPager myViewPager;
     SharedPreferences preferences;
     static final String filename = "remember";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,6 +15,7 @@ import com.cse.timetableapp.FacultyProfile;
 import com.cse.timetableapp.FacultySearchItems;
 import com.cse.timetableapp.LoadingDialog;
 import com.cse.timetableapp.R;
+import com.cse.timetableapp.SubjectFaculty;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,7 +86,7 @@ public class FacultyWorkload extends AppCompatActivity {
                         facultyDetailsAdder.setName(facultyDetails.get(snapshot1.getKey()).getName());
                         facultyDetailsAdder.setId(facultyDetails.get(snapshot1.getKey()).getId());
                     }else{
-                        facultyDetailsAdder.setName(snapshot1.getKey());
+                        facultyDetailsAdder.setName("UNAVAILABLE");
                     }
                     int count = 0;
                     for(DataSnapshot snap:snapshot1.getChildren()){
@@ -98,8 +101,10 @@ public class FacultyWorkload extends AppCompatActivity {
                     String faculty_id = snapshot1.getKey();
                     if(!faculty_id.contains("E0") || faculty_id.contains("EEE0")){
                     WorkLoads work = new WorkLoads(facultyDetailsAdder.getId(),count+"",facultyDetailsAdder.getName());
-                    workLoads.add(work);
-                    facultyids.add(faculty_id);
+                        if (!facultyDetailsAdder.getName().equals("UNAVAILABLE")) {
+                            workLoads.add(work);
+                            facultyids.add(faculty_id);
+                        }
                     }
                 }
                 Log.e("After",workLoads.toString());
@@ -114,6 +119,28 @@ public class FacultyWorkload extends AppCompatActivity {
     }
 
     public void assignVals(){
+
+        Collections.sort(workLoads, new Comparator<WorkLoads>() {
+            @Override
+            public int compare(WorkLoads i, WorkLoads j) {
+                String a = i.faculty_id;
+                String b = j.faculty_id;
+
+                if(a.length()==3)
+                    a = "0"+a;
+                if(b.length() == 3)
+                    b = "0"+b;
+
+                a = a.trim();
+                b = b.trim();
+                if(a.compareTo(b) > 0)
+                    return 1;
+                else
+                    return -1;
+            }
+        });
+
+
         FacultyWorkloadAdapter adapter = new FacultyWorkloadAdapter(getApplicationContext(), R.layout.workload_item,workLoads);
         listView.setAdapter(adapter);
         listView.setClickable(true);

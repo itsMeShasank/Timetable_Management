@@ -432,7 +432,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                         value = value.substring(0,value.indexOf("("));
                         curRow.set(i,value);
                     }
-                    else if(value.contains("CC Lab")  || value.contains("MAT Lab") || value.contains("CP Lab") || value.contains("TEC") || value.contains("Floor") || value.contains("floor") || value.contains("CSE")) {
+                    else if(value.contains("CC Lab")  || value.contains("MAT Lab") || value.contains("CP Lab") || value.contains("TEC Lab") || value.contains("Floor") || value.contains("floor") || value.contains("CSE")) {
 
                         roomsList.add(value.substring(value.indexOf("(")+1,value.lastIndexOf(")")));
                         value = value.substring(0,value.indexOf("("));
@@ -574,8 +574,8 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         /*    Firebase Calling Functions    */
 
         System.out.println(entireList+"\n"+entireroomsList+"\n");
-        //faculty(entireList, entireroomsList.get(0), subjects);
-        student(entireList,entireroomsList.get(0),subjects);
+        faculty(entireList, entireroomsList.get(0), subjects);
+        //student(entireList,entireroomsList.get(0),subjects);
 
     }
 
@@ -584,7 +584,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
 
         int columncount = 0;
         for (String key : entireList) {
-            if (key.contains("M Tech") || key.contains("II") || key.contains("IV") || key.contains("III")) {
+            if (key.contains("M Tech") || key.contains("II") || key.contains("IV") || key.contains("III") || key.contains("I")) {
                 columncount = 0;
             } else {
 
@@ -779,7 +779,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         String finalFaculty = faculty;
         if(!subject.equals("***") && !subject.contains("Sat") ) {
             System.out.println(x+" "+timing+"  "+periodnumber+"  "+section+"  "+prsntday+"  "+subject+"  "+room+"  "+faculty);
-           /* data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
+            data.child(section).child(prsntday).child(timing).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //Log.e("snap: ",dataSnapshot.toString());
@@ -918,7 +918,7 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });*/
+            });
         }
 
         //modifyFacultyDetails();
@@ -1229,14 +1229,14 @@ public class ModidyCurrentTimetable extends AppCompatActivity {
         //..hello jsd
         if(!st.getSub().equals("***") && !st.getSub().contains("Sat") ) {
             System.out.println("students : "+time+", "+st.getPer()+", "+st.getDay()+", "+st.getSec()+", "+st.getSub()+", "+st.getRoom()+", "+st.getFaculty());
-            /*databaseReference.child(section).child(prsntday).child(time).setValue(st).addOnCompleteListener(new OnCompleteListener<Void>() {
+            databaseReference.child(section).child(prsntday).child(time).setValue(st).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
                         Log.e("yupee","done");
                     }
                 }
-            });*/
+            });
         }
     }
 

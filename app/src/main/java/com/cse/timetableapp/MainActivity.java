@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     static int workload = 0;
     HashMap<String,FacultySearchItems> facultyDetails;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
